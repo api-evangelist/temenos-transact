@@ -1,0 +1,59 @@
+name: Temenos Transact APIs
+description: Core banking APIs from Temenos Transact, providing comprehensive banking functionality including accounts, transactions, payments, loans, and customer management
+image: https://www.temenos.com/wp-content/uploads/2023/01/temenos-logo.svg
+url: https://www.temenos.com/products/transact/
+created: '2024'
+modified: '2024'
+specificationVersion: '0.18'
+apis:
+- name: Temenos Transact Core Banking API
+  description: RESTful APIs for core banking operations including account management, customer data, transactions, and payment processing
+  image: https://www.temenos.com/wp-content/uploads/2023/01/temenos-logo.svg
+  humanURL: https://www.temenos.com/products/transact/
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Banking
+  - Core Banking
+  - Accounts
+  - Payments
+  - Transactions
+  - Customers
+  properties:
+  - type: Documentation
+    url: https://developer.temenos.com/transact/documentation
+  - type: OpenAPI
+    url: https://developer.temenos.com/transact/openapi.json
+  - type: Authentication
+    url: https://developer.temenos.com/transact/authentication
+  - type: Sandbox
+    url: https://sandbox.temenos.com/transact
+  - type: SDKs
+    url: https://developer.temenos.com/transact/sdks
+  - type: Terms of Service
+    url: https://www.temenos.com/terms-of-service/
+  - type: Privacy Policy
+    url: https://www.temenos.com/privacy-policy/
+  - type: Support
+    url: https://support.temenos.com
+  - type: Status
+    url: https://status.temenos.com
+  - type: Change Log
+    url: https://developer.temenos.com/transact/changelog
+  contact:
+  - type: Support
+    url: https://support.temenos.com
+  - type: Email
+    email: api.support@temenos.com
+  - type: Sales
+    url: https://www.temenos.com/contact/
+maintainers:
+- name: Temenos
+  email: api.support@temenos.com
+  url: https://www.temenos.com
+tags:
+- Banking
+- Core Banking
+- Financial Services
+- Enterprise
+- Fintech
+- Digital Banking
