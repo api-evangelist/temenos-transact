@@ -1,0 +1,552 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "temenos": "https://developer.temenos.com/ns/transact/",
+    "fibo": "https://spec.edmcouncil.org/fibo/ontology/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+
+    "id": "@id",
+    "type": "@type",
+
+    "Account": "schema:BankAccount",
+    "CurrentAccount": "temenos:CurrentAccount",
+    "SavingsAccount": "temenos:SavingsAccount",
+    "CorporateAccount": "temenos:CorporateAccount",
+    "IslamicAccount": "temenos:IslamicAccount",
+    "DepositAccount": "temenos:DepositAccount",
+    "LoanAccount": "schema:LoanOrCredit",
+
+    "Customer": "schema:Person",
+    "CorporateCustomer": "schema:Organization",
+    "Beneficiary": "temenos:Beneficiary",
+
+    "Transaction": "temenos:Transaction",
+    "FundTransfer": "schema:TransferAction",
+    "PaymentOrder": "schema:PayAction",
+    "StandingOrder": "temenos:StandingOrder",
+    "DirectDebit": "temenos:DirectDebit",
+
+    "Product": "schema:FinancialProduct",
+    "DepositProduct": "temenos:DepositProduct",
+    "LoanProduct": "temenos:LoanProduct",
+    "CardProduct": "temenos:CardProduct",
+
+    "Card": "temenos:BankCard",
+    "DebitCard": "temenos:DebitCard",
+    "CreditCard": "temenos:CreditCard",
+
+    "Currency": "temenos:Currency",
+    "Country": "schema:Country",
+    "Address": "schema:PostalAddress",
+
+    "accountId": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "accountName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "accountType": {
+      "@id": "temenos:accountType",
+      "@type": "xsd:string"
+    },
+    "customerId": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "customerName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "customerMnemonic": {
+      "@id": "temenos:customerMnemonic",
+      "@type": "xsd:string"
+    },
+    "shortName": {
+      "@id": "schema:alternateName",
+      "@type": "xsd:string"
+    },
+    "displayNames": {
+      "@id": "schema:name",
+      "@container": "@list"
+    },
+    "customerNames": {
+      "@id": "schema:name",
+      "@container": "@list"
+    },
+
+    "title": {
+      "@id": "schema:honorificPrefix",
+      "@type": "xsd:string"
+    },
+    "gender": {
+      "@id": "schema:gender",
+      "@type": "xsd:string"
+    },
+    "dateOfBirth": {
+      "@id": "schema:birthDate",
+      "@type": "xsd:date"
+    },
+    "nationalityId": {
+      "@id": "schema:nationality",
+      "@type": "xsd:string"
+    },
+    "residenceId": {
+      "@id": "temenos:residenceId",
+      "@type": "xsd:string"
+    },
+
+    "communicationDevices": {
+      "@id": "schema:contactPoint",
+      "@container": "@list"
+    },
+    "deviceType": {
+      "@id": "schema:contactType",
+      "@type": "xsd:string"
+    },
+    "deviceValue": {
+      "@id": "schema:value",
+      "@type": "xsd:string"
+    },
+
+    "addresses": {
+      "@id": "schema:address",
+      "@container": "@list"
+    },
+    "addressType": {
+      "@id": "temenos:addressType",
+      "@type": "xsd:string"
+    },
+    "addressLine1": {
+      "@id": "schema:streetAddress",
+      "@type": "xsd:string"
+    },
+    "addressLine2": {
+      "@id": "temenos:addressLine2",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "schema:addressLocality",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "schema:addressRegion",
+      "@type": "xsd:string"
+    },
+    "postCode": {
+      "@id": "schema:postalCode",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "schema:addressCountry",
+      "@type": "xsd:string"
+    },
+
+    "transactionId": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "transactionType": {
+      "@id": "temenos:transactionType",
+      "@type": "xsd:string"
+    },
+    "debitOrCredit": {
+      "@id": "temenos:debitOrCredit",
+      "@type": "xsd:string"
+    },
+    "amount": {
+      "@id": "schema:amount",
+      "@type": "xsd:decimal"
+    },
+    "currency": {
+      "@id": "schema:currency",
+      "@type": "xsd:string"
+    },
+    "bookingDate": {
+      "@id": "temenos:bookingDate",
+      "@type": "xsd:date"
+    },
+    "valueDate": {
+      "@id": "temenos:valueDate",
+      "@type": "xsd:date"
+    },
+    "processingDate": {
+      "@id": "temenos:processingDate",
+      "@type": "xsd:date"
+    },
+    "reference": {
+      "@id": "temenos:reference",
+      "@type": "xsd:string"
+    },
+    "endToEndReference": {
+      "@id": "temenos:endToEndReference",
+      "@type": "xsd:string"
+    },
+    "narrative": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+
+    "counterparty": "temenos:counterparty",
+    "counterpartyName": {
+      "@id": "temenos:counterpartyName",
+      "@type": "xsd:string"
+    },
+    "counterpartyAccountId": {
+      "@id": "temenos:counterpartyAccountId",
+      "@type": "xsd:string"
+    },
+
+    "balance": {
+      "@id": "temenos:balance",
+      "@type": "xsd:decimal"
+    },
+    "workingBalance": {
+      "@id": "temenos:workingBalance",
+      "@type": "xsd:decimal"
+    },
+    "availableBalance": {
+      "@id": "temenos:availableBalance",
+      "@type": "xsd:decimal"
+    },
+    "clearedBalance": {
+      "@id": "temenos:clearedBalance",
+      "@type": "xsd:decimal"
+    },
+    "lockedAmount": {
+      "@id": "temenos:lockedAmount",
+      "@type": "xsd:decimal"
+    },
+    "overdraftLimit": {
+      "@id": "temenos:overdraftLimit",
+      "@type": "xsd:decimal"
+    },
+    "accruedInterest": {
+      "@id": "temenos:accruedInterest",
+      "@type": "xsd:decimal"
+    },
+
+    "exchangeRate": {
+      "@id": "schema:exchangeRate",
+      "@type": "xsd:decimal"
+    },
+    "chargesAmount": {
+      "@id": "temenos:chargesAmount",
+      "@type": "xsd:decimal"
+    },
+    "reversalIndicator": {
+      "@id": "temenos:reversalIndicator",
+      "@type": "xsd:boolean"
+    },
+    "statementNumber": {
+      "@id": "temenos:statementNumber",
+      "@type": "xsd:string"
+    },
+    "transactionStatus": {
+      "@id": "temenos:transactionStatus",
+      "@type": "xsd:string"
+    },
+    "channel": {
+      "@id": "temenos:channel",
+      "@type": "xsd:string"
+    },
+    "paymentMethod": {
+      "@id": "schema:paymentMethod",
+      "@type": "xsd:string"
+    },
+
+    "debitAccountId": {
+      "@id": "temenos:debitAccountId",
+      "@type": "xsd:string"
+    },
+    "creditAccountId": {
+      "@id": "temenos:creditAccountId",
+      "@type": "xsd:string"
+    },
+    "debitAmount": {
+      "@id": "temenos:debitAmount",
+      "@type": "xsd:decimal"
+    },
+    "creditAmount": {
+      "@id": "temenos:creditAmount",
+      "@type": "xsd:decimal"
+    },
+    "debitCurrency": {
+      "@id": "temenos:debitCurrency",
+      "@type": "xsd:string"
+    },
+    "creditCurrency": {
+      "@id": "temenos:creditCurrency",
+      "@type": "xsd:string"
+    },
+    "transferType": {
+      "@id": "temenos:transferType",
+      "@type": "xsd:string"
+    },
+    "paymentType": {
+      "@id": "temenos:paymentType",
+      "@type": "xsd:string"
+    },
+
+    "beneficiaryId": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "beneficiaryName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "beneficiaryIban": {
+      "@id": "temenos:beneficiaryIban",
+      "@type": "xsd:string"
+    },
+    "beneficiaryBic": {
+      "@id": "temenos:beneficiaryBic",
+      "@type": "xsd:string"
+    },
+    "beneficiaryType": {
+      "@id": "temenos:beneficiaryType",
+      "@type": "xsd:string"
+    },
+    "remittanceInformation": {
+      "@id": "temenos:remittanceInformation",
+      "@type": "xsd:string"
+    },
+    "chargesType": {
+      "@id": "temenos:chargesType",
+      "@type": "xsd:string"
+    },
+
+    "iban": {
+      "@id": "temenos:iban",
+      "@type": "xsd:string"
+    },
+    "bic": {
+      "@id": "temenos:bic",
+      "@type": "xsd:string"
+    },
+    "bankName": {
+      "@id": "temenos:bankName",
+      "@type": "xsd:string"
+    },
+
+    "frequency": {
+      "@id": "temenos:frequency",
+      "@type": "xsd:string"
+    },
+    "startDate": {
+      "@id": "schema:startDate",
+      "@type": "xsd:date"
+    },
+    "endDate": {
+      "@id": "schema:endDate",
+      "@type": "xsd:date"
+    },
+    "nextPaymentDate": {
+      "@id": "temenos:nextPaymentDate",
+      "@type": "xsd:date"
+    },
+
+    "productId": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "productName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "productGroup": {
+      "@id": "temenos:productGroup",
+      "@type": "xsd:string"
+    },
+    "description": "schema:description",
+
+    "principalAmount": {
+      "@id": "temenos:principalAmount",
+      "@type": "xsd:decimal"
+    },
+    "outstandingBalance": {
+      "@id": "temenos:outstandingBalance",
+      "@type": "xsd:decimal"
+    },
+    "interestRate": {
+      "@id": "temenos:interestRate",
+      "@type": "xsd:decimal"
+    },
+    "effectiveRate": {
+      "@id": "temenos:effectiveRate",
+      "@type": "xsd:decimal"
+    },
+    "maturityDate": {
+      "@id": "temenos:maturityDate",
+      "@type": "xsd:date"
+    },
+    "disbursementDate": {
+      "@id": "temenos:disbursementDate",
+      "@type": "xsd:date"
+    },
+    "term": {
+      "@id": "temenos:term",
+      "@type": "xsd:string"
+    },
+    "renewalType": {
+      "@id": "temenos:renewalType",
+      "@type": "xsd:string"
+    },
+    "repaymentFrequency": {
+      "@id": "temenos:repaymentFrequency",
+      "@type": "xsd:string"
+    },
+
+    "cardId": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "cardNumber": {
+      "@id": "temenos:cardNumber",
+      "@type": "xsd:string"
+    },
+    "cardType": {
+      "@id": "temenos:cardType",
+      "@type": "xsd:string"
+    },
+    "cardholderName": {
+      "@id": "temenos:cardholderName",
+      "@type": "xsd:string"
+    },
+    "expiryDate": {
+      "@id": "temenos:expiryDate",
+      "@type": "xsd:string"
+    },
+    "dailyLimit": {
+      "@id": "temenos:dailyLimit",
+      "@type": "xsd:decimal"
+    },
+    "availableLimit": {
+      "@id": "temenos:availableLimit",
+      "@type": "xsd:decimal"
+    },
+
+    "currencyCode": {
+      "@id": "temenos:currencyCode",
+      "@type": "xsd:string"
+    },
+    "currencyName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "decimalPlaces": {
+      "@id": "temenos:decimalPlaces",
+      "@type": "xsd:integer"
+    },
+    "buyRate": {
+      "@id": "temenos:buyRate",
+      "@type": "xsd:decimal"
+    },
+    "sellRate": {
+      "@id": "temenos:sellRate",
+      "@type": "xsd:decimal"
+    },
+    "midRate": {
+      "@id": "temenos:midRate",
+      "@type": "xsd:decimal"
+    },
+
+    "countryCode": {
+      "@id": "temenos:countryCode",
+      "@type": "xsd:string"
+    },
+    "countryName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+
+    "openingDate": {
+      "@id": "temenos:openingDate",
+      "@type": "xsd:date"
+    },
+    "branchId": {
+      "@id": "temenos:branchId",
+      "@type": "xsd:string"
+    },
+    "accountOfficerId": {
+      "@id": "temenos:accountOfficerId",
+      "@type": "xsd:integer"
+    },
+    "sectorId": {
+      "@id": "temenos:sectorId",
+      "@type": "xsd:integer"
+    },
+    "industryId": {
+      "@id": "temenos:industryId",
+      "@type": "xsd:integer"
+    },
+    "language": {
+      "@id": "schema:inLanguage",
+      "@type": "xsd:integer"
+    },
+    "customerStatus": {
+      "@id": "temenos:customerStatus",
+      "@type": "xsd:integer"
+    },
+    "customerCompany": {
+      "@id": "temenos:customerCompany",
+      "@type": "xsd:string"
+    },
+    "amlCheck": {
+      "@id": "temenos:amlCheck",
+      "@type": "xsd:string"
+    },
+    "amlResult": {
+      "@id": "temenos:amlResult",
+      "@type": "xsd:string"
+    },
+    "kycStatus": {
+      "@id": "temenos:kycStatus",
+      "@type": "xsd:string"
+    },
+
+    "status": "temenos:status",
+    "executionDate": {
+      "@id": "temenos:executionDate",
+      "@type": "xsd:date"
+    },
+    "totalCharges": {
+      "@id": "temenos:totalCharges",
+      "@type": "xsd:decimal"
+    },
+    "rejectionReason": {
+      "@id": "temenos:rejectionReason",
+      "@type": "xsd:string"
+    },
+
+    "audit": "temenos:audit",
+    "createdBy": {
+      "@id": "dcterms:creator",
+      "@type": "xsd:string"
+    },
+    "createdAt": {
+      "@id": "dcterms:created",
+      "@type": "xsd:dateTime"
+    },
+    "modifiedBy": {
+      "@id": "temenos:modifiedBy",
+      "@type": "xsd:string"
+    },
+    "modifiedAt": {
+      "@id": "dcterms:modified",
+      "@type": "xsd:dateTime"
+    },
+    "authorizedBy": {
+      "@id": "temenos:authorizedBy",
+      "@type": "xsd:string"
+    },
+    "authorizedAt": {
+      "@id": "temenos:authorizedAt",
+      "@type": "xsd:dateTime"
+    }
+  }
+}

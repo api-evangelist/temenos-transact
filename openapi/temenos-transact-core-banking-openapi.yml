@@ -1,0 +1,2822 @@
+openapi: 3.1.0
+info:
+  title: Temenos Transact Core Banking API
+  description: >-
+    RESTful APIs for Temenos Transact (formerly T24) core banking operations.
+    Provides comprehensive banking functionality organized into domain-driven
+    API categories including Holdings (accounts, deposits, loans, cards),
+    Order (payments, transfers, standing orders), Party (customers, beneficiaries,
+    KYC), Reference (currencies, countries, rates), Product (catalog, conditions),
+    and Enterprise (pricing, bundles). Built on the Arrangement Architecture,
+    a modular business component-based framework enabling reusable product
+    components across retail, corporate, treasury, wealth, and Islamic banking
+    domains. APIs exchange data over HTTP using JSON format with a versioned
+    URL structure following the pattern api/v1.0.0/{domain}/{resource}.
+  version: 1.0.0
+  contact:
+    name: Temenos Developer Support
+    url: https://developer.temenos.com/
+    email: api.support@temenos.com
+  license:
+    name: Temenos Terms of Service
+    url: https://www.temenos.com/terms-of-service/
+  termsOfService: https://www.temenos.com/terms-of-service/
+
+servers:
+  - url: https://api.temenos.com/api/v1.0.0
+    description: Temenos Transact API - Production
+  - url: https://sandbox.temenos.com/api/v1.0.0
+    description: Temenos Transact API - Sandbox
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Accounts
+    description: >-
+      Manage customer accounts created using the Arrangement Architecture
+      including current accounts, savings accounts, corporate accounts,
+      Islamic accounts, non-resident and minor accounts.
+  - name: Customers
+    description: >-
+      Create, update, and manage customer profiles, contact details,
+      KYC documentation, compliance records, communication preferences,
+      and party relationships.
+  - name: Transactions
+    description: >-
+      Retrieve transaction history, statement details, and account
+      activity records for all account types and arrangements.
+  - name: Payments
+    description: >-
+      Process fund transfers, standing orders, direct debits, payment
+      orders, sweeps, and cross-border payments. Includes payment
+      validation, cost calculation, status tracking, and cancellation.
+  - name: Deposits
+    description: >-
+      Manage deposit arrangements including term deposits, savings
+      deposits, and fixed deposit products with maturity tracking
+      and renewal capabilities.
+  - name: Loans
+    description: >-
+      Create and manage loan arrangements, credit facilities, repayment
+      schedules, drawdowns, and loan lifecycle operations.
+  - name: Beneficiaries
+    description: >-
+      Manage payment beneficiaries including domestic and international
+      beneficiary registration, validation, and maintenance.
+  - name: Products
+    description: >-
+      Browse the product catalog and retrieve product conditions,
+      eligibility criteria, and arrangement details.
+  - name: Reference Data
+    description: >-
+      Access system-wide lookup and configuration data including
+      currencies, countries, IBAN/BIC validation, interest rate
+      tables, and balance type definitions.
+  - name: Cards
+    description: >-
+      Manage debit and credit card operations including card issuance,
+      activation, blocking, and limit management.
+
+paths:
+  /holdings/accounts:
+    get:
+      operationId: getAccounts
+      summary: List accounts
+      description: >-
+        Retrieve a list of customer accounts. Supports filtering by customer,
+        account type, status, currency, and other criteria. Returns account
+        arrangements created through the Arrangement Architecture including
+        current, savings, corporate, and Islamic account types.
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+        - $ref: '#/components/parameters/customerId'
+        - name: accountType
+          in: query
+          description: Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)
+          schema:
+            type: string
+        - name: currency
+          in: query
+          description: Filter by account currency (ISO 4217 code)
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter by account status
+          schema:
+            type: string
+            enum:
+              - ACTIVE
+              - INACTIVE
+              - CLOSED
+              - PENDING
+      responses:
+        '200':
+          description: Successful retrieval of accounts list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /holdings/accounts/{accountId}:
+    get:
+      operationId: getAccount
+      summary: Get account details
+      description: >-
+        Retrieve detailed information for a specific account arrangement
+        including balances, product details, interest conditions, charges,
+        and account officer assignment.
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+      responses:
+        '200':
+          description: Successful retrieval of account details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDetailsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      operationId: updateAccount
+      summary: Update account
+      description: >-
+        Update an existing account arrangement. Supports modifying account
+        attributes such as posting restrictions, overdraft limits, account
+        officer, and product conditions.
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpdateRequest'
+      responses:
+        '200':
+          description: Account updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDetailsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /holdings/accounts/{accountId}/balances:
+    get:
+      operationId: getAccountBalances
+      summary: Get account balances
+      description: >-
+        Retrieve balance information for a specific account including
+        available balance, working balance, locked amount, cleared balance,
+        and other balance types as configured.
+      tags:
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+      responses:
+        '200':
+          description: Successful retrieval of account balances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountBalancesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /holdings/accounts/{accountId}/transactions:
+    get:
+      operationId: getAccountTransactions
+      summary: List account transactions
+      description: >-
+        Retrieve transaction history for a specific account. Supports
+        filtering by date range, transaction type, amount range, and
+        booking date. Returns debit and credit entries with narrative,
+        value date, and reference details.
+      tags:
+        - Transactions
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+        - name: fromDate
+          in: query
+          description: Start date for transaction history (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          description: End date for transaction history (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: transactionType
+          in: query
+          description: Filter by transaction type
+          schema:
+            type: string
+        - name: minAmount
+          in: query
+          description: Minimum transaction amount filter
+          schema:
+            type: number
+        - name: maxAmount
+          in: query
+          description: Maximum transaction amount filter
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful retrieval of transaction history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /party/customers:
+    get:
+      operationId: getCustomers
+      summary: List customers
+      description: >-
+        Retrieve a list of customers. Supports filtering by customer name,
+        mnemonic, sector, status, and other criteria. Returns customer
+        profiles with basic information.
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+        - name: customerName
+          in: query
+          description: Filter by customer name (partial match supported)
+          schema:
+            type: string
+        - name: mnemonic
+          in: query
+          description: Filter by customer mnemonic
+          schema:
+            type: string
+        - name: sector
+          in: query
+          description: Filter by customer sector code
+          schema:
+            type: integer
+        - name: status
+          in: query
+          description: Filter by customer status
+          schema:
+            type: string
+            enum:
+              - ACTIVE
+              - INACTIVE
+              - DECEASED
+              - CLOSED
+      responses:
+        '200':
+          description: Successful retrieval of customers list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomersResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createCustomer
+      summary: Create customer
+      description: >-
+        Create a new customer record in Temenos Transact. Each new customer
+        is assigned a unique system-generated customer ID. Required fields
+        include short name, sector, and customer mnemonic. Supports creating
+        individual and corporate customer types with full demographic,
+        contact, and compliance information.
+      tags:
+        - Customers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerCreateRequest'
+      responses:
+        '201':
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDetailsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          description: Conflict - customer mnemonic already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /party/customers/{customerId}:
+    get:
+      operationId: getCustomer
+      summary: Get customer details
+      description: >-
+        Retrieve detailed information for a specific customer including
+        personal details, contact information, KYC status, AML check
+        results, account officer assignment, and relationship details.
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/customerIdPath'
+      responses:
+        '200':
+          description: Successful retrieval of customer details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDetailsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      operationId: updateCustomer
+      summary: Update customer
+      description: >-
+        Update an existing customer record. Supports modifying customer
+        attributes such as contact details, address, communication
+        preferences, and KYC documentation.
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/customerIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdateRequest'
+      responses:
+        '200':
+          description: Customer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDetailsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /party/customers/{customerId}/accounts:
+    get:
+      operationId: getCustomerAccounts
+      summary: List customer accounts
+      description: >-
+        Retrieve all accounts associated with a specific customer,
+        including account type, status, currency, and balance summary.
+      tags:
+        - Customers
+        - Accounts
+      parameters:
+        - $ref: '#/components/parameters/customerIdPath'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+      responses:
+        '200':
+          description: Successful retrieval of customer accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /order/fundTransfers:
+    post:
+      operationId: createFundTransfer
+      summary: Create fund transfer
+      description: >-
+        Initiate a fund transfer between accounts. Supports internal
+        transfers, domestic payments, and cross-border transfers.
+        Validates accounts, calculates charges and exchange rates,
+        and processes the payment according to configured payment
+        rules and cut-off times.
+      tags:
+        - Payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FundTransferRequest'
+      responses:
+        '201':
+          description: Fund transfer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundTransferResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          description: Validation failed - insufficient funds or invalid account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /order/fundTransfers/{transferId}:
+    get:
+      operationId: getFundTransfer
+      summary: Get fund transfer details
+      description: >-
+        Retrieve the status and details of a specific fund transfer
+        including processing status, value date, charges applied,
+        exchange rate, and any error details.
+      tags:
+        - Payments
+      parameters:
+        - name: transferId
+          in: path
+          required: true
+          description: Unique identifier of the fund transfer
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful retrieval of fund transfer details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundTransferResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /order/paymentOrders:
+    get:
+      operationId: getPaymentOrders
+      summary: List payment orders
+      description: >-
+        Retrieve a list of payment orders. Supports filtering by
+        status, debit account, credit account, date range, and
+        payment type. Includes pending, processed, and rejected
+        payment orders.
+      tags:
+        - Payments
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+        - name: debitAccountId
+          in: query
+          description: Filter by debit account ID
+          schema:
+            type: string
+        - name: creditAccountId
+          in: query
+          description: Filter by credit account ID
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter by payment status
+          schema:
+            type: string
+            enum:
+              - PENDING
+              - PROCESSING
+              - COMPLETED
+              - REJECTED
+              - CANCELLED
+        - name: fromDate
+          in: query
+          description: Start date filter (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          description: End date filter (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful retrieval of payment orders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentOrdersResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createPaymentOrder
+      summary: Create payment order
+      description: >-
+        Submit a new payment order for processing. Validates the payment
+        details, calculates charges and execution times, and queues
+        the payment for processing. Supports various payment types
+        including SEPA, SWIFT, ACH, and domestic clearing.
+      tags:
+        - Payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentOrderRequest'
+      responses:
+        '201':
+          description: Payment order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentOrderResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          description: Payment validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /order/paymentOrders/{paymentOrderId}:
+    get:
+      operationId: getPaymentOrder
+      summary: Get payment order details
+      description: >-
+        Retrieve detailed information for a specific payment order
+        including status, amount, charges, exchange rate, execution
+        date, and processing details.
+      tags:
+        - Payments
+      parameters:
+        - name: paymentOrderId
+          in: path
+          required: true
+          description: Unique identifier of the payment order
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful retrieval of payment order details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentOrderResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /order/paymentOrders/{paymentOrderId}/cancellation:
+    post:
+      operationId: cancelPaymentOrder
+      summary: Cancel payment order
+      description: >-
+        Request cancellation of a pending payment order. Only payment
+        orders in PENDING or PROCESSING status can be cancelled.
+        Returns the updated payment order status.
+      tags:
+        - Payments
+      parameters:
+        - name: paymentOrderId
+          in: path
+          required: true
+          description: Unique identifier of the payment order to cancel
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Payment order cancellation accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentOrderResponse'
+        '400':
+          description: Payment order cannot be cancelled in current status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /order/standingOrders:
+    get:
+      operationId: getStandingOrders
+      summary: List standing orders
+      description: >-
+        Retrieve standing order instructions for recurring payments.
+        Supports filtering by account, frequency, status, and next
+        execution date.
+      tags:
+        - Payments
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+        - name: accountId
+          in: query
+          description: Filter by account ID
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter by standing order status
+          schema:
+            type: string
+            enum:
+              - ACTIVE
+              - SUSPENDED
+              - EXPIRED
+              - CANCELLED
+      responses:
+        '200':
+          description: Successful retrieval of standing orders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandingOrdersResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createStandingOrder
+      summary: Create standing order
+      description: >-
+        Create a new standing order instruction for recurring payments.
+        Defines the debit account, beneficiary, amount, frequency,
+        start date, and optional end date.
+      tags:
+        - Payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StandingOrderRequest'
+      responses:
+        '201':
+          description: Standing order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandingOrderResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          description: Standing order validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /holdings/deposits:
+    get:
+      operationId: getDeposits
+      summary: List deposits
+      description: >-
+        Retrieve deposit arrangements including term deposits, savings
+        deposits, and fixed deposits. Supports filtering by customer,
+        maturity date range, status, and currency.
+      tags:
+        - Deposits
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+        - $ref: '#/components/parameters/customerId'
+        - name: maturityDateFrom
+          in: query
+          description: Filter deposits maturing from this date (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: maturityDateTo
+          in: query
+          description: Filter deposits maturing up to this date (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful retrieval of deposits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /holdings/deposits/{depositId}:
+    get:
+      operationId: getDeposit
+      summary: Get deposit details
+      description: >-
+        Retrieve detailed information for a specific deposit arrangement
+        including principal amount, interest rate, maturity date, accrued
+        interest, and renewal options.
+      tags:
+        - Deposits
+      parameters:
+        - name: depositId
+          in: path
+          required: true
+          description: Unique identifier of the deposit arrangement
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful retrieval of deposit details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositDetailsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /holdings/loans:
+    get:
+      operationId: getLoans
+      summary: List loans
+      description: >-
+        Retrieve loan arrangements including personal loans, mortgages,
+        credit facilities, and overdraft agreements. Supports filtering
+        by customer, product type, status, and currency.
+      tags:
+        - Loans
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+        - $ref: '#/components/parameters/customerId'
+        - name: productType
+          in: query
+          description: Filter by loan product type
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter by loan status
+          schema:
+            type: string
+            enum:
+              - ACTIVE
+              - MATURED
+              - DELINQUENT
+              - CLOSED
+      responses:
+        '200':
+          description: Successful retrieval of loans
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoansResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /holdings/loans/{loanId}:
+    get:
+      operationId: getLoan
+      summary: Get loan details
+      description: >-
+        Retrieve detailed information for a specific loan arrangement
+        including principal, outstanding balance, interest rate,
+        repayment schedule, next payment date, and facility details.
+      tags:
+        - Loans
+      parameters:
+        - name: loanId
+          in: path
+          required: true
+          description: Unique identifier of the loan arrangement
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful retrieval of loan details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanDetailsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /party/beneficiaries:
+    get:
+      operationId: getBeneficiaries
+      summary: List beneficiaries
+      description: >-
+        Retrieve registered payment beneficiaries for a customer.
+        Includes domestic and international beneficiaries with their
+        bank details and validation status.
+      tags:
+        - Beneficiaries
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Successful retrieval of beneficiaries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeneficiariesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createBeneficiary
+      summary: Create beneficiary
+      description: >-
+        Register a new payment beneficiary for a customer. Validates
+        the beneficiary bank details including IBAN, BIC/SWIFT code,
+        and account number format.
+      tags:
+        - Beneficiaries
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeneficiaryCreateRequest'
+      responses:
+        '201':
+          description: Beneficiary created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeneficiaryResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          description: Beneficiary validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /product/products:
+    get:
+      operationId: getProducts
+      summary: List products
+      description: >-
+        Retrieve the product catalog including account products, deposit
+        products, loan products, and card products. Returns product
+        definitions with their conditions, eligibility criteria, and
+        arrangement details.
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+        - name: productGroup
+          in: query
+          description: Filter by product group (e.g., ACCOUNTS, DEPOSITS, LOANS)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful retrieval of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /reference/currencies:
+    get:
+      operationId: getCurrencies
+      summary: List currencies
+      description: >-
+        Retrieve available currencies with their ISO 4217 codes,
+        decimal precision, exchange rates, and market details.
+      tags:
+        - Reference Data
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+      responses:
+        '200':
+          description: Successful retrieval of currencies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrenciesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /reference/countries:
+    get:
+      operationId: getCountries
+      summary: List countries
+      description: >-
+        Retrieve available countries with their ISO 3166 codes,
+        currency details, and regulatory classification.
+      tags:
+        - Reference Data
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+      responses:
+        '200':
+          description: Successful retrieval of countries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountriesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /reference/ibanValidation/{iban}:
+    get:
+      operationId: validateIban
+      summary: Validate IBAN
+      description: >-
+        Validate an International Bank Account Number (IBAN) and return
+        the resolved bank details including BIC, bank name, and branch
+        information.
+      tags:
+        - Reference Data
+      parameters:
+        - name: iban
+          in: path
+          required: true
+          description: The IBAN to validate
+          schema:
+            type: string
+      responses:
+        '200':
+          description: IBAN validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IbanValidationResponse'
+        '400':
+          description: Invalid IBAN format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /holdings/cards:
+    get:
+      operationId: getCards
+      summary: List cards
+      description: >-
+        Retrieve debit and credit cards associated with customer accounts.
+        Includes card status, type, expiry date, and linked account details.
+      tags:
+        - Cards
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageStart'
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Successful retrieval of cards
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /holdings/cards/{cardId}:
+    get:
+      operationId: getCard
+      summary: Get card details
+      description: >-
+        Retrieve detailed information for a specific card including
+        card number (masked), status, limits, linked account, and
+        transaction history summary.
+      tags:
+        - Cards
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          description: Unique identifier of the card
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful retrieval of card details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardDetailsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        OAuth 2.0 Bearer token authentication. Obtain a token from the
+        Temenos authentication endpoint using client credentials or
+        authorization code flow.
+
+  parameters:
+    pageSize:
+      name: page_size
+      in: query
+      description: Number of records to return per page (default 25, max 100)
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        maximum: 100
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    customerId:
+      name: customerId
+      in: query
+      description: Filter by customer identifier
+      schema:
+        type: string
+    customerIdPath:
+      name: customerId
+      in: path
+      required: true
+      description: Unique identifier of the customer
+      schema:
+        type: string
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      description: Unique identifier of the account arrangement
+      schema:
+        type: string
+
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Insufficient permissions to access this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+            - success
+            - error
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+            - Live
+            - Unauth
+            - Hold
+            - Reversed
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+        pageStart:
+          type: integer
+          description: Current page offset
+        totalRecords:
+          type: integer
+          description: Total number of records available
+
+    Account:
+      type: object
+      description: >-
+        A banking account arrangement in Temenos Transact. Created through
+        the Arrangement Architecture supporting current, savings, corporate,
+        Islamic, non-resident, and minor account types.
+      properties:
+        accountId:
+          type: string
+          description: Unique system-generated account identifier
+          examples:
+            - "AA2014500001"
+        accountName:
+          type: string
+          description: Display name of the account
+        customerId:
+          type: string
+          description: Identifier of the owning customer
+        customerName:
+          type: string
+          description: Name of the owning customer
+        productId:
+          type: string
+          description: Product identifier from the arrangement architecture
+        productName:
+          type: string
+          description: Human-readable product name
+        accountType:
+          type: string
+          description: Type of account
+          enum:
+            - CURRENT
+            - SAVINGS
+            - CORPORATE
+            - ISLAMIC
+            - NON_RESIDENT
+            - MINOR
+        currency:
+          type: string
+          description: Account currency in ISO 4217 format
+          pattern: "^[A-Z]{3}$"
+          examples:
+            - "USD"
+            - "EUR"
+            - "GBP"
+        status:
+          type: string
+          description: Current account status
+          enum:
+            - ACTIVE
+            - INACTIVE
+            - CLOSED
+            - PENDING
+            - DORMANT
+        openingDate:
+          type: string
+          format: date
+          description: Date the account was opened
+        workingBalance:
+          type: number
+          description: Current working balance of the account
+        availableBalance:
+          type: number
+          description: Available balance including overdraft facility
+        accountOfficerId:
+          type: integer
+          description: Identifier of the assigned account officer
+        branchId:
+          type: string
+          description: Branch where the account is held
+        iban:
+          type: string
+          description: International Bank Account Number
+        bic:
+          type: string
+          description: Bank Identifier Code (SWIFT code)
+
+    AccountBalances:
+      type: object
+      description: Balance breakdown for a banking account
+      properties:
+        accountId:
+          type: string
+          description: Account identifier
+        currency:
+          type: string
+          description: Currency of the balances
+        workingBalance:
+          type: number
+          description: Current working balance including pending transactions
+        availableBalance:
+          type: number
+          description: Balance available for withdrawals and payments
+        clearedBalance:
+          type: number
+          description: Balance of cleared funds only
+        lockedAmount:
+          type: number
+          description: Amount locked or blocked on the account
+        overdraftLimit:
+          type: number
+          description: Approved overdraft facility amount
+        accruedInterest:
+          type: number
+          description: Interest accrued but not yet capitalized
+        pendingDeposits:
+          type: number
+          description: Deposits received but not yet cleared
+        asOfDate:
+          type: string
+          format: date-time
+          description: Timestamp when balances were calculated
+
+    Transaction:
+      type: object
+      description: >-
+        A financial transaction record in Temenos Transact representing a
+        debit or credit entry against an account.
+      properties:
+        transactionId:
+          type: string
+          description: Unique transaction identifier
+          examples:
+            - "FT2014500001"
+        accountId:
+          type: string
+          description: Account against which the transaction was posted
+        transactionType:
+          type: string
+          description: Type classification of the transaction
+          examples:
+            - "TRANSFER"
+            - "PAYMENT"
+            - "DEPOSIT"
+            - "WITHDRAWAL"
+            - "FEE"
+            - "INTEREST"
+        debitOrCredit:
+          type: string
+          description: Whether the transaction is a debit or credit
+          enum:
+            - DEBIT
+            - CREDIT
+        amount:
+          type: number
+          description: Transaction amount in account currency
+        currency:
+          type: string
+          description: Currency of the transaction
+          pattern: "^[A-Z]{3}$"
+        bookingDate:
+          type: string
+          format: date
+          description: Date the transaction was booked
+        valueDate:
+          type: string
+          format: date
+          description: Value date for interest calculation purposes
+        processingDate:
+          type: string
+          format: date
+          description: Date the transaction was processed
+        reference:
+          type: string
+          description: Transaction reference number
+        narrative:
+          type: string
+          description: Transaction description or narrative text
+        counterpartyAccountId:
+          type: string
+          description: Account identifier of the counterparty
+        counterpartyName:
+          type: string
+          description: Name of the counterparty
+        balance:
+          type: number
+          description: Running balance after this transaction
+        exchangeRate:
+          type: number
+          description: Exchange rate applied if currency conversion occurred
+        chargesAmount:
+          type: number
+          description: Charges applied to this transaction
+        reversalIndicator:
+          type: boolean
+          description: Whether this transaction is a reversal
+        statementNumber:
+          type: string
+          description: Statement number this transaction belongs to
+
+    Customer:
+      type: object
+      description: >-
+        A customer record in Temenos Transact representing an individual
+        or corporate entity with a banking relationship.
+      properties:
+        customerId:
+          type: string
+          description: Unique system-generated customer identifier
+          examples:
+            - "100282"
+        customerMnemonic:
+          type: string
+          description: Short alphanumeric code identifying the customer (3-10 characters, first character alphabetic)
+          pattern: "^[A-Z][A-Z0-9]{2,9}$"
+          examples:
+            - "JSMITH01"
+        shortName:
+          type: string
+          description: Short name of the customer (3-35 characters, uppercase)
+          examples:
+            - "JOHN SMITH"
+        customerNames:
+          type: array
+          description: Full name entries for the customer
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Customer name line
+        displayNames:
+          type: array
+          description: Display name entries for the customer
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Display name
+        title:
+          type: string
+          description: Customer title
+          enum:
+            - MR
+            - MRS
+            - MS
+            - MISS
+            - DR
+            - REV
+        gender:
+          type: string
+          description: Customer gender
+          enum:
+            - MALE
+            - FEMALE
+        dateOfBirth:
+          type: string
+          format: date
+          description: Customer date of birth
+        nationalityId:
+          type: string
+          description: Nationality code
+        residenceId:
+          type: string
+          description: Country of residence code
+        language:
+          type: integer
+          description: Preferred language code
+        customerStatus:
+          type: integer
+          description: Customer status code (1 = active)
+        sectorId:
+          type: integer
+          description: Customer sector classification (1-4 digits)
+          examples:
+            - 1000
+        industryId:
+          type: integer
+          description: Industry classification code
+          examples:
+            - 1000
+        accountOfficerId:
+          type: integer
+          description: Assigned account officer identifier
+          examples:
+            - 6
+        target:
+          type: integer
+          description: Target market segment
+        communicationDevices:
+          type: array
+          description: Contact communication devices (phone, email)
+          items:
+            type: object
+            properties:
+              deviceType:
+                type: string
+                description: Type of communication device
+                enum:
+                  - PHONE
+                  - EMAIL
+                  - MOBILE
+                  - FAX
+              deviceValue:
+                type: string
+                description: Contact value (phone number or email address)
+              preferredChannel:
+                type: boolean
+                description: Whether this is the preferred contact channel
+        addresses:
+          type: array
+          description: Customer address records
+          items:
+            $ref: '#/components/schemas/Address'
+        customerCompany:
+          type: string
+          description: Company identifier the customer belongs to
+        amlCheck:
+          type: string
+          description: AML verification check status
+        amlResult:
+          type: string
+          description: AML verification result
+        kycStatus:
+          type: string
+          description: KYC compliance status
+          enum:
+            - VERIFIED
+            - PENDING
+            - EXPIRED
+            - NOT_CHECKED
+
+    Address:
+      type: object
+      description: Physical or mailing address
+      properties:
+        addressType:
+          type: string
+          description: Type of address
+          enum:
+            - RESIDENTIAL
+            - CORRESPONDENCE
+            - BUSINESS
+            - REGISTERED
+        addressLine1:
+          type: string
+          description: First line of address
+        addressLine2:
+          type: string
+          description: Second line of address
+        city:
+          type: string
+          description: City name
+        state:
+          type: string
+          description: State or province
+        postCode:
+          type: string
+          description: Postal or ZIP code
+        country:
+          type: string
+          description: Country code (ISO 3166)
+          pattern: "^[A-Z]{2}$"
+
+    FundTransfer:
+      type: object
+      description: >-
+        A fund transfer operation in Temenos Transact for moving funds
+        between accounts, supporting internal transfers, domestic payments,
+        and cross-border transactions.
+      properties:
+        transferId:
+          type: string
+          description: Unique transfer identifier
+          examples:
+            - "FT2014500001"
+        debitAccountId:
+          type: string
+          description: Source account identifier
+        debitCurrency:
+          type: string
+          description: Currency of the debit account
+        creditAccountId:
+          type: string
+          description: Destination account identifier
+        creditCurrency:
+          type: string
+          description: Currency of the credit account
+        amount:
+          type: number
+          description: Transfer amount
+        creditAmount:
+          type: number
+          description: Amount credited (may differ due to exchange rate)
+        transferType:
+          type: string
+          description: Type of transfer
+          enum:
+            - INTERNAL
+            - DOMESTIC
+            - INTERNATIONAL
+            - SEPA
+            - SWIFT
+        status:
+          type: string
+          description: Current transfer status
+          enum:
+            - PENDING
+            - PROCESSING
+            - COMPLETED
+            - FAILED
+            - REVERSED
+        valueDate:
+          type: string
+          format: date
+          description: Value date of the transfer
+        executionDate:
+          type: string
+          format: date
+          description: Actual execution date
+        exchangeRate:
+          type: number
+          description: Applied exchange rate for cross-currency transfers
+        chargesAmount:
+          type: number
+          description: Total charges applied
+        chargesCurrency:
+          type: string
+          description: Currency of the charges
+        narrative:
+          type: string
+          description: Transfer description or purpose
+        endToEndReference:
+          type: string
+          description: End-to-end reference for payment tracking
+
+    PaymentOrder:
+      type: object
+      description: >-
+        A payment order in Temenos Transact for submitting payment
+        instructions through various clearing systems.
+      properties:
+        paymentOrderId:
+          type: string
+          description: Unique payment order identifier
+        debitAccountId:
+          type: string
+          description: Debit account identifier
+        debitAmount:
+          type: number
+          description: Amount debited from the source account
+        debitCurrency:
+          type: string
+          description: Currency of the debit
+        creditAccountId:
+          type: string
+          description: Credit account identifier or beneficiary account
+        creditAmount:
+          type: number
+          description: Amount credited to the destination account
+        creditCurrency:
+          type: string
+          description: Currency of the credit
+        paymentType:
+          type: string
+          description: Payment type classification
+          enum:
+            - INTERNAL
+            - SEPA_CREDIT
+            - SEPA_INSTANT
+            - SWIFT_MT103
+            - ACH
+            - DOMESTIC_CLEARING
+            - RTGS
+        status:
+          type: string
+          description: Payment order status
+          enum:
+            - PENDING
+            - PROCESSING
+            - COMPLETED
+            - REJECTED
+            - CANCELLED
+        valueDate:
+          type: string
+          format: date
+          description: Value date of the payment
+        executionDate:
+          type: string
+          format: date-time
+          description: Timestamp when the payment was executed
+        beneficiaryName:
+          type: string
+          description: Name of the payment beneficiary
+        beneficiaryIban:
+          type: string
+          description: IBAN of the beneficiary
+        beneficiaryBic:
+          type: string
+          description: BIC/SWIFT code of the beneficiary bank
+        remittanceInformation:
+          type: string
+          description: Remittance information or payment reference
+        chargesType:
+          type: string
+          description: Who bears the charges
+          enum:
+            - OUR
+            - BEN
+            - SHA
+        totalCharges:
+          type: number
+          description: Total charges applied
+        exchangeRate:
+          type: number
+          description: Applied exchange rate
+        rejectionReason:
+          type: string
+          description: Reason for rejection if applicable
+
+    StandingOrder:
+      type: object
+      description: A standing order instruction for recurring payments
+      properties:
+        standingOrderId:
+          type: string
+          description: Unique standing order identifier
+        accountId:
+          type: string
+          description: Debit account identifier
+        beneficiaryId:
+          type: string
+          description: Beneficiary identifier
+        beneficiaryAccountId:
+          type: string
+          description: Beneficiary account identifier
+        beneficiaryName:
+          type: string
+          description: Name of the beneficiary
+        amount:
+          type: number
+          description: Recurring payment amount
+        currency:
+          type: string
+          description: Payment currency
+        frequency:
+          type: string
+          description: Payment frequency
+          enum:
+            - DAILY
+            - WEEKLY
+            - BIWEEKLY
+            - MONTHLY
+            - QUARTERLY
+            - SEMI_ANNUALLY
+            - ANNUALLY
+        startDate:
+          type: string
+          format: date
+          description: Date of the first payment
+        endDate:
+          type: string
+          format: date
+          description: Date of the last payment (optional for indefinite)
+        nextPaymentDate:
+          type: string
+          format: date
+          description: Date of the next scheduled payment
+        status:
+          type: string
+          description: Standing order status
+          enum:
+            - ACTIVE
+            - SUSPENDED
+            - EXPIRED
+            - CANCELLED
+        narrative:
+          type: string
+          description: Payment description
+
+    Deposit:
+      type: object
+      description: A deposit arrangement in Temenos Transact
+      properties:
+        depositId:
+          type: string
+          description: Unique deposit identifier
+        customerId:
+          type: string
+          description: Customer identifier
+        productId:
+          type: string
+          description: Deposit product identifier
+        productName:
+          type: string
+          description: Name of the deposit product
+        principalAmount:
+          type: number
+          description: Original deposit principal amount
+        currentBalance:
+          type: number
+          description: Current balance including accrued interest
+        currency:
+          type: string
+          description: Deposit currency
+        interestRate:
+          type: number
+          description: Applied interest rate percentage
+        accruedInterest:
+          type: number
+          description: Interest accrued but not yet capitalized
+        startDate:
+          type: string
+          format: date
+          description: Deposit start date
+        maturityDate:
+          type: string
+          format: date
+          description: Deposit maturity date
+        term:
+          type: string
+          description: Deposit term description
+          examples:
+            - "12M"
+            - "6M"
+            - "1Y"
+        renewalType:
+          type: string
+          description: Automatic renewal behaviour
+          enum:
+            - AUTO_RENEW
+            - NOTIFY
+            - NO_RENEWAL
+        status:
+          type: string
+          description: Deposit status
+          enum:
+            - ACTIVE
+            - MATURED
+            - CLOSED
+            - PREMATURE_CLOSURE
+
+    Loan:
+      type: object
+      description: A loan arrangement in Temenos Transact
+      properties:
+        loanId:
+          type: string
+          description: Unique loan identifier
+        customerId:
+          type: string
+          description: Customer identifier
+        productId:
+          type: string
+          description: Loan product identifier
+        productName:
+          type: string
+          description: Name of the loan product
+        principalAmount:
+          type: number
+          description: Original loan principal amount
+        outstandingBalance:
+          type: number
+          description: Current outstanding balance
+        currency:
+          type: string
+          description: Loan currency
+        interestRate:
+          type: number
+          description: Applied interest rate percentage
+        effectiveRate:
+          type: number
+          description: Annual percentage rate (APR)
+        disbursementDate:
+          type: string
+          format: date
+          description: Date the loan was disbursed
+        maturityDate:
+          type: string
+          format: date
+          description: Loan maturity date
+        nextPaymentDate:
+          type: string
+          format: date
+          description: Next repayment due date
+        nextPaymentAmount:
+          type: number
+          description: Next repayment amount due
+        repaymentFrequency:
+          type: string
+          description: Frequency of loan repayments
+          enum:
+            - MONTHLY
+            - QUARTERLY
+            - SEMI_ANNUALLY
+            - ANNUALLY
+        status:
+          type: string
+          description: Loan status
+          enum:
+            - ACTIVE
+            - MATURED
+            - DELINQUENT
+            - CLOSED
+            - WRITTEN_OFF
+        overdueAmount:
+          type: number
+          description: Amount currently overdue
+        daysPastDue:
+          type: integer
+          description: Number of days past due
+
+    Beneficiary:
+      type: object
+      description: A registered payment beneficiary
+      properties:
+        beneficiaryId:
+          type: string
+          description: Unique beneficiary identifier
+        customerId:
+          type: string
+          description: Owning customer identifier
+        beneficiaryName:
+          type: string
+          description: Name of the beneficiary
+        accountNumber:
+          type: string
+          description: Beneficiary account number
+        iban:
+          type: string
+          description: Beneficiary IBAN
+        bic:
+          type: string
+          description: Beneficiary bank BIC/SWIFT code
+        bankName:
+          type: string
+          description: Name of the beneficiary bank
+        bankCountry:
+          type: string
+          description: Country of the beneficiary bank
+        currency:
+          type: string
+          description: Default payment currency
+        beneficiaryType:
+          type: string
+          description: Type of beneficiary
+          enum:
+            - DOMESTIC
+            - INTERNATIONAL
+            - SEPA
+        status:
+          type: string
+          description: Beneficiary status
+          enum:
+            - ACTIVE
+            - INACTIVE
+            - PENDING_VERIFICATION
+        nickname:
+          type: string
+          description: User-defined nickname for the beneficiary
+
+    Product:
+      type: object
+      description: A banking product definition from the product catalog
+      properties:
+        productId:
+          type: string
+          description: Unique product identifier
+        productName:
+          type: string
+          description: Name of the product
+        productGroup:
+          type: string
+          description: Product group classification
+          enum:
+            - ACCOUNTS
+            - DEPOSITS
+            - LOANS
+            - CARDS
+            - INSURANCE
+        description:
+          type: string
+          description: Detailed product description
+        currency:
+          type: array
+          description: Supported currencies
+          items:
+            type: string
+        interestRate:
+          type: object
+          description: Interest rate conditions
+          properties:
+            minimum:
+              type: number
+            maximum:
+              type: number
+            default:
+              type: number
+        minimumBalance:
+          type: number
+          description: Minimum balance requirement
+        fees:
+          type: array
+          description: Associated fees and charges
+          items:
+            type: object
+            properties:
+              feeType:
+                type: string
+              amount:
+                type: number
+              currency:
+                type: string
+              frequency:
+                type: string
+        status:
+          type: string
+          description: Product availability status
+          enum:
+            - ACTIVE
+            - DISCONTINUED
+            - COMING_SOON
+
+    Currency:
+      type: object
+      description: Currency definition with exchange rate information
+      properties:
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+          pattern: "^[A-Z]{3}$"
+        currencyName:
+          type: string
+          description: Full currency name
+        numericCode:
+          type: string
+          description: ISO 4217 numeric code
+        decimalPlaces:
+          type: integer
+          description: Number of decimal places
+        buyRate:
+          type: number
+          description: Current buy exchange rate
+        sellRate:
+          type: number
+          description: Current sell exchange rate
+        midRate:
+          type: number
+          description: Mid-market exchange rate
+
+    Country:
+      type: object
+      description: Country definition with regulatory details
+      properties:
+        countryCode:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+          pattern: "^[A-Z]{2}$"
+        countryName:
+          type: string
+          description: Full country name
+        currencyCode:
+          type: string
+          description: Default currency code
+        ibanRequired:
+          type: boolean
+          description: Whether IBAN is required for payments to this country
+        sanctioned:
+          type: boolean
+          description: Whether the country is under sanctions
+
+    Card:
+      type: object
+      description: A debit or credit card linked to a customer account
+      properties:
+        cardId:
+          type: string
+          description: Unique card identifier
+        cardNumber:
+          type: string
+          description: Masked card number
+          examples:
+            - "****-****-****-1234"
+        cardType:
+          type: string
+          description: Type of card
+          enum:
+            - DEBIT
+            - CREDIT
+            - PREPAID
+        accountId:
+          type: string
+          description: Linked account identifier
+        customerId:
+          type: string
+          description: Card holder customer identifier
+        cardholderName:
+          type: string
+          description: Name on the card
+        expiryDate:
+          type: string
+          description: Card expiry date (MM/YY)
+          pattern: "^(0[1-9]|1[0-2])/[0-9]{2}$"
+        status:
+          type: string
+          description: Card status
+          enum:
+            - ACTIVE
+            - BLOCKED
+            - EXPIRED
+            - CANCELLED
+            - PENDING_ACTIVATION
+        dailyLimit:
+          type: number
+          description: Daily transaction limit
+        availableLimit:
+          type: number
+          description: Available spending limit
+
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+        - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+                - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
+
+    AccountsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    AccountDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Account'
+
+    AccountUpdateRequest:
+      type: object
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+              description: Override warnings and proceed
+        body:
+          type: object
+          properties:
+            accountName:
+              type: string
+            accountOfficerId:
+              type: integer
+            overdraftLimit:
+              type: number
+            postingRestriction:
+              type: string
+
+    AccountBalancesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/AccountBalances'
+
+    TransactionsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    CustomersResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    CustomerDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Customer'
+
+    CustomerCreateRequest:
+      type: object
+      required:
+        - body
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+              description: Override warnings and proceed
+        body:
+          type: object
+          required:
+            - shortName
+            - customerMnemonic
+            - sectorId
+          properties:
+            shortName:
+              type: string
+              description: Customer short name (3-35 chars, uppercase alphanumeric)
+              minLength: 3
+              maxLength: 35
+            customerMnemonic:
+              type: string
+              description: Customer mnemonic (3-10 chars, first char alphabetic)
+              pattern: "^[A-Z][A-Z0-9]{2,9}$"
+            customerNames:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+            displayNames:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+            title:
+              type: string
+              enum:
+                - MR
+                - MRS
+                - MS
+                - MISS
+                - DR
+                - REV
+            gender:
+              type: string
+              enum:
+                - MALE
+                - FEMALE
+            dateOfBirth:
+              type: string
+              format: date
+            nationalityId:
+              type: string
+            sectorId:
+              type: integer
+              description: Sector classification (1-4 digits)
+            industryId:
+              type: integer
+            accountOfficerId:
+              type: integer
+            target:
+              type: integer
+            language:
+              type: integer
+            communicationDevices:
+              type: array
+              items:
+                type: object
+                properties:
+                  deviceType:
+                    type: string
+                    enum:
+                      - PHONE
+                      - EMAIL
+                      - MOBILE
+                      - FAX
+                  deviceValue:
+                    type: string
+            addresses:
+              type: array
+              items:
+                $ref: '#/components/schemas/Address'
+
+    CustomerUpdateRequest:
+      type: object
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+        body:
+          type: object
+          properties:
+            customerNames:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+            displayNames:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+            communicationDevices:
+              type: array
+              items:
+                type: object
+                properties:
+                  deviceType:
+                    type: string
+                  deviceValue:
+                    type: string
+            addresses:
+              type: array
+              items:
+                $ref: '#/components/schemas/Address'
+
+    FundTransferRequest:
+      type: object
+      required:
+        - body
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+        body:
+          type: object
+          required:
+            - debitAccountId
+            - creditAccountId
+            - amount
+          properties:
+            debitAccountId:
+              type: string
+              description: Source account identifier
+            creditAccountId:
+              type: string
+              description: Destination account identifier
+            amount:
+              type: number
+              description: Transfer amount
+              minimum: 0.01
+            currency:
+              type: string
+              description: Transfer currency (defaults to debit account currency)
+            valueDate:
+              type: string
+              format: date
+              description: Value date (defaults to current business date)
+            narrative:
+              type: string
+              description: Transfer description
+            endToEndReference:
+              type: string
+              description: End-to-end reference
+
+    FundTransferResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/FundTransfer'
+
+    PaymentOrdersResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentOrder'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    PaymentOrderRequest:
+      type: object
+      required:
+        - body
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+        body:
+          type: object
+          required:
+            - debitAccountId
+            - debitAmount
+          properties:
+            debitAccountId:
+              type: string
+            debitAmount:
+              type: number
+              minimum: 0.01
+            debitCurrency:
+              type: string
+            creditAccountId:
+              type: string
+            creditAmount:
+              type: number
+            creditCurrency:
+              type: string
+            beneficiaryId:
+              type: string
+            beneficiaryName:
+              type: string
+            beneficiaryIban:
+              type: string
+            beneficiaryBic:
+              type: string
+            paymentType:
+              type: string
+              enum:
+                - INTERNAL
+                - SEPA_CREDIT
+                - SEPA_INSTANT
+                - SWIFT_MT103
+                - ACH
+                - DOMESTIC_CLEARING
+                - RTGS
+            valueDate:
+              type: string
+              format: date
+            remittanceInformation:
+              type: string
+            chargesType:
+              type: string
+              enum:
+                - OUR
+                - BEN
+                - SHA
+            endToEndReference:
+              type: string
+
+    PaymentOrderResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/PaymentOrder'
+
+    StandingOrdersResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandingOrder'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    StandingOrderRequest:
+      type: object
+      required:
+        - body
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+        body:
+          type: object
+          required:
+            - accountId
+            - amount
+            - currency
+            - frequency
+            - startDate
+          properties:
+            accountId:
+              type: string
+            beneficiaryId:
+              type: string
+            beneficiaryAccountId:
+              type: string
+            beneficiaryName:
+              type: string
+            amount:
+              type: number
+              minimum: 0.01
+            currency:
+              type: string
+            frequency:
+              type: string
+              enum:
+                - DAILY
+                - WEEKLY
+                - BIWEEKLY
+                - MONTHLY
+                - QUARTERLY
+                - SEMI_ANNUALLY
+                - ANNUALLY
+            startDate:
+              type: string
+              format: date
+            endDate:
+              type: string
+              format: date
+            narrative:
+              type: string
+
+    StandingOrderResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/StandingOrder'
+
+    DepositsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deposit'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    DepositDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Deposit'
+
+    LoansResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Loan'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    LoanDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Loan'
+
+    BeneficiariesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Beneficiary'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    BeneficiaryCreateRequest:
+      type: object
+      required:
+        - body
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+        body:
+          type: object
+          required:
+            - customerId
+            - beneficiaryName
+          properties:
+            customerId:
+              type: string
+            beneficiaryName:
+              type: string
+            accountNumber:
+              type: string
+            iban:
+              type: string
+            bic:
+              type: string
+            bankName:
+              type: string
+            bankCountry:
+              type: string
+            currency:
+              type: string
+            beneficiaryType:
+              type: string
+              enum:
+                - DOMESTIC
+                - INTERNATIONAL
+                - SEPA
+            nickname:
+              type: string
+
+    BeneficiaryResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Beneficiary'
+
+    ProductsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    CurrenciesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Currency'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    CountriesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Country'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    IbanValidationResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: object
+          properties:
+            iban:
+              type: string
+              description: The validated IBAN
+            valid:
+              type: boolean
+              description: Whether the IBAN is valid
+            bic:
+              type: string
+              description: Resolved BIC/SWIFT code
+            bankName:
+              type: string
+              description: Name of the bank
+            branchName:
+              type: string
+              description: Name of the branch
+            country:
+              type: string
+              description: Country code
+
+    CardsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+
+    CardDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Card'
