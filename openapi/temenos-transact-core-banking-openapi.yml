@@ -37,20 +37,20 @@ tags:
       Manage customer accounts created using the Arrangement Architecture
       including current accounts, savings accounts, corporate accounts,
       Islamic accounts, non-resident and minor accounts.
+  - name: Beneficiaries
+    description: >-
+      Manage payment beneficiaries including domestic and international
+      beneficiary registration, validation, and maintenance.
+  - name: Cards
+    description: >-
+      Manage debit and credit card operations including card issuance,
+      activation, blocking, and limit management.
+
   - name: Customers
     description: >-
       Create, update, and manage customer profiles, contact details,
       KYC documentation, compliance records, communication preferences,
       and party relationships.
-  - name: Transactions
-    description: >-
-      Retrieve transaction history, statement details, and account
-      activity records for all account types and arrangements.
-  - name: Payments
-    description: >-
-      Process fund transfers, standing orders, direct debits, payment
-      orders, sweeps, and cross-border payments. Includes payment
-      validation, cost calculation, status tracking, and cancellation.
   - name: Deposits
     description: >-
       Manage deposit arrangements including term deposits, savings
@@ -60,10 +60,11 @@ tags:
     description: >-
       Create and manage loan arrangements, credit facilities, repayment
       schedules, drawdowns, and loan lifecycle operations.
-  - name: Beneficiaries
+  - name: Payments
     description: >-
-      Manage payment beneficiaries including domestic and international
-      beneficiary registration, validation, and maintenance.
+      Process fund transfers, standing orders, direct debits, payment
+      orders, sweeps, and cross-border payments. Includes payment
+      validation, cost calculation, status tracking, and cancellation.
   - name: Products
     description: >-
       Browse the product catalog and retrieve product conditions,
@@ -73,11 +74,10 @@ tags:
       Access system-wide lookup and configuration data including
       currencies, countries, IBAN/BIC validation, interest rate
       tables, and balance type definitions.
-  - name: Cards
+  - name: Transactions
     description: >-
-      Manage debit and credit card operations including card issuance,
-      activation, blocking, and limit management.
-
+      Retrieve transaction history, statement details, and account
+      activity records for all account types and arrangements.
 paths:
   /holdings/accounts:
     get:
@@ -434,8 +434,8 @@ paths:
         Retrieve all accounts associated with a specific customer,
         including account type, status, currency, and balance summary.
       tags:
-        - Customers
         - Accounts
+        - Customers
       parameters:
         - $ref: '#/components/parameters/customerIdPath'
         - $ref: '#/components/parameters/pageSize'

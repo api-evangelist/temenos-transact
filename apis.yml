@@ -16,12 +16,12 @@ apis:
     humanURL: https://www.temenos.com/products/transact/
     baseURL: https://api.temenos.com/transact/v1
     tags:
+      - Accounts
       - Banking
       - Core Banking
-      - Accounts
+      - Customers
       - Payments
       - Transactions
-      - Customers
     properties:
       - type: Documentation
         url: https://developer.temenos.com/transact/documentation
@@ -65,10 +65,10 @@ apis:
     humanURL: https://developer.temenos.com/transact-microservice-apis
     baseURL: https://api.temenos.com/transact/v1
     tags:
-      - Microservices
-      - Orchestration
       - Configuration
       - Entitlements
+      - Microservices
+      - Orchestration
     properties:
       - type: Documentation
         url: https://developer.temenos.com/transact-microservice-apis
@@ -82,8 +82,8 @@ apis:
     humanURL: https://developer.temenos.com/transact-data-hub
     baseURL: https://api.temenos.com/transact/v1
     tags:
-      - Data Hub
       - Analytics
+      - Data Hub
       - Data Store
       - Reporting
     properties:
@@ -99,10 +99,10 @@ apis:
     humanURL: https://developer.temenos.com/operational-data-store
     baseURL: https://api.temenos.com/transact/v1
     tags:
-      - Operational Data
-      - Real-time
       - Data Streams
       - ETL
+      - Operational Data
+      - Real-Time
     properties:
       - type: Documentation
         url: https://developer.temenos.com/operational-data-store
@@ -130,8 +130,7 @@ common:
   - type: Privacy Policy
     url: https://www.temenos.com/privacy-policy/
   - type: PostmanCollection
-    url: 
-      https://www.postman.com/temenos-devex/temenos-essential-apis/documentation/sd6uv6m/temenos-essential-apis
+    url: https://www.postman.com/temenos-devex/temenos-essential-apis/documentation/sd6uv6m/temenos-essential-apis
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
@@ -139,7 +138,7 @@ maintainers:
 tags:
   - Banking
   - Core Banking
-  - Financial Services
-  - Enterprise
-  - Fintech
   - Digital Banking
+  - Enterprise
+  - Financial Services
+  - Fintech
