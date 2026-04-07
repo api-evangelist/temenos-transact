@@ -82,7 +82,7 @@ paths:
   /holdings/accounts:
     get:
       operationId: getAccounts
-      summary: List accounts
+      summary: Temenos Transact List accounts
       description: >-
         Retrieve a list of customer accounts. Supports filtering by customer,
         account type, status, currency, and other criteria. Returns account
@@ -133,7 +133,7 @@ paths:
   /holdings/accounts/{accountId}:
     get:
       operationId: getAccount
-      summary: Get account details
+      summary: Temenos Transact Get account details
       description: >-
         Retrieve detailed information for a specific account arrangement
         including balances, product details, interest conditions, charges,
@@ -159,7 +159,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     put:
       operationId: updateAccount
-      summary: Update account
+      summary: Temenos Transact Update account
       description: >-
         Update an existing account arrangement. Supports modifying account
         attributes such as posting restrictions, overdraft limits, account
@@ -195,7 +195,7 @@ paths:
   /holdings/accounts/{accountId}/balances:
     get:
       operationId: getAccountBalances
-      summary: Get account balances
+      summary: Temenos Transact Get account balances
       description: >-
         Retrieve balance information for a specific account including
         available balance, working balance, locked amount, cleared balance,
@@ -221,7 +221,7 @@ paths:
   /holdings/accounts/{accountId}/transactions:
     get:
       operationId: getAccountTransactions
-      summary: List account transactions
+      summary: Temenos Transact List account transactions
       description: >-
         Retrieve transaction history for a specific account. Supports
         filtering by date range, transaction type, amount range, and
@@ -279,7 +279,7 @@ paths:
   /party/customers:
     get:
       operationId: getCustomers
-      summary: List customers
+      summary: Temenos Transact List customers
       description: >-
         Retrieve a list of customers. Supports filtering by customer name,
         mnemonic, sector, status, and other criteria. Returns customer
@@ -329,7 +329,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       operationId: createCustomer
-      summary: Create customer
+      summary: Temenos Transact Create customer
       description: >-
         Create a new customer record in Temenos Transact. Each new customer
         is assigned a unique system-generated customer ID. Required fields
@@ -369,7 +369,7 @@ paths:
   /party/customers/{customerId}:
     get:
       operationId: getCustomer
-      summary: Get customer details
+      summary: Temenos Transact Get customer details
       description: >-
         Retrieve detailed information for a specific customer including
         personal details, contact information, KYC status, AML check
@@ -395,7 +395,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     put:
       operationId: updateCustomer
-      summary: Update customer
+      summary: Temenos Transact Update customer
       description: >-
         Update an existing customer record. Supports modifying customer
         attributes such as contact details, address, communication
@@ -429,7 +429,7 @@ paths:
   /party/customers/{customerId}/accounts:
     get:
       operationId: getCustomerAccounts
-      summary: List customer accounts
+      summary: Temenos Transact List customer accounts
       description: >-
         Retrieve all accounts associated with a specific customer,
         including account type, status, currency, and balance summary.
@@ -457,7 +457,7 @@ paths:
   /order/fundTransfers:
     post:
       operationId: createFundTransfer
-      summary: Create fund transfer
+      summary: Temenos Transact Create fund transfer
       description: >-
         Initiate a fund transfer between accounts. Supports internal
         transfers, domestic payments, and cross-border transfers.
@@ -497,7 +497,7 @@ paths:
   /order/fundTransfers/{transferId}:
     get:
       operationId: getFundTransfer
-      summary: Get fund transfer details
+      summary: Temenos Transact Get fund transfer details
       description: >-
         Retrieve the status and details of a specific fund transfer
         including processing status, value date, charges applied,
@@ -528,7 +528,7 @@ paths:
   /order/paymentOrders:
     get:
       operationId: getPaymentOrders
-      summary: List payment orders
+      summary: Temenos Transact List payment orders
       description: >-
         Retrieve a list of payment orders. Supports filtering by
         status, debit account, credit account, date range, and
@@ -587,7 +587,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       operationId: createPaymentOrder
-      summary: Create payment order
+      summary: Temenos Transact Create payment order
       description: >-
         Submit a new payment order for processing. Validates the payment
         details, calculates charges and execution times, and queues
@@ -624,7 +624,7 @@ paths:
   /order/paymentOrders/{paymentOrderId}:
     get:
       operationId: getPaymentOrder
-      summary: Get payment order details
+      summary: Temenos Transact Get payment order details
       description: >-
         Retrieve detailed information for a specific payment order
         including status, amount, charges, exchange rate, execution
@@ -655,7 +655,7 @@ paths:
   /order/paymentOrders/{paymentOrderId}/cancellation:
     post:
       operationId: cancelPaymentOrder
-      summary: Cancel payment order
+      summary: Temenos Transact Cancel payment order
       description: >-
         Request cancellation of a pending payment order. Only payment
         orders in PENDING or PROCESSING status can be cancelled.
@@ -692,7 +692,7 @@ paths:
   /order/standingOrders:
     get:
       operationId: getStandingOrders
-      summary: List standing orders
+      summary: Temenos Transact List standing orders
       description: >-
         Retrieve standing order instructions for recurring payments.
         Supports filtering by account, frequency, status, and next
@@ -732,7 +732,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       operationId: createStandingOrder
-      summary: Create standing order
+      summary: Temenos Transact Create standing order
       description: >-
         Create a new standing order instruction for recurring payments.
         Defines the debit account, beneficiary, amount, frequency,
@@ -768,7 +768,7 @@ paths:
   /holdings/deposits:
     get:
       operationId: getDeposits
-      summary: List deposits
+      summary: Temenos Transact List deposits
       description: >-
         Retrieve deposit arrangements including term deposits, savings
         deposits, and fixed deposits. Supports filtering by customer,
@@ -808,7 +808,7 @@ paths:
   /holdings/deposits/{depositId}:
     get:
       operationId: getDeposit
-      summary: Get deposit details
+      summary: Temenos Transact Get deposit details
       description: >-
         Retrieve detailed information for a specific deposit arrangement
         including principal amount, interest rate, maturity date, accrued
@@ -839,7 +839,7 @@ paths:
   /holdings/loans:
     get:
       operationId: getLoans
-      summary: List loans
+      summary: Temenos Transact List loans
       description: >-
         Retrieve loan arrangements including personal loans, mortgages,
         credit facilities, and overdraft agreements. Supports filtering
@@ -882,7 +882,7 @@ paths:
   /holdings/loans/{loanId}:
     get:
       operationId: getLoan
-      summary: Get loan details
+      summary: Temenos Transact Get loan details
       description: >-
         Retrieve detailed information for a specific loan arrangement
         including principal, outstanding balance, interest rate,
@@ -913,7 +913,7 @@ paths:
   /party/beneficiaries:
     get:
       operationId: getBeneficiaries
-      summary: List beneficiaries
+      summary: Temenos Transact List beneficiaries
       description: >-
         Retrieve registered payment beneficiaries for a customer.
         Includes domestic and international beneficiaries with their
@@ -937,7 +937,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       operationId: createBeneficiary
-      summary: Create beneficiary
+      summary: Temenos Transact Create beneficiary
       description: >-
         Register a new payment beneficiary for a customer. Validates
         the beneficiary bank details including IBAN, BIC/SWIFT code,
@@ -973,7 +973,7 @@ paths:
   /product/products:
     get:
       operationId: getProducts
-      summary: List products
+      summary: Temenos Transact List products
       description: >-
         Retrieve the product catalog including account products, deposit
         products, loan products, and card products. Returns product
@@ -1004,7 +1004,7 @@ paths:
   /reference/currencies:
     get:
       operationId: getCurrencies
-      summary: List currencies
+      summary: Temenos Transact List currencies
       description: >-
         Retrieve available currencies with their ISO 4217 codes,
         decimal precision, exchange rates, and market details.
@@ -1028,7 +1028,7 @@ paths:
   /reference/countries:
     get:
       operationId: getCountries
-      summary: List countries
+      summary: Temenos Transact List countries
       description: >-
         Retrieve available countries with their ISO 3166 codes,
         currency details, and regulatory classification.
@@ -1052,7 +1052,7 @@ paths:
   /reference/ibanValidation/{iban}:
     get:
       operationId: validateIban
-      summary: Validate IBAN
+      summary: Temenos Transact Validate IBAN
       description: >-
         Validate an International Bank Account Number (IBAN) and return
         the resolved bank details including BIC, bank name, and branch
@@ -1087,7 +1087,7 @@ paths:
   /holdings/cards:
     get:
       operationId: getCards
-      summary: List cards
+      summary: Temenos Transact List cards
       description: >-
         Retrieve debit and credit cards associated with customer accounts.
         Includes card status, type, expiry date, and linked account details.
@@ -1112,7 +1112,7 @@ paths:
   /holdings/cards/{cardId}:
     get:
       operationId: getCard
-      summary: Get card details
+      summary: Temenos Transact Get card details
       description: >-
         Retrieve detailed information for a specific card including
         card number (masked), status, limits, linked account, and
