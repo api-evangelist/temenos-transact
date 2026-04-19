@@ -1,0 +1,18 @@
+{
+  "accountId": "500123",
+  "accountName": "example_value",
+  "customerId": "500123",
+  "customerName": "example_value",
+  "productId": "500123",
+  "productName": "example_value",
+  "accountType": "example_value",
+  "currency": "example_value",
+  "status": "example_value",
+  "openingDate": "example_value",
+  "workingBalance": 42.5,
+  "availableBalance": 42.5,
+  "accountOfficerId": "500123",
+  "branchId": "500123",
+  "iban": "example_value",
+  "bic": "example_value"
+}

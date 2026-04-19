@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Beneficiary",
+  "type": "object",
+  "properties": {
+    "beneficiaryId": {
+      "type": "string"
+    },
+    "customerId": {
+      "type": "string"
+    },
+    "beneficiaryName": {
+      "type": "string"
+    },
+    "accountNumber": {
+      "type": "string"
+    },
+    "iban": {
+      "type": "string"
+    },
+    "bic": {
+      "type": "string"
+    },
+    "bankName": {
+      "type": "string"
+    },
+    "bankCountry": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "beneficiaryType": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "nickname": {
+      "type": "string"
+    }
+  }
+}

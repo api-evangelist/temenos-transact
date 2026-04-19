@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Transaction",
+  "type": "object",
+  "description": "A financial transaction record in Temenos Transact representing a debit or credit entry against an account.",
+  "properties": {
+    "transactionId": {
+      "type": "string",
+      "description": "Unique transaction identifier"
+    },
+    "accountId": {
+      "type": "string",
+      "description": "Account against which the transaction was posted"
+    },
+    "transactionType": {
+      "type": "string",
+      "description": "Type classification of the transaction"
+    },
+    "debitOrCredit": {
+      "type": "string",
+      "description": "Whether the transaction is a debit or credit"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Transaction amount in account currency"
+    },
+    "currency": {
+      "type": "string",
+      "description": "Currency of the transaction"
+    },
+    "bookingDate": {
+      "type": "string",
+      "description": "Date the transaction was booked"
+    },
+    "valueDate": {
+      "type": "string",
+      "description": "Value date for interest calculation purposes"
+    },
+    "processingDate": {
+      "type": "string",
+      "description": "Date the transaction was processed"
+    },
+    "reference": {
+      "type": "string",
+      "description": "Transaction reference number"
+    },
+    "narrative": {
+      "type": "string",
+      "description": "Transaction description or narrative text"
+    },
+    "counterpartyAccountId": {
+      "type": "string",
+      "description": "Account identifier of the counterparty"
+    },
+    "counterpartyName": {
+      "type": "string",
+      "description": "Name of the counterparty"
+    },
+    "balance": {
+      "type": "number",
+      "description": "Running balance after this transaction"
+    },
+    "exchangeRate": {
+      "type": "number",
+      "description": "Exchange rate applied if currency conversion occurred"
+    },
+    "chargesAmount": {
+      "type": "number",
+      "description": "Charges applied to this transaction"
+    },
+    "reversalIndicator": {
+      "type": "boolean",
+      "description": "Whether this transaction is a reversal"
+    },
+    "statementNumber": {
+      "type": "string",
+      "description": "Statement number this transaction belongs to"
+    }
+  }
+}

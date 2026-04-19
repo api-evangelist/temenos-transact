@@ -1,0 +1,326 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Temenos Digital Banking"
+  description: "Unified digital banking capability combining account management, customer operations, payment processing, deposits, loans, and reference data for retail and corporate banking applications. Used by digital banking developers and fintech integration teams."
+  tags:
+    - Temenos
+    - Digital Banking
+    - Core Banking
+    - Payments
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      TEMENOS_BEARER_TOKEN: TEMENOS_BEARER_TOKEN
+
+capability:
+  consumes:
+    - import: core-banking
+      location: ./shared/core-banking.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: digital-banking-api
+      description: "Unified REST API for digital banking operations."
+      resources:
+        - path: /v1/accounts
+          name: accounts
+          description: "Account management"
+          operations:
+            - method: GET
+              name: list-accounts
+              description: "List customer accounts"
+              call: "core-banking.list-accounts"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/accounts/{accountId}
+          name: account-details
+          description: "Account details"
+          operations:
+            - method: GET
+              name: get-account
+              description: "Get account details"
+              call: "core-banking.get-account"
+              with:
+                accountId: "rest.accountId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/accounts/{accountId}/balances
+          name: account-balances
+          description: "Account balances"
+          operations:
+            - method: GET
+              name: get-account-balances
+              description: "Get account balances"
+              call: "core-banking.get-account-balances"
+              with:
+                accountId: "rest.accountId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/accounts/{accountId}/transactions
+          name: account-transactions
+          description: "Transaction history"
+          operations:
+            - method: GET
+              name: get-account-transactions
+              description: "Get transaction history"
+              call: "core-banking.get-account-transactions"
+              with:
+                accountId: "rest.accountId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/customers
+          name: customers
+          description: "Customer management"
+          operations:
+            - method: GET
+              name: list-customers
+              description: "List customers"
+              call: "core-banking.list-customers"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-customer
+              description: "Create a customer"
+              call: "core-banking.create-customer"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/payments
+          name: payments
+          description: "Payment operations"
+          operations:
+            - method: GET
+              name: list-payment-orders
+              description: "List payment orders"
+              call: "core-banking.list-payment-orders"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-payment-order
+              description: "Create a payment order"
+              call: "core-banking.create-payment-order"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/transfers
+          name: transfers
+          description: "Fund transfers"
+          operations:
+            - method: POST
+              name: create-fund-transfer
+              description: "Initiate a fund transfer"
+              call: "core-banking.create-fund-transfer"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: digital-banking-mcp
+      transport: http
+      description: "MCP server for AI-assisted digital banking operations."
+      tools:
+        - name: list-accounts
+          description: "List customer accounts with optional filters"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "core-banking.list-accounts"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-account
+          description: "Get account details by ID"
+          hints:
+            readOnly: true
+          call: "core-banking.get-account"
+          with:
+            accountId: "tools.accountId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-account-balances
+          description: "Get account balance information"
+          hints:
+            readOnly: true
+          call: "core-banking.get-account-balances"
+          with:
+            accountId: "tools.accountId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-account-transactions
+          description: "Get transaction history for an account"
+          hints:
+            readOnly: true
+          call: "core-banking.get-account-transactions"
+          with:
+            accountId: "tools.accountId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-customers
+          description: "List customers"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "core-banking.list-customers"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-customer
+          description: "Get customer details"
+          hints:
+            readOnly: true
+          call: "core-banking.get-customer"
+          with:
+            customerId: "tools.customerId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-customer
+          description: "Create a new customer"
+          call: "core-banking.create-customer"
+          with:
+            shortName: "tools.shortName"
+            customerMnemonic: "tools.customerMnemonic"
+            sectorId: "tools.sectorId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-customer-accounts
+          description: "List accounts for a customer"
+          hints:
+            readOnly: true
+          call: "core-banking.get-customer-accounts"
+          with:
+            customerId: "tools.customerId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-fund-transfer
+          description: "Initiate a fund transfer between accounts"
+          call: "core-banking.create-fund-transfer"
+          with:
+            debitAccountId: "tools.debitAccountId"
+            creditAccountId: "tools.creditAccountId"
+            amount: "tools.amount"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-fund-transfer
+          description: "Get fund transfer status and details"
+          hints:
+            readOnly: true
+          call: "core-banking.get-fund-transfer"
+          with:
+            transferId: "tools.transferId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-payment-orders
+          description: "List payment orders"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "core-banking.list-payment-orders"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-payment-order
+          description: "Submit a payment order"
+          call: "core-banking.create-payment-order"
+          with:
+            debitAccountId: "tools.debitAccountId"
+            debitAmount: "tools.debitAmount"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: cancel-payment-order
+          description: "Cancel a pending payment order"
+          hints:
+            destructive: true
+          call: "core-banking.cancel-payment-order"
+          with:
+            paymentOrderId: "tools.paymentOrderId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-deposits
+          description: "List deposit arrangements"
+          hints:
+            readOnly: true
+          call: "core-banking.list-deposits"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-loans
+          description: "List loan arrangements"
+          hints:
+            readOnly: true
+          call: "core-banking.list-loans"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-beneficiaries
+          description: "List payment beneficiaries"
+          hints:
+            readOnly: true
+          call: "core-banking.list-beneficiaries"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-beneficiary
+          description: "Register a new payment beneficiary"
+          call: "core-banking.create-beneficiary"
+          with:
+            customerId: "tools.customerId"
+            beneficiaryName: "tools.beneficiaryName"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-products
+          description: "List banking products from the catalog"
+          hints:
+            readOnly: true
+          call: "core-banking.list-products"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-currencies
+          description: "List available currencies"
+          hints:
+            readOnly: true
+          call: "core-banking.list-currencies"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: validate-iban
+          description: "Validate an IBAN and resolve bank details"
+          hints:
+            readOnly: true
+          call: "core-banking.validate-iban"
+          with:
+            iban: "tools.iban"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-cards
+          description: "List debit and credit cards"
+          hints:
+            readOnly: true
+          call: "core-banking.list-cards"
+          outputParameters:
+            - type: object
+              mapping: "$."

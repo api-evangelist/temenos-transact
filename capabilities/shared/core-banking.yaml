@@ -1,0 +1,458 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Temenos Transact Core Banking API"
+  description: "RESTful APIs for Temenos Transact core banking operations including account management, customer data, transactions, payments, deposits, loans, cards, and reference data."
+  tags:
+    - Banking
+    - Core Banking
+    - Accounts
+    - Payments
+    - Transactions
+    - Customers
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      TEMENOS_BEARER_TOKEN: TEMENOS_BEARER_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: core-banking
+      baseUri: https://api.temenos.com/api/v1.0.0
+      description: "Temenos Transact Core Banking API for accounts, customers, payments, deposits, loans, and reference data."
+      authentication:
+        type: bearer
+        token: "{{TEMENOS_BEARER_TOKEN}}"
+      resources:
+        - name: accounts
+          path: /holdings/accounts
+          description: "Customer account management"
+          operations:
+            - name: list-accounts
+              method: GET
+              description: "Retrieve a list of customer accounts"
+              inputParameters:
+                - name: page_size
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Number of records per page"
+                - name: customerId
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by customer identifier"
+                - name: accountType
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by account type"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-account
+              method: GET
+              description: "Retrieve account details by ID"
+              inputParameters:
+                - name: accountId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Unique account identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-account
+              method: PUT
+              description: "Update an existing account"
+              inputParameters:
+                - name: accountId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Unique account identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  accountName: "{{tools.accountName}}"
+            - name: get-account-balances
+              method: GET
+              description: "Retrieve balance information for an account"
+              inputParameters:
+                - name: accountId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Unique account identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-account-transactions
+              method: GET
+              description: "Retrieve transaction history for an account"
+              inputParameters:
+                - name: accountId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Unique account identifier"
+                - name: fromDate
+                  in: query
+                  type: string
+                  required: false
+                  description: "Start date filter"
+                - name: toDate
+                  in: query
+                  type: string
+                  required: false
+                  description: "End date filter"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: customers
+          path: /party/customers
+          description: "Customer profile management"
+          operations:
+            - name: list-customers
+              method: GET
+              description: "Retrieve a list of customers"
+              inputParameters:
+                - name: customerName
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by customer name"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-customer
+              method: POST
+              description: "Create a new customer record"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  shortName: "{{tools.shortName}}"
+                  customerMnemonic: "{{tools.customerMnemonic}}"
+                  sectorId: "{{tools.sectorId}}"
+            - name: get-customer
+              method: GET
+              description: "Retrieve customer details"
+              inputParameters:
+                - name: customerId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Customer identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-customer
+              method: PUT
+              description: "Update customer details"
+              inputParameters:
+                - name: customerId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Customer identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  customerNames: "{{tools.customerNames}}"
+            - name: get-customer-accounts
+              method: GET
+              description: "Retrieve accounts for a customer"
+              inputParameters:
+                - name: customerId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Customer identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: payments
+          path: /order
+          description: "Payment processing operations"
+          operations:
+            - name: create-fund-transfer
+              method: POST
+              description: "Initiate a fund transfer"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  debitAccountId: "{{tools.debitAccountId}}"
+                  creditAccountId: "{{tools.creditAccountId}}"
+                  amount: "{{tools.amount}}"
+            - name: get-fund-transfer
+              method: GET
+              description: "Get fund transfer details"
+              inputParameters:
+                - name: transferId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Transfer identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-payment-orders
+              method: GET
+              description: "List payment orders"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-payment-order
+              method: POST
+              description: "Create a payment order"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  debitAccountId: "{{tools.debitAccountId}}"
+                  debitAmount: "{{tools.debitAmount}}"
+            - name: get-payment-order
+              method: GET
+              description: "Get payment order details"
+              inputParameters:
+                - name: paymentOrderId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Payment order identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: cancel-payment-order
+              method: POST
+              description: "Cancel a payment order"
+              inputParameters:
+                - name: paymentOrderId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Payment order identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-standing-orders
+              method: GET
+              description: "List standing orders"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-standing-order
+              method: POST
+              description: "Create a standing order"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  accountId: "{{tools.accountId}}"
+                  amount: "{{tools.amount}}"
+                  frequency: "{{tools.frequency}}"
+        - name: deposits
+          path: /holdings/deposits
+          description: "Deposit arrangement management"
+          operations:
+            - name: list-deposits
+              method: GET
+              description: "List deposit arrangements"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-deposit
+              method: GET
+              description: "Get deposit details"
+              inputParameters:
+                - name: depositId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Deposit identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: loans
+          path: /holdings/loans
+          description: "Loan arrangement management"
+          operations:
+            - name: list-loans
+              method: GET
+              description: "List loan arrangements"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-loan
+              method: GET
+              description: "Get loan details"
+              inputParameters:
+                - name: loanId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Loan identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: beneficiaries
+          path: /party/beneficiaries
+          description: "Payment beneficiary management"
+          operations:
+            - name: list-beneficiaries
+              method: GET
+              description: "List registered beneficiaries"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-beneficiary
+              method: POST
+              description: "Register a new beneficiary"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  customerId: "{{tools.customerId}}"
+                  beneficiaryName: "{{tools.beneficiaryName}}"
+        - name: products
+          path: /product/products
+          description: "Product catalog"
+          operations:
+            - name: list-products
+              method: GET
+              description: "List banking products"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: reference
+          path: /reference
+          description: "Reference data"
+          operations:
+            - name: list-currencies
+              method: GET
+              description: "List available currencies"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-countries
+              method: GET
+              description: "List available countries"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: validate-iban
+              method: GET
+              description: "Validate an IBAN"
+              inputParameters:
+                - name: iban
+                  in: path
+                  type: string
+                  required: true
+                  description: "IBAN to validate"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: cards
+          path: /holdings/cards
+          description: "Card management"
+          operations:
+            - name: list-cards
+              method: GET
+              description: "List debit and credit cards"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-card
+              method: GET
+              description: "Get card details"
+              inputParameters:
+                - name: cardId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Card identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."

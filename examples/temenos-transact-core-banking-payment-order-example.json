@@ -1,0 +1,21 @@
+{
+  "paymentOrderId": "500123",
+  "debitAccountId": "500123",
+  "debitAmount": 42.5,
+  "debitCurrency": "example_value",
+  "creditAccountId": "500123",
+  "creditAmount": 42.5,
+  "creditCurrency": "example_value",
+  "paymentType": "example_value",
+  "status": "example_value",
+  "valueDate": "example_value",
+  "executionDate": "example_value",
+  "beneficiaryName": "example_value",
+  "beneficiaryIban": "example_value",
+  "beneficiaryBic": "example_value",
+  "remittanceInformation": "example_value",
+  "chargesType": "example_value",
+  "totalCharges": 42.5,
+  "exchangeRate": 42.5,
+  "rejectionReason": "example_value"
+}

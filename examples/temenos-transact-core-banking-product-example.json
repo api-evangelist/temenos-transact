@@ -1,0 +1,11 @@
+{
+  "productId": "500123",
+  "productName": "example_value",
+  "productGroup": "example_value",
+  "description": "A sample description.",
+  "currency": [],
+  "interestRate": "example_value",
+  "minimumBalance": 42.5,
+  "fees": [],
+  "status": "example_value"
+}

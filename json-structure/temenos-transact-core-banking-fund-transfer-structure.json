@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "FundTransfer",
+  "type": "object",
+  "properties": {
+    "transferId": {
+      "type": "string"
+    },
+    "debitAccountId": {
+      "type": "string"
+    },
+    "debitCurrency": {
+      "type": "string"
+    },
+    "creditAccountId": {
+      "type": "string"
+    },
+    "creditCurrency": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "creditAmount": {
+      "type": "number"
+    },
+    "transferType": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "valueDate": {
+      "type": "string"
+    },
+    "executionDate": {
+      "type": "string"
+    },
+    "exchangeRate": {
+      "type": "number"
+    },
+    "chargesAmount": {
+      "type": "number"
+    },
+    "chargesCurrency": {
+      "type": "string"
+    },
+    "narrative": {
+      "type": "string"
+    },
+    "endToEndReference": {
+      "type": "string"
+    }
+  }
+}

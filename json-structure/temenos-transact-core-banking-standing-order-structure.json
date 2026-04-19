@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "StandingOrder",
+  "type": "object",
+  "properties": {
+    "standingOrderId": {
+      "type": "string"
+    },
+    "accountId": {
+      "type": "string"
+    },
+    "beneficiaryId": {
+      "type": "string"
+    },
+    "beneficiaryAccountId": {
+      "type": "string"
+    },
+    "beneficiaryName": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "frequency": {
+      "type": "string"
+    },
+    "startDate": {
+      "type": "string"
+    },
+    "endDate": {
+      "type": "string"
+    },
+    "nextPaymentDate": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "narrative": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaginationInfo",
+  "type": "object",
+  "description": "Pagination metadata for list responses",
+  "properties": {
+    "pageSize": {
+      "type": "integer",
+      "description": "Number of records per page"
+    },
+    "pageStart": {
+      "type": "integer",
+      "description": "Current page offset"
+    },
+    "totalRecords": {
+      "type": "integer",
+      "description": "Total number of records available"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Customer",
+  "type": "object",
+  "properties": {
+    "customerId": {
+      "type": "string"
+    },
+    "customerMnemonic": {
+      "type": "string"
+    },
+    "shortName": {
+      "type": "string"
+    },
+    "customerNames": {
+      "type": "array"
+    },
+    "displayNames": {
+      "type": "array"
+    },
+    "title": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "dateOfBirth": {
+      "type": "string"
+    },
+    "nationalityId": {
+      "type": "string"
+    },
+    "residenceId": {
+      "type": "string"
+    },
+    "language": {
+      "type": "integer"
+    },
+    "customerStatus": {
+      "type": "integer"
+    },
+    "sectorId": {
+      "type": "integer"
+    },
+    "industryId": {
+      "type": "integer"
+    },
+    "accountOfficerId": {
+      "type": "integer"
+    },
+    "target": {
+      "type": "integer"
+    },
+    "communicationDevices": {
+      "type": "array"
+    },
+    "addresses": {
+      "type": "array"
+    },
+    "customerCompany": {
+      "type": "string"
+    },
+    "amlCheck": {
+      "type": "string"
+    },
+    "amlResult": {
+      "type": "string"
+    },
+    "kycStatus": {
+      "type": "string"
+    }
+  }
+}

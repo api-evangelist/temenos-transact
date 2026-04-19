@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Deposit",
+  "type": "object",
+  "properties": {
+    "depositId": {
+      "type": "string"
+    },
+    "customerId": {
+      "type": "string"
+    },
+    "productId": {
+      "type": "string"
+    },
+    "productName": {
+      "type": "string"
+    },
+    "principalAmount": {
+      "type": "number"
+    },
+    "currentBalance": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "interestRate": {
+      "type": "number"
+    },
+    "accruedInterest": {
+      "type": "number"
+    },
+    "startDate": {
+      "type": "string"
+    },
+    "maturityDate": {
+      "type": "string"
+    },
+    "term": {
+      "type": "string"
+    },
+    "renewalType": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  }
+}

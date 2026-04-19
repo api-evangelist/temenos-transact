@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "PaginationInfo",
+  "type": "object",
+  "properties": {
+    "pageSize": {
+      "type": "integer"
+    },
+    "pageStart": {
+      "type": "integer"
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  }
+}

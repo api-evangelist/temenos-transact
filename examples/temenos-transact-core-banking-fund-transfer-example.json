@@ -1,0 +1,18 @@
+{
+  "transferId": "500123",
+  "debitAccountId": "500123",
+  "debitCurrency": "example_value",
+  "creditAccountId": "500123",
+  "creditCurrency": "example_value",
+  "amount": 42.5,
+  "creditAmount": 42.5,
+  "transferType": "example_value",
+  "status": "example_value",
+  "valueDate": "example_value",
+  "executionDate": "example_value",
+  "exchangeRate": 42.5,
+  "chargesAmount": 42.5,
+  "chargesCurrency": "example_value",
+  "narrative": "example_value",
+  "endToEndReference": "example_value"
+}

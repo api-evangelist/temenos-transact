@@ -1,0 +1,15 @@
+{
+  "standingOrderId": "500123",
+  "accountId": "500123",
+  "beneficiaryId": "500123",
+  "beneficiaryAccountId": "500123",
+  "beneficiaryName": "example_value",
+  "amount": 42.5,
+  "currency": "example_value",
+  "frequency": "example_value",
+  "startDate": "example_value",
+  "endDate": "example_value",
+  "nextPaymentDate": "example_value",
+  "status": "example_value",
+  "narrative": "example_value"
+}

@@ -23,97 +23,97 @@ info:
   termsOfService: https://www.temenos.com/terms-of-service/
 
 servers:
-  - url: https://api.temenos.com/api/v1.0.0
-    description: Temenos Transact API - Production
-  - url: https://sandbox.temenos.com/api/v1.0.0
-    description: Temenos Transact API - Sandbox
+- url: https://api.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Production
+- url: https://sandbox.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Sandbox
 
 security:
-  - bearerAuth: []
+- bearerAuth: []
 
 tags:
-  - name: Accounts
-    description: >-
-      Manage customer accounts created using the Arrangement Architecture
-      including current accounts, savings accounts, corporate accounts,
-      Islamic accounts, non-resident and minor accounts.
-  - name: Beneficiaries
-    description: >-
-      Manage payment beneficiaries including domestic and international
-      beneficiary registration, validation, and maintenance.
-  - name: Cards
-    description: >-
-      Manage debit and credit card operations including card issuance,
-      activation, blocking, and limit management.
+- name: Accounts
+  description: >-
+    Manage customer accounts created using the Arrangement Architecture
+    including current accounts, savings accounts, corporate accounts,
+    Islamic accounts, non-resident and minor accounts.
+- name: Beneficiaries
+  description: >-
+    Manage payment beneficiaries including domestic and international
+    beneficiary registration, validation, and maintenance.
+- name: Cards
+  description: >-
+    Manage debit and credit card operations including card issuance,
+    activation, blocking, and limit management.
 
-  - name: Customers
-    description: >-
-      Create, update, and manage customer profiles, contact details,
-      KYC documentation, compliance records, communication preferences,
-      and party relationships.
-  - name: Deposits
-    description: >-
-      Manage deposit arrangements including term deposits, savings
-      deposits, and fixed deposit products with maturity tracking
-      and renewal capabilities.
-  - name: Loans
-    description: >-
-      Create and manage loan arrangements, credit facilities, repayment
-      schedules, drawdowns, and loan lifecycle operations.
-  - name: Payments
-    description: >-
-      Process fund transfers, standing orders, direct debits, payment
-      orders, sweeps, and cross-border payments. Includes payment
-      validation, cost calculation, status tracking, and cancellation.
-  - name: Products
-    description: >-
-      Browse the product catalog and retrieve product conditions,
-      eligibility criteria, and arrangement details.
-  - name: Reference Data
-    description: >-
-      Access system-wide lookup and configuration data including
-      currencies, countries, IBAN/BIC validation, interest rate
-      tables, and balance type definitions.
-  - name: Transactions
-    description: >-
-      Retrieve transaction history, statement details, and account
-      activity records for all account types and arrangements.
+- name: Customers
+  description: >-
+    Create, update, and manage customer profiles, contact details,
+    KYC documentation, compliance records, communication preferences,
+    and party relationships.
+- name: Deposits
+  description: >-
+    Manage deposit arrangements including term deposits, savings
+    deposits, and fixed deposit products with maturity tracking
+    and renewal capabilities.
+- name: Loans
+  description: >-
+    Create and manage loan arrangements, credit facilities, repayment
+    schedules, drawdowns, and loan lifecycle operations.
+- name: Payments
+  description: >-
+    Process fund transfers, standing orders, direct debits, payment
+    orders, sweeps, and cross-border payments. Includes payment
+    validation, cost calculation, status tracking, and cancellation.
+- name: Products
+  description: >-
+    Browse the product catalog and retrieve product conditions,
+    eligibility criteria, and arrangement details.
+- name: Reference Data
+  description: >-
+    Access system-wide lookup and configuration data including
+    currencies, countries, IBAN/BIC validation, interest rate
+    tables, and balance type definitions.
+- name: Transactions
+  description: >-
+    Retrieve transaction history, statement details, and account
+    activity records for all account types and arrangements.
 paths:
   /holdings/accounts:
     get:
       operationId: getAccounts
-      summary: Temenos Transact List accounts
+      summary: Temenos Transact List Accounts
       description: >-
         Retrieve a list of customer accounts. Supports filtering by customer,
         account type, status, currency, and other criteria. Returns account
         arrangements created through the Arrangement Architecture including
         current, savings, corporate, and Islamic account types.
       tags:
-        - Accounts
+      - Accounts
       parameters:
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
-        - $ref: '#/components/parameters/customerId'
-        - name: accountType
-          in: query
-          description: Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)
-          schema:
-            type: string
-        - name: currency
-          in: query
-          description: Filter by account currency (ISO 4217 code)
-          schema:
-            type: string
-        - name: status
-          in: query
-          description: Filter by account status
-          schema:
-            type: string
-            enum:
-              - ACTIVE
-              - INACTIVE
-              - CLOSED
-              - PENDING
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - $ref: '#/components/parameters/customerId'
+      - name: accountType
+        in: query
+        description: Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)
+        schema:
+          type: string
+      - name: currency
+        in: query
+        description: Filter by account currency (ISO 4217 code)
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Filter by account status
+        schema:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - CLOSED
+          - PENDING
       responses:
         '200':
           description: Successful retrieval of accounts list
@@ -130,18 +130,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /holdings/accounts/{accountId}:
     get:
       operationId: getAccount
-      summary: Temenos Transact Get account details
+      summary: Temenos Transact Get Account Details
       description: >-
         Retrieve detailed information for a specific account arrangement
         including balances, product details, interest conditions, charges,
         and account officer assignment.
       tags:
-        - Accounts
+      - Accounts
       parameters:
-        - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/accountId'
       responses:
         '200':
           description: Successful retrieval of account details
@@ -157,17 +160,20 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateAccount
-      summary: Temenos Transact Update account
+      summary: Temenos Transact Update Account
       description: >-
         Update an existing account arrangement. Supports modifying account
         attributes such as posting restrictions, overdraft limits, account
         officer, and product conditions.
       tags:
-        - Accounts
+      - Accounts
       parameters:
-        - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/accountId'
       requestBody:
         required: true
         content:
@@ -192,18 +198,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /holdings/accounts/{accountId}/balances:
     get:
       operationId: getAccountBalances
-      summary: Temenos Transact Get account balances
+      summary: Temenos Transact Get Account Balances
       description: >-
         Retrieve balance information for a specific account including
         available balance, working balance, locked amount, cleared balance,
         and other balance types as configured.
       tags:
-        - Accounts
+      - Accounts
       parameters:
-        - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/accountId'
       responses:
         '200':
           description: Successful retrieval of account balances
@@ -218,48 +227,51 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /holdings/accounts/{accountId}/transactions:
     get:
       operationId: getAccountTransactions
-      summary: Temenos Transact List account transactions
+      summary: Temenos Transact List Account Transactions
       description: >-
         Retrieve transaction history for a specific account. Supports
         filtering by date range, transaction type, amount range, and
         booking date. Returns debit and credit entries with narrative,
         value date, and reference details.
       tags:
-        - Transactions
+      - Transactions
       parameters:
-        - $ref: '#/components/parameters/accountId'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
-        - name: fromDate
-          in: query
-          description: Start date for transaction history (YYYY-MM-DD)
-          schema:
-            type: string
-            format: date
-        - name: toDate
-          in: query
-          description: End date for transaction history (YYYY-MM-DD)
-          schema:
-            type: string
-            format: date
-        - name: transactionType
-          in: query
-          description: Filter by transaction type
-          schema:
-            type: string
-        - name: minAmount
-          in: query
-          description: Minimum transaction amount filter
-          schema:
-            type: number
-        - name: maxAmount
-          in: query
-          description: Maximum transaction amount filter
-          schema:
-            type: number
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - name: fromDate
+        in: query
+        description: Start date for transaction history (YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - name: toDate
+        in: query
+        description: End date for transaction history (YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - name: transactionType
+        in: query
+        description: Filter by transaction type
+        schema:
+          type: string
+      - name: minAmount
+        in: query
+        description: Minimum transaction amount filter
+        schema:
+          type: number
+      - name: maxAmount
+        in: query
+        description: Maximum transaction amount filter
+        schema:
+          type: number
       responses:
         '200':
           description: Successful retrieval of transaction history
@@ -276,44 +288,47 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /party/customers:
     get:
       operationId: getCustomers
-      summary: Temenos Transact List customers
+      summary: Temenos Transact List Customers
       description: >-
         Retrieve a list of customers. Supports filtering by customer name,
         mnemonic, sector, status, and other criteria. Returns customer
         profiles with basic information.
       tags:
-        - Customers
+      - Customers
       parameters:
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
-        - name: customerName
-          in: query
-          description: Filter by customer name (partial match supported)
-          schema:
-            type: string
-        - name: mnemonic
-          in: query
-          description: Filter by customer mnemonic
-          schema:
-            type: string
-        - name: sector
-          in: query
-          description: Filter by customer sector code
-          schema:
-            type: integer
-        - name: status
-          in: query
-          description: Filter by customer status
-          schema:
-            type: string
-            enum:
-              - ACTIVE
-              - INACTIVE
-              - DECEASED
-              - CLOSED
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - name: customerName
+        in: query
+        description: Filter by customer name (partial match supported)
+        schema:
+          type: string
+      - name: mnemonic
+        in: query
+        description: Filter by customer mnemonic
+        schema:
+          type: string
+      - name: sector
+        in: query
+        description: Filter by customer sector code
+        schema:
+          type: integer
+      - name: status
+        in: query
+        description: Filter by customer status
+        schema:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - DECEASED
+          - CLOSED
       responses:
         '200':
           description: Successful retrieval of customers list
@@ -327,9 +342,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createCustomer
-      summary: Temenos Transact Create customer
+      summary: Temenos Transact Create Customer
       description: >-
         Create a new customer record in Temenos Transact. Each new customer
         is assigned a unique system-generated customer ID. Required fields
@@ -337,7 +355,7 @@ paths:
         individual and corporate customer types with full demographic,
         contact, and compliance information.
       tags:
-        - Customers
+      - Customers
       requestBody:
         required: true
         content:
@@ -366,18 +384,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /party/customers/{customerId}:
     get:
       operationId: getCustomer
-      summary: Temenos Transact Get customer details
+      summary: Temenos Transact Get Customer Details
       description: >-
         Retrieve detailed information for a specific customer including
         personal details, contact information, KYC status, AML check
         results, account officer assignment, and relationship details.
       tags:
-        - Customers
+      - Customers
       parameters:
-        - $ref: '#/components/parameters/customerIdPath'
+      - $ref: '#/components/parameters/customerIdPath'
       responses:
         '200':
           description: Successful retrieval of customer details
@@ -393,17 +414,20 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateCustomer
-      summary: Temenos Transact Update customer
+      summary: Temenos Transact Update Customer
       description: >-
         Update an existing customer record. Supports modifying customer
         attributes such as contact details, address, communication
         preferences, and KYC documentation.
       tags:
-        - Customers
+      - Customers
       parameters:
-        - $ref: '#/components/parameters/customerIdPath'
+      - $ref: '#/components/parameters/customerIdPath'
       requestBody:
         required: true
         content:
@@ -426,20 +450,23 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /party/customers/{customerId}/accounts:
     get:
       operationId: getCustomerAccounts
-      summary: Temenos Transact List customer accounts
+      summary: Temenos Transact List Customer Accounts
       description: >-
         Retrieve all accounts associated with a specific customer,
         including account type, status, currency, and balance summary.
       tags:
-        - Accounts
-        - Customers
+      - Accounts
+      - Customers
       parameters:
-        - $ref: '#/components/parameters/customerIdPath'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
+      - $ref: '#/components/parameters/customerIdPath'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
       responses:
         '200':
           description: Successful retrieval of customer accounts
@@ -454,10 +481,13 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /order/fundTransfers:
     post:
       operationId: createFundTransfer
-      summary: Temenos Transact Create fund transfer
+      summary: Temenos Transact Create Fund Transfer
       description: >-
         Initiate a fund transfer between accounts. Supports internal
         transfers, domestic payments, and cross-border transfers.
@@ -465,7 +495,7 @@ paths:
         and processes the payment according to configured payment
         rules and cut-off times.
       tags:
-        - Payments
+      - Payments
       requestBody:
         required: true
         content:
@@ -494,23 +524,26 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /order/fundTransfers/{transferId}:
     get:
       operationId: getFundTransfer
-      summary: Temenos Transact Get fund transfer details
+      summary: Temenos Transact Get Fund Transfer Details
       description: >-
         Retrieve the status and details of a specific fund transfer
         including processing status, value date, charges applied,
         exchange rate, and any error details.
       tags:
-        - Payments
+      - Payments
       parameters:
-        - name: transferId
-          in: path
-          required: true
-          description: Unique identifier of the fund transfer
-          schema:
-            type: string
+      - name: transferId
+        in: path
+        required: true
+        description: Unique identifier of the fund transfer
+        schema:
+          type: string
       responses:
         '200':
           description: Successful retrieval of fund transfer details
@@ -525,53 +558,56 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /order/paymentOrders:
     get:
       operationId: getPaymentOrders
-      summary: Temenos Transact List payment orders
+      summary: Temenos Transact List Payment Orders
       description: >-
         Retrieve a list of payment orders. Supports filtering by
         status, debit account, credit account, date range, and
         payment type. Includes pending, processed, and rejected
         payment orders.
       tags:
-        - Payments
+      - Payments
       parameters:
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
-        - name: debitAccountId
-          in: query
-          description: Filter by debit account ID
-          schema:
-            type: string
-        - name: creditAccountId
-          in: query
-          description: Filter by credit account ID
-          schema:
-            type: string
-        - name: status
-          in: query
-          description: Filter by payment status
-          schema:
-            type: string
-            enum:
-              - PENDING
-              - PROCESSING
-              - COMPLETED
-              - REJECTED
-              - CANCELLED
-        - name: fromDate
-          in: query
-          description: Start date filter (YYYY-MM-DD)
-          schema:
-            type: string
-            format: date
-        - name: toDate
-          in: query
-          description: End date filter (YYYY-MM-DD)
-          schema:
-            type: string
-            format: date
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - name: debitAccountId
+        in: query
+        description: Filter by debit account ID
+        schema:
+          type: string
+      - name: creditAccountId
+        in: query
+        description: Filter by credit account ID
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Filter by payment status
+        schema:
+          type: string
+          enum:
+          - PENDING
+          - PROCESSING
+          - COMPLETED
+          - REJECTED
+          - CANCELLED
+      - name: fromDate
+        in: query
+        description: Start date filter (YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - name: toDate
+        in: query
+        description: End date filter (YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
       responses:
         '200':
           description: Successful retrieval of payment orders
@@ -585,16 +621,19 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createPaymentOrder
-      summary: Temenos Transact Create payment order
+      summary: Temenos Transact Create Payment Order
       description: >-
         Submit a new payment order for processing. Validates the payment
         details, calculates charges and execution times, and queues
         the payment for processing. Supports various payment types
         including SEPA, SWIFT, ACH, and domestic clearing.
       tags:
-        - Payments
+      - Payments
       requestBody:
         required: true
         content:
@@ -621,23 +660,26 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /order/paymentOrders/{paymentOrderId}:
     get:
       operationId: getPaymentOrder
-      summary: Temenos Transact Get payment order details
+      summary: Temenos Transact Get Payment Order Details
       description: >-
         Retrieve detailed information for a specific payment order
         including status, amount, charges, exchange rate, execution
         date, and processing details.
       tags:
-        - Payments
+      - Payments
       parameters:
-        - name: paymentOrderId
-          in: path
-          required: true
-          description: Unique identifier of the payment order
-          schema:
-            type: string
+      - name: paymentOrderId
+        in: path
+        required: true
+        description: Unique identifier of the payment order
+        schema:
+          type: string
       responses:
         '200':
           description: Successful retrieval of payment order details
@@ -652,23 +694,26 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /order/paymentOrders/{paymentOrderId}/cancellation:
     post:
       operationId: cancelPaymentOrder
-      summary: Temenos Transact Cancel payment order
+      summary: Temenos Transact Cancel Payment Order
       description: >-
         Request cancellation of a pending payment order. Only payment
         orders in PENDING or PROCESSING status can be cancelled.
         Returns the updated payment order status.
       tags:
-        - Payments
+      - Payments
       parameters:
-        - name: paymentOrderId
-          in: path
-          required: true
-          description: Unique identifier of the payment order to cancel
-          schema:
-            type: string
+      - name: paymentOrderId
+        in: path
+        required: true
+        description: Unique identifier of the payment order to cancel
+        schema:
+          type: string
       responses:
         '200':
           description: Payment order cancellation accepted
@@ -689,34 +734,37 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /order/standingOrders:
     get:
       operationId: getStandingOrders
-      summary: Temenos Transact List standing orders
+      summary: Temenos Transact List Standing Orders
       description: >-
         Retrieve standing order instructions for recurring payments.
         Supports filtering by account, frequency, status, and next
         execution date.
       tags:
-        - Payments
+      - Payments
       parameters:
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
-        - name: accountId
-          in: query
-          description: Filter by account ID
-          schema:
-            type: string
-        - name: status
-          in: query
-          description: Filter by standing order status
-          schema:
-            type: string
-            enum:
-              - ACTIVE
-              - SUSPENDED
-              - EXPIRED
-              - CANCELLED
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - name: accountId
+        in: query
+        description: Filter by account ID
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Filter by standing order status
+        schema:
+          type: string
+          enum:
+          - ACTIVE
+          - SUSPENDED
+          - EXPIRED
+          - CANCELLED
       responses:
         '200':
           description: Successful retrieval of standing orders
@@ -730,15 +778,18 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createStandingOrder
-      summary: Temenos Transact Create standing order
+      summary: Temenos Transact Create Standing Order
       description: >-
         Create a new standing order instruction for recurring payments.
         Defines the debit account, beneficiary, amount, frequency,
         start date, and optional end date.
       tags:
-        - Payments
+      - Payments
       requestBody:
         required: true
         content:
@@ -765,32 +816,35 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /holdings/deposits:
     get:
       operationId: getDeposits
-      summary: Temenos Transact List deposits
+      summary: Temenos Transact List Deposits
       description: >-
         Retrieve deposit arrangements including term deposits, savings
         deposits, and fixed deposits. Supports filtering by customer,
         maturity date range, status, and currency.
       tags:
-        - Deposits
+      - Deposits
       parameters:
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
-        - $ref: '#/components/parameters/customerId'
-        - name: maturityDateFrom
-          in: query
-          description: Filter deposits maturing from this date (YYYY-MM-DD)
-          schema:
-            type: string
-            format: date
-        - name: maturityDateTo
-          in: query
-          description: Filter deposits maturing up to this date (YYYY-MM-DD)
-          schema:
-            type: string
-            format: date
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - $ref: '#/components/parameters/customerId'
+      - name: maturityDateFrom
+        in: query
+        description: Filter deposits maturing from this date (YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
+      - name: maturityDateTo
+        in: query
+        description: Filter deposits maturing up to this date (YYYY-MM-DD)
+        schema:
+          type: string
+          format: date
       responses:
         '200':
           description: Successful retrieval of deposits
@@ -805,23 +859,26 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /holdings/deposits/{depositId}:
     get:
       operationId: getDeposit
-      summary: Temenos Transact Get deposit details
+      summary: Temenos Transact Get Deposit Details
       description: >-
         Retrieve detailed information for a specific deposit arrangement
         including principal amount, interest rate, maturity date, accrued
         interest, and renewal options.
       tags:
-        - Deposits
+      - Deposits
       parameters:
-        - name: depositId
-          in: path
-          required: true
-          description: Unique identifier of the deposit arrangement
-          schema:
-            type: string
+      - name: depositId
+        in: path
+        required: true
+        description: Unique identifier of the deposit arrangement
+        schema:
+          type: string
       responses:
         '200':
           description: Successful retrieval of deposit details
@@ -836,35 +893,38 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /holdings/loans:
     get:
       operationId: getLoans
-      summary: Temenos Transact List loans
+      summary: Temenos Transact List Loans
       description: >-
         Retrieve loan arrangements including personal loans, mortgages,
         credit facilities, and overdraft agreements. Supports filtering
         by customer, product type, status, and currency.
       tags:
-        - Loans
+      - Loans
       parameters:
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
-        - $ref: '#/components/parameters/customerId'
-        - name: productType
-          in: query
-          description: Filter by loan product type
-          schema:
-            type: string
-        - name: status
-          in: query
-          description: Filter by loan status
-          schema:
-            type: string
-            enum:
-              - ACTIVE
-              - MATURED
-              - DELINQUENT
-              - CLOSED
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - $ref: '#/components/parameters/customerId'
+      - name: productType
+        in: query
+        description: Filter by loan product type
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Filter by loan status
+        schema:
+          type: string
+          enum:
+          - ACTIVE
+          - MATURED
+          - DELINQUENT
+          - CLOSED
       responses:
         '200':
           description: Successful retrieval of loans
@@ -879,23 +939,26 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /holdings/loans/{loanId}:
     get:
       operationId: getLoan
-      summary: Temenos Transact Get loan details
+      summary: Temenos Transact Get Loan Details
       description: >-
         Retrieve detailed information for a specific loan arrangement
         including principal, outstanding balance, interest rate,
         repayment schedule, next payment date, and facility details.
       tags:
-        - Loans
+      - Loans
       parameters:
-        - name: loanId
-          in: path
-          required: true
-          description: Unique identifier of the loan arrangement
-          schema:
-            type: string
+      - name: loanId
+        in: path
+        required: true
+        description: Unique identifier of the loan arrangement
+        schema:
+          type: string
       responses:
         '200':
           description: Successful retrieval of loan details
@@ -910,20 +973,23 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /party/beneficiaries:
     get:
       operationId: getBeneficiaries
-      summary: Temenos Transact List beneficiaries
+      summary: Temenos Transact List Beneficiaries
       description: >-
         Retrieve registered payment beneficiaries for a customer.
         Includes domestic and international beneficiaries with their
         bank details and validation status.
       tags:
-        - Beneficiaries
+      - Beneficiaries
       parameters:
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
-        - $ref: '#/components/parameters/customerId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - $ref: '#/components/parameters/customerId'
       responses:
         '200':
           description: Successful retrieval of beneficiaries
@@ -935,15 +1001,18 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     post:
       operationId: createBeneficiary
-      summary: Temenos Transact Create beneficiary
+      summary: Temenos Transact Create Beneficiary
       description: >-
         Register a new payment beneficiary for a customer. Validates
         the beneficiary bank details including IBAN, BIC/SWIFT code,
         and account number format.
       tags:
-        - Beneficiaries
+      - Beneficiaries
       requestBody:
         required: true
         content:
@@ -970,25 +1039,28 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /product/products:
     get:
       operationId: getProducts
-      summary: Temenos Transact List products
+      summary: Temenos Transact List Products
       description: >-
         Retrieve the product catalog including account products, deposit
         products, loan products, and card products. Returns product
         definitions with their conditions, eligibility criteria, and
         arrangement details.
       tags:
-        - Products
+      - Products
       parameters:
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
-        - name: productGroup
-          in: query
-          description: Filter by product group (e.g., ACCOUNTS, DEPOSITS, LOANS)
-          schema:
-            type: string
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - name: productGroup
+        in: query
+        description: Filter by product group (e.g., ACCOUNTS, DEPOSITS, LOANS)
+        schema:
+          type: string
       responses:
         '200':
           description: Successful retrieval of products
@@ -1001,18 +1073,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /reference/currencies:
     get:
       operationId: getCurrencies
-      summary: Temenos Transact List currencies
+      summary: Temenos Transact List Currencies
       description: >-
         Retrieve available currencies with their ISO 4217 codes,
         decimal precision, exchange rates, and market details.
       tags:
-        - Reference Data
+      - Reference Data
       parameters:
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
       responses:
         '200':
           description: Successful retrieval of currencies
@@ -1025,18 +1100,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /reference/countries:
     get:
       operationId: getCountries
-      summary: Temenos Transact List countries
+      summary: Temenos Transact List Countries
       description: >-
         Retrieve available countries with their ISO 3166 codes,
         currency details, and regulatory classification.
       tags:
-        - Reference Data
+      - Reference Data
       parameters:
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
       responses:
         '200':
           description: Successful retrieval of countries
@@ -1049,23 +1127,26 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /reference/ibanValidation/{iban}:
     get:
       operationId: validateIban
-      summary: Temenos Transact Validate IBAN
+      summary: Temenos Transact Validate Iban
       description: >-
         Validate an International Bank Account Number (IBAN) and return
         the resolved bank details including BIC, bank name, and branch
         information.
       tags:
-        - Reference Data
+      - Reference Data
       parameters:
-        - name: iban
-          in: path
-          required: true
-          description: The IBAN to validate
-          schema:
-            type: string
+      - name: iban
+        in: path
+        required: true
+        description: The IBAN to validate
+        schema:
+          type: string
       responses:
         '200':
           description: IBAN validation result
@@ -1084,19 +1165,22 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /holdings/cards:
     get:
       operationId: getCards
-      summary: Temenos Transact List cards
+      summary: Temenos Transact List Cards
       description: >-
         Retrieve debit and credit cards associated with customer accounts.
         Includes card status, type, expiry date, and linked account details.
       tags:
-        - Cards
+      - Cards
       parameters:
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pageStart'
-        - $ref: '#/components/parameters/customerId'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - $ref: '#/components/parameters/customerId'
       responses:
         '200':
           description: Successful retrieval of cards
@@ -1109,23 +1193,26 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /holdings/cards/{cardId}:
     get:
       operationId: getCard
-      summary: Temenos Transact Get card details
+      summary: Temenos Transact Get Card Details
       description: >-
         Retrieve detailed information for a specific card including
         card number (masked), status, limits, linked account, and
         transaction history summary.
       tags:
-        - Cards
+      - Cards
       parameters:
-        - name: cardId
-          in: path
-          required: true
-          description: Unique identifier of the card
-          schema:
-            type: string
+      - name: cardId
+        in: path
+        required: true
+        description: Unique identifier of the card
+        schema:
+          type: string
       responses:
         '200':
           description: Successful retrieval of card details
@@ -1140,6 +1227,9 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     bearerAuth:
@@ -1230,20 +1320,23 @@ components:
         id:
           type: string
           description: Unique identifier for the resource
+          example: abc123
         status:
           type: string
           description: Status of the operation (success, error)
           enum:
-            - success
-            - error
+          - success
+          - error
+          example: success
         transactionStatus:
           type: string
           description: Transaction lifecycle status
           enum:
-            - Live
-            - Unauth
-            - Hold
-            - Reversed
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
         audit:
           type: object
           properties:
@@ -1254,6 +1347,7 @@ components:
               type: integer
               description: Time taken to generate the response in milliseconds
 
+          example: example_value
     PaginationInfo:
       type: object
       description: Pagination metadata for list responses
@@ -1261,13 +1355,16 @@ components:
         pageSize:
           type: integer
           description: Number of records per page
+          example: 10
         pageStart:
           type: integer
           description: Current page offset
+          example: 10
         totalRecords:
           type: integer
           description: Total number of records available
 
+          example: 10
     Account:
       type: object
       description: >-
@@ -1279,72 +1376,86 @@ components:
           type: string
           description: Unique system-generated account identifier
           examples:
-            - "AA2014500001"
+          - "AA2014500001"
         accountName:
           type: string
           description: Display name of the account
+          example: example_value
         customerId:
           type: string
           description: Identifier of the owning customer
+          example: '500123'
         customerName:
           type: string
           description: Name of the owning customer
+          example: example_value
         productId:
           type: string
           description: Product identifier from the arrangement architecture
+          example: '500123'
         productName:
           type: string
           description: Human-readable product name
+          example: example_value
         accountType:
           type: string
           description: Type of account
           enum:
-            - CURRENT
-            - SAVINGS
-            - CORPORATE
-            - ISLAMIC
-            - NON_RESIDENT
-            - MINOR
+          - CURRENT
+          - SAVINGS
+          - CORPORATE
+          - ISLAMIC
+          - NON_RESIDENT
+          - MINOR
+          example: CURRENT
         currency:
           type: string
           description: Account currency in ISO 4217 format
           pattern: "^[A-Z]{3}$"
           examples:
-            - "USD"
-            - "EUR"
-            - "GBP"
+          - "USD"
+          - "EUR"
+          - "GBP"
         status:
           type: string
           description: Current account status
           enum:
-            - ACTIVE
-            - INACTIVE
-            - CLOSED
-            - PENDING
-            - DORMANT
+          - ACTIVE
+          - INACTIVE
+          - CLOSED
+          - PENDING
+          - DORMANT
+          example: ACTIVE
         openingDate:
           type: string
           format: date
           description: Date the account was opened
+          example: '2026-01-15'
         workingBalance:
           type: number
           description: Current working balance of the account
+          example: 42.5
         availableBalance:
           type: number
           description: Available balance including overdraft facility
+          example: 42.5
         accountOfficerId:
           type: integer
           description: Identifier of the assigned account officer
+          example: '500123'
         branchId:
           type: string
           description: Branch where the account is held
+          example: '500123'
         iban:
           type: string
           description: International Bank Account Number
+          example: example_value
         bic:
           type: string
           description: Bank Identifier Code (SWIFT code)
 
+          example: example_value
     AccountBalances:
       type: object
       description: Balance breakdown for a banking account
@@ -1352,35 +1463,45 @@ components:
         accountId:
           type: string
           description: Account identifier
+          example: '500123'
         currency:
           type: string
           description: Currency of the balances
+          example: example_value
         workingBalance:
           type: number
           description: Current working balance including pending transactions
+          example: 42.5
         availableBalance:
           type: number
           description: Balance available for withdrawals and payments
+          example: 42.5
         clearedBalance:
           type: number
           description: Balance of cleared funds only
+          example: 42.5
         lockedAmount:
           type: number
           description: Amount locked or blocked on the account
+          example: 42.5
         overdraftLimit:
           type: number
           description: Approved overdraft facility amount
+          example: 42.5
         accruedInterest:
           type: number
           description: Interest accrued but not yet capitalized
+          example: 42.5
         pendingDeposits:
           type: number
           description: Deposits received but not yet cleared
+          example: 42.5
         asOfDate:
           type: string
           format: date-time
           description: Timestamp when balances were calculated
 
+          example: '2026-01-15T10:30:00Z'
     Transaction:
       type: object
       description: >-
@@ -1391,73 +1512,89 @@ components:
           type: string
           description: Unique transaction identifier
           examples:
-            - "FT2014500001"
+          - "FT2014500001"
         accountId:
           type: string
           description: Account against which the transaction was posted
+          example: '500123'
         transactionType:
           type: string
           description: Type classification of the transaction
           examples:
-            - "TRANSFER"
-            - "PAYMENT"
-            - "DEPOSIT"
-            - "WITHDRAWAL"
-            - "FEE"
-            - "INTEREST"
+          - "TRANSFER"
+          - "PAYMENT"
+          - "DEPOSIT"
+          - "WITHDRAWAL"
+          - "FEE"
+          - "INTEREST"
         debitOrCredit:
           type: string
           description: Whether the transaction is a debit or credit
           enum:
-            - DEBIT
-            - CREDIT
+          - DEBIT
+          - CREDIT
+          example: DEBIT
         amount:
           type: number
           description: Transaction amount in account currency
+          example: 42.5
         currency:
           type: string
           description: Currency of the transaction
           pattern: "^[A-Z]{3}$"
+          example: example_value
         bookingDate:
           type: string
           format: date
           description: Date the transaction was booked
+          example: '2026-01-15'
         valueDate:
           type: string
           format: date
           description: Value date for interest calculation purposes
+          example: '2026-01-15'
         processingDate:
           type: string
           format: date
           description: Date the transaction was processed
+          example: '2026-01-15'
         reference:
           type: string
           description: Transaction reference number
+          example: example_value
         narrative:
           type: string
           description: Transaction description or narrative text
+          example: example_value
         counterpartyAccountId:
           type: string
           description: Account identifier of the counterparty
+          example: '500123'
         counterpartyName:
           type: string
           description: Name of the counterparty
+          example: example_value
         balance:
           type: number
           description: Running balance after this transaction
+          example: 42.5
         exchangeRate:
           type: number
           description: Exchange rate applied if currency conversion occurred
+          example: 42.5
         chargesAmount:
           type: number
           description: Charges applied to this transaction
+          example: 42.5
         reversalIndicator:
           type: boolean
           description: Whether this transaction is a reversal
+          example: true
         statementNumber:
           type: string
           description: Statement number this transaction belongs to
 
+          example: example_value
     Customer:
       type: object
       description: >-
@@ -1468,18 +1605,18 @@ components:
           type: string
           description: Unique system-generated customer identifier
           examples:
-            - "100282"
+          - "100282"
         customerMnemonic:
           type: string
           description: Short alphanumeric code identifying the customer (3-10 characters, first character alphabetic)
           pattern: "^[A-Z][A-Z0-9]{2,9}$"
           examples:
-            - "JSMITH01"
+          - "JSMITH01"
         shortName:
           type: string
           description: Short name of the customer (3-35 characters, uppercase)
           examples:
-            - "JOHN SMITH"
+          - "JOHN SMITH"
         customerNames:
           type: array
           description: Full name entries for the customer
@@ -1489,6 +1626,7 @@ components:
               name:
                 type: string
                 description: Customer name line
+          example: []
         displayNames:
           type: array
           description: Display name entries for the customer
@@ -1498,56 +1636,65 @@ components:
               name:
                 type: string
                 description: Display name
+          example: []
         title:
           type: string
           description: Customer title
           enum:
-            - MR
-            - MRS
-            - MS
-            - MISS
-            - DR
-            - REV
+          - MR
+          - MRS
+          - MS
+          - MISS
+          - DR
+          - REV
+          example: MR
         gender:
           type: string
           description: Customer gender
           enum:
-            - MALE
-            - FEMALE
+          - MALE
+          - FEMALE
+          example: MALE
         dateOfBirth:
           type: string
           format: date
           description: Customer date of birth
+          example: '2026-01-15'
         nationalityId:
           type: string
           description: Nationality code
+          example: '500123'
         residenceId:
           type: string
           description: Country of residence code
+          example: '500123'
         language:
           type: integer
           description: Preferred language code
+          example: 10
         customerStatus:
           type: integer
           description: Customer status code (1 = active)
+          example: 10
         sectorId:
           type: integer
           description: Customer sector classification (1-4 digits)
           examples:
-            - 1000
+          - 1000
         industryId:
           type: integer
           description: Industry classification code
           examples:
-            - 1000
+          - 1000
         accountOfficerId:
           type: integer
           description: Assigned account officer identifier
           examples:
-            - 6
+          - 6
         target:
           type: integer
           description: Target market segment
+          example: 10
         communicationDevices:
           type: array
           description: Contact communication devices (phone, email)
@@ -1558,39 +1705,45 @@ components:
                 type: string
                 description: Type of communication device
                 enum:
-                  - PHONE
-                  - EMAIL
-                  - MOBILE
-                  - FAX
+                - PHONE
+                - EMAIL
+                - MOBILE
+                - FAX
               deviceValue:
                 type: string
                 description: Contact value (phone number or email address)
               preferredChannel:
                 type: boolean
                 description: Whether this is the preferred contact channel
+          example: []
         addresses:
           type: array
           description: Customer address records
           items:
             $ref: '#/components/schemas/Address'
+          example: []
         customerCompany:
           type: string
           description: Company identifier the customer belongs to
+          example: example_value
         amlCheck:
           type: string
           description: AML verification check status
+          example: example_value
         amlResult:
           type: string
           description: AML verification result
+          example: example_value
         kycStatus:
           type: string
           description: KYC compliance status
           enum:
-            - VERIFIED
-            - PENDING
-            - EXPIRED
-            - NOT_CHECKED
+          - VERIFIED
+          - PENDING
+          - EXPIRED
+          - NOT_CHECKED
 
+          example: VERIFIED
     Address:
       type: object
       description: Physical or mailing address
@@ -1599,30 +1752,37 @@ components:
           type: string
           description: Type of address
           enum:
-            - RESIDENTIAL
-            - CORRESPONDENCE
-            - BUSINESS
-            - REGISTERED
+          - RESIDENTIAL
+          - CORRESPONDENCE
+          - BUSINESS
+          - REGISTERED
+          example: RESIDENTIAL
         addressLine1:
           type: string
           description: First line of address
+          example: example_value
         addressLine2:
           type: string
           description: Second line of address
+          example: example_value
         city:
           type: string
           description: City name
+          example: example_value
         state:
           type: string
           description: State or province
+          example: example_value
         postCode:
           type: string
           description: Postal or ZIP code
+          example: example_value
         country:
           type: string
           description: Country code (ISO 3166)
           pattern: "^[A-Z]{2}$"
 
+          example: example_value
     FundTransfer:
       type: object
       description: >-
@@ -1634,67 +1794,82 @@ components:
           type: string
           description: Unique transfer identifier
           examples:
-            - "FT2014500001"
+          - "FT2014500001"
         debitAccountId:
           type: string
           description: Source account identifier
+          example: '500123'
         debitCurrency:
           type: string
           description: Currency of the debit account
+          example: example_value
         creditAccountId:
           type: string
           description: Destination account identifier
+          example: '500123'
         creditCurrency:
           type: string
           description: Currency of the credit account
+          example: example_value
         amount:
           type: number
           description: Transfer amount
+          example: 42.5
         creditAmount:
           type: number
           description: Amount credited (may differ due to exchange rate)
+          example: 42.5
         transferType:
           type: string
           description: Type of transfer
           enum:
-            - INTERNAL
-            - DOMESTIC
-            - INTERNATIONAL
-            - SEPA
-            - SWIFT
+          - INTERNAL
+          - DOMESTIC
+          - INTERNATIONAL
+          - SEPA
+          - SWIFT
+          example: INTERNAL
         status:
           type: string
           description: Current transfer status
           enum:
-            - PENDING
-            - PROCESSING
-            - COMPLETED
-            - FAILED
-            - REVERSED
+          - PENDING
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          - REVERSED
+          example: PENDING
         valueDate:
           type: string
           format: date
           description: Value date of the transfer
+          example: '2026-01-15'
         executionDate:
           type: string
           format: date
           description: Actual execution date
+          example: '2026-01-15'
         exchangeRate:
           type: number
           description: Applied exchange rate for cross-currency transfers
+          example: 42.5
         chargesAmount:
           type: number
           description: Total charges applied
+          example: 42.5
         chargesCurrency:
           type: string
           description: Currency of the charges
+          example: example_value
         narrative:
           type: string
           description: Transfer description or purpose
+          example: example_value
         endToEndReference:
           type: string
           description: End-to-end reference for payment tracking
 
+          example: example_value
     PaymentOrder:
       type: object
       description: >-
@@ -1704,81 +1879,100 @@ components:
         paymentOrderId:
           type: string
           description: Unique payment order identifier
+          example: '500123'
         debitAccountId:
           type: string
           description: Debit account identifier
+          example: '500123'
         debitAmount:
           type: number
           description: Amount debited from the source account
+          example: 42.5
         debitCurrency:
           type: string
           description: Currency of the debit
+          example: example_value
         creditAccountId:
           type: string
           description: Credit account identifier or beneficiary account
+          example: '500123'
         creditAmount:
           type: number
           description: Amount credited to the destination account
+          example: 42.5
         creditCurrency:
           type: string
           description: Currency of the credit
+          example: example_value
         paymentType:
           type: string
           description: Payment type classification
           enum:
-            - INTERNAL
-            - SEPA_CREDIT
-            - SEPA_INSTANT
-            - SWIFT_MT103
-            - ACH
-            - DOMESTIC_CLEARING
-            - RTGS
+          - INTERNAL
+          - SEPA_CREDIT
+          - SEPA_INSTANT
+          - SWIFT_MT103
+          - ACH
+          - DOMESTIC_CLEARING
+          - RTGS
+          example: INTERNAL
         status:
           type: string
           description: Payment order status
           enum:
-            - PENDING
-            - PROCESSING
-            - COMPLETED
-            - REJECTED
-            - CANCELLED
+          - PENDING
+          - PROCESSING
+          - COMPLETED
+          - REJECTED
+          - CANCELLED
+          example: PENDING
         valueDate:
           type: string
           format: date
           description: Value date of the payment
+          example: '2026-01-15'
         executionDate:
           type: string
           format: date-time
           description: Timestamp when the payment was executed
+          example: '2026-01-15T10:30:00Z'
         beneficiaryName:
           type: string
           description: Name of the payment beneficiary
+          example: example_value
         beneficiaryIban:
           type: string
           description: IBAN of the beneficiary
+          example: example_value
         beneficiaryBic:
           type: string
           description: BIC/SWIFT code of the beneficiary bank
+          example: example_value
         remittanceInformation:
           type: string
           description: Remittance information or payment reference
+          example: example_value
         chargesType:
           type: string
           description: Who bears the charges
           enum:
-            - OUR
-            - BEN
-            - SHA
+          - OUR
+          - BEN
+          - SHA
+          example: OUR
         totalCharges:
           type: number
           description: Total charges applied
+          example: 42.5
         exchangeRate:
           type: number
           description: Applied exchange rate
+          example: 42.5
         rejectionReason:
           type: string
           description: Reason for rejection if applicable
 
+          example: example_value
     StandingOrder:
       type: object
       description: A standing order instruction for recurring payments
@@ -1786,59 +1980,72 @@ components:
         standingOrderId:
           type: string
           description: Unique standing order identifier
+          example: '500123'
         accountId:
           type: string
           description: Debit account identifier
+          example: '500123'
         beneficiaryId:
           type: string
           description: Beneficiary identifier
+          example: '500123'
         beneficiaryAccountId:
           type: string
           description: Beneficiary account identifier
+          example: '500123'
         beneficiaryName:
           type: string
           description: Name of the beneficiary
+          example: example_value
         amount:
           type: number
           description: Recurring payment amount
+          example: 42.5
         currency:
           type: string
           description: Payment currency
+          example: example_value
         frequency:
           type: string
           description: Payment frequency
           enum:
-            - DAILY
-            - WEEKLY
-            - BIWEEKLY
-            - MONTHLY
-            - QUARTERLY
-            - SEMI_ANNUALLY
-            - ANNUALLY
+          - DAILY
+          - WEEKLY
+          - BIWEEKLY
+          - MONTHLY
+          - QUARTERLY
+          - SEMI_ANNUALLY
+          - ANNUALLY
+          example: DAILY
         startDate:
           type: string
           format: date
           description: Date of the first payment
+          example: '2026-01-15'
         endDate:
           type: string
           format: date
           description: Date of the last payment (optional for indefinite)
+          example: '2026-01-15'
         nextPaymentDate:
           type: string
           format: date
           description: Date of the next scheduled payment
+          example: '2026-01-15'
         status:
           type: string
           description: Standing order status
           enum:
-            - ACTIVE
-            - SUSPENDED
-            - EXPIRED
-            - CANCELLED
+          - ACTIVE
+          - SUSPENDED
+          - EXPIRED
+          - CANCELLED
+          example: ACTIVE
         narrative:
           type: string
           description: Payment description
 
+          example: example_value
     Deposit:
       type: object
       description: A deposit arrangement in Temenos Transact
@@ -1846,61 +2053,74 @@ components:
         depositId:
           type: string
           description: Unique deposit identifier
+          example: '500123'
         customerId:
           type: string
           description: Customer identifier
+          example: '500123'
         productId:
           type: string
           description: Deposit product identifier
+          example: '500123'
         productName:
           type: string
           description: Name of the deposit product
+          example: example_value
         principalAmount:
           type: number
           description: Original deposit principal amount
+          example: 42.5
         currentBalance:
           type: number
           description: Current balance including accrued interest
+          example: 42.5
         currency:
           type: string
           description: Deposit currency
+          example: example_value
         interestRate:
           type: number
           description: Applied interest rate percentage
+          example: 42.5
         accruedInterest:
           type: number
           description: Interest accrued but not yet capitalized
+          example: 42.5
         startDate:
           type: string
           format: date
           description: Deposit start date
+          example: '2026-01-15'
         maturityDate:
           type: string
           format: date
           description: Deposit maturity date
+          example: '2026-01-15'
         term:
           type: string
           description: Deposit term description
           examples:
-            - "12M"
-            - "6M"
-            - "1Y"
+          - "12M"
+          - "6M"
+          - "1Y"
         renewalType:
           type: string
           description: Automatic renewal behaviour
           enum:
-            - AUTO_RENEW
-            - NOTIFY
-            - NO_RENEWAL
+          - AUTO_RENEW
+          - NOTIFY
+          - NO_RENEWAL
+          example: AUTO_RENEW
         status:
           type: string
           description: Deposit status
           enum:
-            - ACTIVE
-            - MATURED
-            - CLOSED
-            - PREMATURE_CLOSURE
+          - ACTIVE
+          - MATURED
+          - CLOSED
+          - PREMATURE_CLOSURE
 
+          example: ACTIVE
     Loan:
       type: object
       description: A loan arrangement in Temenos Transact
@@ -1908,69 +2128,86 @@ components:
         loanId:
           type: string
           description: Unique loan identifier
+          example: '500123'
         customerId:
           type: string
           description: Customer identifier
+          example: '500123'
         productId:
           type: string
           description: Loan product identifier
+          example: '500123'
         productName:
           type: string
           description: Name of the loan product
+          example: example_value
         principalAmount:
           type: number
           description: Original loan principal amount
+          example: 42.5
         outstandingBalance:
           type: number
           description: Current outstanding balance
+          example: 42.5
         currency:
           type: string
           description: Loan currency
+          example: example_value
         interestRate:
           type: number
           description: Applied interest rate percentage
+          example: 42.5
         effectiveRate:
           type: number
           description: Annual percentage rate (APR)
+          example: 42.5
         disbursementDate:
           type: string
           format: date
           description: Date the loan was disbursed
+          example: '2026-01-15'
         maturityDate:
           type: string
           format: date
           description: Loan maturity date
+          example: '2026-01-15'
         nextPaymentDate:
           type: string
           format: date
           description: Next repayment due date
+          example: '2026-01-15'
         nextPaymentAmount:
           type: number
           description: Next repayment amount due
+          example: 42.5
         repaymentFrequency:
           type: string
           description: Frequency of loan repayments
           enum:
-            - MONTHLY
-            - QUARTERLY
-            - SEMI_ANNUALLY
-            - ANNUALLY
+          - MONTHLY
+          - QUARTERLY
+          - SEMI_ANNUALLY
+          - ANNUALLY
+          example: MONTHLY
         status:
           type: string
           description: Loan status
           enum:
-            - ACTIVE
-            - MATURED
-            - DELINQUENT
-            - CLOSED
-            - WRITTEN_OFF
+          - ACTIVE
+          - MATURED
+          - DELINQUENT
+          - CLOSED
+          - WRITTEN_OFF
+          example: ACTIVE
         overdueAmount:
           type: number
           description: Amount currently overdue
+          example: 42.5
         daysPastDue:
           type: integer
           description: Number of days past due
 
+          example: 10
     Beneficiary:
       type: object
       description: A registered payment beneficiary
@@ -1978,48 +2215,60 @@ components:
         beneficiaryId:
           type: string
           description: Unique beneficiary identifier
+          example: '500123'
         customerId:
           type: string
           description: Owning customer identifier
+          example: '500123'
         beneficiaryName:
           type: string
           description: Name of the beneficiary
+          example: example_value
         accountNumber:
           type: string
           description: Beneficiary account number
+          example: example_value
         iban:
           type: string
           description: Beneficiary IBAN
+          example: example_value
         bic:
           type: string
           description: Beneficiary bank BIC/SWIFT code
+          example: example_value
         bankName:
           type: string
           description: Name of the beneficiary bank
+          example: example_value
         bankCountry:
           type: string
           description: Country of the beneficiary bank
+          example: example_value
         currency:
           type: string
           description: Default payment currency
+          example: example_value
         beneficiaryType:
           type: string
           description: Type of beneficiary
           enum:
-            - DOMESTIC
-            - INTERNATIONAL
-            - SEPA
+          - DOMESTIC
+          - INTERNATIONAL
+          - SEPA
+          example: DOMESTIC
         status:
           type: string
           description: Beneficiary status
           enum:
-            - ACTIVE
-            - INACTIVE
-            - PENDING_VERIFICATION
+          - ACTIVE
+          - INACTIVE
+          - PENDING_VERIFICATION
+          example: ACTIVE
         nickname:
           type: string
           description: User-defined nickname for the beneficiary
 
+          example: example_value
     Product:
       type: object
       description: A banking product definition from the product catalog
@@ -2027,26 +2276,31 @@ components:
         productId:
           type: string
           description: Unique product identifier
+          example: '500123'
         productName:
           type: string
           description: Name of the product
+          example: example_value
         productGroup:
           type: string
           description: Product group classification
           enum:
-            - ACCOUNTS
-            - DEPOSITS
-            - LOANS
-            - CARDS
-            - INSURANCE
+          - ACCOUNTS
+          - DEPOSITS
+          - LOANS
+          - CARDS
+          - INSURANCE
+          example: ACCOUNTS
         description:
           type: string
           description: Detailed product description
+          example: A sample description.
         currency:
           type: array
           description: Supported currencies
           items:
             type: string
+          example: []
         interestRate:
           type: object
           description: Interest rate conditions
@@ -2057,9 +2311,11 @@ components:
               type: number
             default:
               type: number
+          example: example_value
         minimumBalance:
           type: number
           description: Minimum balance requirement
+          example: 42.5
         fees:
           type: array
           description: Associated fees and charges
@@ -2074,14 +2330,16 @@ components:
                 type: string
               frequency:
                 type: string
+          example: []
         status:
           type: string
           description: Product availability status
           enum:
-            - ACTIVE
-            - DISCONTINUED
-            - COMING_SOON
+          - ACTIVE
+          - DISCONTINUED
+          - COMING_SOON
 
+          example: ACTIVE
     Currency:
       type: object
       description: Currency definition with exchange rate information
@@ -2090,25 +2348,32 @@ components:
           type: string
           description: ISO 4217 currency code
           pattern: "^[A-Z]{3}$"
+          example: example_value
         currencyName:
           type: string
           description: Full currency name
+          example: example_value
         numericCode:
           type: string
           description: ISO 4217 numeric code
+          example: example_value
         decimalPlaces:
           type: integer
           description: Number of decimal places
+          example: 10
         buyRate:
           type: number
           description: Current buy exchange rate
+          example: 42.5
         sellRate:
           type: number
           description: Current sell exchange rate
+          example: 42.5
         midRate:
           type: number
           description: Mid-market exchange rate
 
+          example: 42.5
     Country:
       type: object
       description: Country definition with regulatory details
@@ -2117,19 +2382,24 @@ components:
           type: string
           description: ISO 3166-1 alpha-2 country code
           pattern: "^[A-Z]{2}$"
+          example: example_value
         countryName:
           type: string
           description: Full country name
+          example: example_value
         currencyCode:
           type: string
           description: Default currency code
+          example: example_value
         ibanRequired:
           type: boolean
           description: Whether IBAN is required for payments to this country
+          example: true
         sanctioned:
           type: boolean
           description: Whether the country is under sanctions
 
+          example: true
     Card:
       type: object
       description: A debit or credit card linked to a customer account
@@ -2137,52 +2407,61 @@ components:
         cardId:
           type: string
           description: Unique card identifier
+          example: '500123'
         cardNumber:
           type: string
           description: Masked card number
           examples:
-            - "****-****-****-1234"
+          - "****-****-****-1234"
         cardType:
           type: string
           description: Type of card
           enum:
-            - DEBIT
-            - CREDIT
-            - PREPAID
+          - DEBIT
+          - CREDIT
+          - PREPAID
+          example: DEBIT
         accountId:
           type: string
           description: Linked account identifier
+          example: '500123'
         customerId:
           type: string
           description: Card holder customer identifier
+          example: '500123'
         cardholderName:
           type: string
           description: Name on the card
+          example: example_value
         expiryDate:
           type: string
           description: Card expiry date (MM/YY)
           pattern: "^(0[1-9]|1[0-2])/[0-9]{2}$"
+          example: example_value
         status:
           type: string
           description: Card status
           enum:
-            - ACTIVE
-            - BLOCKED
-            - EXPIRED
-            - CANCELLED
-            - PENDING_ACTIVATION
+          - ACTIVE
+          - BLOCKED
+          - EXPIRED
+          - CANCELLED
+          - PENDING_ACTIVATION
+          example: ACTIVE
         dailyLimit:
           type: number
           description: Daily transaction limit
+          example: 42.5
         availableLimit:
           type: number
           description: Available spending limit
 
+          example: 42.5
     ErrorResponse:
       type: object
       description: Standard error response structure
       required:
-        - header
+      - header
       properties:
         header:
           type: object
@@ -2194,10 +2473,11 @@ components:
               type: string
               description: Error status
               enum:
-                - error
+              - error
             transactionStatus:
               type: string
               description: Transaction status
+          example: example_value
         error:
           type: object
           properties:
@@ -2226,6 +2506,7 @@ components:
                     type: string
                     description: Field-level error code
 
+          example: example_value
     AccountsResponse:
       type: object
       properties:
@@ -2235,6 +2516,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Account'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 
@@ -2255,6 +2537,7 @@ components:
             override:
               type: boolean
               description: Override warnings and proceed
+          example: example_value
         body:
           type: object
           properties:
@@ -2267,6 +2550,7 @@ components:
             postingRestriction:
               type: string
 
+          example: example_value
     AccountBalancesResponse:
       type: object
       properties:
@@ -2284,6 +2568,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Transaction'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 
@@ -2296,6 +2581,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Customer'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 
@@ -2310,7 +2596,7 @@ components:
     CustomerCreateRequest:
       type: object
       required:
-        - body
+      - body
       properties:
         header:
           type: object
@@ -2318,12 +2604,13 @@ components:
             override:
               type: boolean
               description: Override warnings and proceed
+          example: example_value
         body:
           type: object
           required:
-            - shortName
-            - customerMnemonic
-            - sectorId
+          - shortName
+          - customerMnemonic
+          - sectorId
           properties:
             shortName:
               type: string
@@ -2351,17 +2638,17 @@ components:
             title:
               type: string
               enum:
-                - MR
-                - MRS
-                - MS
-                - MISS
-                - DR
-                - REV
+              - MR
+              - MRS
+              - MS
+              - MISS
+              - DR
+              - REV
             gender:
               type: string
               enum:
-                - MALE
-                - FEMALE
+              - MALE
+              - FEMALE
             dateOfBirth:
               type: string
               format: date
@@ -2386,10 +2673,10 @@ components:
                   deviceType:
                     type: string
                     enum:
-                      - PHONE
-                      - EMAIL
-                      - MOBILE
-                      - FAX
+                    - PHONE
+                    - EMAIL
+                    - MOBILE
+                    - FAX
                   deviceValue:
                     type: string
             addresses:
@@ -2397,6 +2684,7 @@ components:
               items:
                 $ref: '#/components/schemas/Address'
 
+          example: example_value
     CustomerUpdateRequest:
       type: object
       properties:
@@ -2405,6 +2693,7 @@ components:
           properties:
             override:
               type: boolean
+          example: example_value
         body:
           type: object
           properties:
@@ -2436,22 +2725,24 @@ components:
               items:
                 $ref: '#/components/schemas/Address'
 
+          example: example_value
     FundTransferRequest:
       type: object
       required:
-        - body
+      - body
       properties:
         header:
           type: object
           properties:
             override:
               type: boolean
+          example: example_value
         body:
           type: object
           required:
-            - debitAccountId
-            - creditAccountId
-            - amount
+          - debitAccountId
+          - creditAccountId
+          - amount
           properties:
             debitAccountId:
               type: string
@@ -2477,6 +2768,7 @@ components:
               type: string
               description: End-to-end reference
 
+          example: example_value
     FundTransferResponse:
       type: object
       properties:
@@ -2494,24 +2786,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PaymentOrder'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 
     PaymentOrderRequest:
       type: object
       required:
-        - body
+      - body
       properties:
         header:
           type: object
           properties:
             override:
               type: boolean
+          example: example_value
         body:
           type: object
           required:
-            - debitAccountId
-            - debitAmount
+          - debitAccountId
+          - debitAmount
           properties:
             debitAccountId:
               type: string
@@ -2537,13 +2831,13 @@ components:
             paymentType:
               type: string
               enum:
-                - INTERNAL
-                - SEPA_CREDIT
-                - SEPA_INSTANT
-                - SWIFT_MT103
-                - ACH
-                - DOMESTIC_CLEARING
-                - RTGS
+              - INTERNAL
+              - SEPA_CREDIT
+              - SEPA_INSTANT
+              - SWIFT_MT103
+              - ACH
+              - DOMESTIC_CLEARING
+              - RTGS
             valueDate:
               type: string
               format: date
@@ -2552,12 +2846,13 @@ components:
             chargesType:
               type: string
               enum:
-                - OUR
-                - BEN
-                - SHA
+              - OUR
+              - BEN
+              - SHA
             endToEndReference:
               type: string
 
+          example: example_value
     PaymentOrderResponse:
       type: object
       properties:
@@ -2575,27 +2870,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StandingOrder'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 
     StandingOrderRequest:
       type: object
       required:
-        - body
+      - body
       properties:
         header:
           type: object
           properties:
             override:
               type: boolean
+          example: example_value
         body:
           type: object
           required:
-            - accountId
-            - amount
-            - currency
-            - frequency
-            - startDate
+          - accountId
+          - amount
+          - currency
+          - frequency
+          - startDate
           properties:
             accountId:
               type: string
@@ -2613,13 +2910,13 @@ components:
             frequency:
               type: string
               enum:
-                - DAILY
-                - WEEKLY
-                - BIWEEKLY
-                - MONTHLY
-                - QUARTERLY
-                - SEMI_ANNUALLY
-                - ANNUALLY
+              - DAILY
+              - WEEKLY
+              - BIWEEKLY
+              - MONTHLY
+              - QUARTERLY
+              - SEMI_ANNUALLY
+              - ANNUALLY
             startDate:
               type: string
               format: date
@@ -2629,6 +2926,7 @@ components:
             narrative:
               type: string
 
+          example: example_value
     StandingOrderResponse:
       type: object
       properties:
@@ -2646,6 +2944,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Deposit'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 
@@ -2666,6 +2965,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Loan'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 
@@ -2686,24 +2986,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Beneficiary'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 
     BeneficiaryCreateRequest:
       type: object
       required:
-        - body
+      - body
       properties:
         header:
           type: object
           properties:
             override:
               type: boolean
+          example: example_value
         body:
           type: object
           required:
-            - customerId
-            - beneficiaryName
+          - customerId
+          - beneficiaryName
           properties:
             customerId:
               type: string
@@ -2724,12 +3026,13 @@ components:
             beneficiaryType:
               type: string
               enum:
-                - DOMESTIC
-                - INTERNATIONAL
-                - SEPA
+              - DOMESTIC
+              - INTERNATIONAL
+              - SEPA
             nickname:
               type: string
 
+          example: example_value
     BeneficiaryResponse:
       type: object
       properties:
@@ -2747,6 +3050,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Product'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 
@@ -2759,6 +3063,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Currency'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 
@@ -2771,6 +3076,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Country'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 
@@ -2801,6 +3107,7 @@ components:
               type: string
               description: Country code
 
+          example: example_value
     CardsResponse:
       type: object
       properties:
@@ -2810,6 +3117,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Card'
+          example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
 

@@ -1,0 +1,20 @@
+{
+  "transactionId": "500123",
+  "accountId": "500123",
+  "transactionType": "example_value",
+  "debitOrCredit": "example_value",
+  "amount": 42.5,
+  "currency": "example_value",
+  "bookingDate": "example_value",
+  "valueDate": "example_value",
+  "processingDate": "example_value",
+  "reference": "example_value",
+  "narrative": "example_value",
+  "counterpartyAccountId": "500123",
+  "counterpartyName": "example_value",
+  "balance": 42.5,
+  "exchangeRate": 42.5,
+  "chargesAmount": 42.5,
+  "reversalIndicator": true,
+  "statementNumber": "example_value"
+}

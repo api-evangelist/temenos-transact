@@ -1,0 +1,9 @@
+{
+  "currencyCode": "example_value",
+  "currencyName": "example_value",
+  "numericCode": "example_value",
+  "decimalPlaces": 10,
+  "buyRate": 42.5,
+  "sellRate": 42.5,
+  "midRate": 42.5
+}

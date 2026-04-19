@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Customer",
+  "type": "object",
+  "description": "A customer record in Temenos Transact representing an individual or corporate entity with a banking relationship.",
+  "properties": {
+    "customerId": {
+      "type": "string",
+      "description": "Unique system-generated customer identifier"
+    },
+    "customerMnemonic": {
+      "type": "string",
+      "description": "Short alphanumeric code identifying the customer (3-10 characters, first character alphabetic)"
+    },
+    "shortName": {
+      "type": "string",
+      "description": "Short name of the customer (3-35 characters, uppercase)"
+    },
+    "customerNames": {
+      "type": "array",
+      "description": "Full name entries for the customer"
+    },
+    "displayNames": {
+      "type": "array",
+      "description": "Display name entries for the customer"
+    },
+    "title": {
+      "type": "string",
+      "description": "Customer title"
+    },
+    "gender": {
+      "type": "string",
+      "description": "Customer gender"
+    },
+    "dateOfBirth": {
+      "type": "string",
+      "description": "Customer date of birth"
+    },
+    "nationalityId": {
+      "type": "string",
+      "description": "Nationality code"
+    },
+    "residenceId": {
+      "type": "string",
+      "description": "Country of residence code"
+    },
+    "language": {
+      "type": "integer",
+      "description": "Preferred language code"
+    },
+    "customerStatus": {
+      "type": "integer",
+      "description": "Customer status code (1 = active)"
+    },
+    "sectorId": {
+      "type": "integer",
+      "description": "Customer sector classification (1-4 digits)"
+    },
+    "industryId": {
+      "type": "integer",
+      "description": "Industry classification code"
+    },
+    "accountOfficerId": {
+      "type": "integer",
+      "description": "Assigned account officer identifier"
+    },
+    "target": {
+      "type": "integer",
+      "description": "Target market segment"
+    },
+    "communicationDevices": {
+      "type": "array",
+      "description": "Contact communication devices (phone, email)"
+    },
+    "addresses": {
+      "type": "array",
+      "description": "Customer address records"
+    },
+    "customerCompany": {
+      "type": "string",
+      "description": "Company identifier the customer belongs to"
+    },
+    "amlCheck": {
+      "type": "string",
+      "description": "AML verification check status"
+    },
+    "amlResult": {
+      "type": "string",
+      "description": "AML verification result"
+    },
+    "kycStatus": {
+      "type": "string",
+      "description": "KYC compliance status"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Address",
+  "type": "object",
+  "description": "Physical or mailing address",
+  "properties": {
+    "addressType": {
+      "type": "string",
+      "description": "Type of address"
+    },
+    "addressLine1": {
+      "type": "string",
+      "description": "First line of address"
+    },
+    "addressLine2": {
+      "type": "string",
+      "description": "Second line of address"
+    },
+    "city": {
+      "type": "string",
+      "description": "City name"
+    },
+    "state": {
+      "type": "string",
+      "description": "State or province"
+    },
+    "postCode": {
+      "type": "string",
+      "description": "Postal or ZIP code"
+    },
+    "country": {
+      "type": "string",
+      "description": "Country code (ISO 3166)"
+    }
+  }
+}

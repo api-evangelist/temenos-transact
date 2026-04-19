@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaymentOrder",
+  "type": "object",
+  "description": "A payment order in Temenos Transact for submitting payment instructions through various clearing systems.",
+  "properties": {
+    "paymentOrderId": {
+      "type": "string",
+      "description": "Unique payment order identifier"
+    },
+    "debitAccountId": {
+      "type": "string",
+      "description": "Debit account identifier"
+    },
+    "debitAmount": {
+      "type": "number",
+      "description": "Amount debited from the source account"
+    },
+    "debitCurrency": {
+      "type": "string",
+      "description": "Currency of the debit"
+    },
+    "creditAccountId": {
+      "type": "string",
+      "description": "Credit account identifier or beneficiary account"
+    },
+    "creditAmount": {
+      "type": "number",
+      "description": "Amount credited to the destination account"
+    },
+    "creditCurrency": {
+      "type": "string",
+      "description": "Currency of the credit"
+    },
+    "paymentType": {
+      "type": "string",
+      "description": "Payment type classification"
+    },
+    "status": {
+      "type": "string",
+      "description": "Payment order status"
+    },
+    "valueDate": {
+      "type": "string",
+      "description": "Value date of the payment"
+    },
+    "executionDate": {
+      "type": "string",
+      "description": "Timestamp when the payment was executed"
+    },
+    "beneficiaryName": {
+      "type": "string",
+      "description": "Name of the payment beneficiary"
+    },
+    "beneficiaryIban": {
+      "type": "string",
+      "description": "IBAN of the beneficiary"
+    },
+    "beneficiaryBic": {
+      "type": "string",
+      "description": "BIC/SWIFT code of the beneficiary bank"
+    },
+    "remittanceInformation": {
+      "type": "string",
+      "description": "Remittance information or payment reference"
+    },
+    "chargesType": {
+      "type": "string",
+      "description": "Who bears the charges"
+    },
+    "totalCharges": {
+      "type": "number",
+      "description": "Total charges applied"
+    },
+    "exchangeRate": {
+      "type": "number",
+      "description": "Applied exchange rate"
+    },
+    "rejectionReason": {
+      "type": "string",
+      "description": "Reason for rejection if applicable"
+    }
+  }
+}

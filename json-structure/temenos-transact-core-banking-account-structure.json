@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Account",
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string"
+    },
+    "accountName": {
+      "type": "string"
+    },
+    "customerId": {
+      "type": "string"
+    },
+    "customerName": {
+      "type": "string"
+    },
+    "productId": {
+      "type": "string"
+    },
+    "productName": {
+      "type": "string"
+    },
+    "accountType": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "openingDate": {
+      "type": "string"
+    },
+    "workingBalance": {
+      "type": "number"
+    },
+    "availableBalance": {
+      "type": "number"
+    },
+    "accountOfficerId": {
+      "type": "integer"
+    },
+    "branchId": {
+      "type": "string"
+    },
+    "iban": {
+      "type": "string"
+    },
+    "bic": {
+      "type": "string"
+    }
+  }
+}

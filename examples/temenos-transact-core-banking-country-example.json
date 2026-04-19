@@ -1,0 +1,7 @@
+{
+  "countryCode": "example_value",
+  "countryName": "example_value",
+  "currencyCode": "example_value",
+  "ibanRequired": true,
+  "sanctioned": true
+}

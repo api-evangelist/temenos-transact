@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "productId": {
+      "type": "string"
+    },
+    "productName": {
+      "type": "string"
+    },
+    "productGroup": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "array"
+    },
+    "interestRate": {
+      "type": "object"
+    },
+    "minimumBalance": {
+      "type": "number"
+    },
+    "fees": {
+      "type": "array"
+    },
+    "status": {
+      "type": "string"
+    }
+  }
+}

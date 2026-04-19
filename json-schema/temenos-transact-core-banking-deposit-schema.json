@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Deposit",
+  "type": "object",
+  "description": "A deposit arrangement in Temenos Transact",
+  "properties": {
+    "depositId": {
+      "type": "string",
+      "description": "Unique deposit identifier"
+    },
+    "customerId": {
+      "type": "string",
+      "description": "Customer identifier"
+    },
+    "productId": {
+      "type": "string",
+      "description": "Deposit product identifier"
+    },
+    "productName": {
+      "type": "string",
+      "description": "Name of the deposit product"
+    },
+    "principalAmount": {
+      "type": "number",
+      "description": "Original deposit principal amount"
+    },
+    "currentBalance": {
+      "type": "number",
+      "description": "Current balance including accrued interest"
+    },
+    "currency": {
+      "type": "string",
+      "description": "Deposit currency"
+    },
+    "interestRate": {
+      "type": "number",
+      "description": "Applied interest rate percentage"
+    },
+    "accruedInterest": {
+      "type": "number",
+      "description": "Interest accrued but not yet capitalized"
+    },
+    "startDate": {
+      "type": "string",
+      "description": "Deposit start date"
+    },
+    "maturityDate": {
+      "type": "string",
+      "description": "Deposit maturity date"
+    },
+    "term": {
+      "type": "string",
+      "description": "Deposit term description"
+    },
+    "renewalType": {
+      "type": "string",
+      "description": "Automatic renewal behaviour"
+    },
+    "status": {
+      "type": "string",
+      "description": "Deposit status"
+    }
+  }
+}

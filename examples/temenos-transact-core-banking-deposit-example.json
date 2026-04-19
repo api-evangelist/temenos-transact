@@ -1,0 +1,16 @@
+{
+  "depositId": "500123",
+  "customerId": "500123",
+  "productId": "500123",
+  "productName": "example_value",
+  "principalAmount": 42.5,
+  "currentBalance": 42.5,
+  "currency": "example_value",
+  "interestRate": 42.5,
+  "accruedInterest": 42.5,
+  "startDate": "example_value",
+  "maturityDate": "example_value",
+  "term": "example_value",
+  "renewalType": "example_value",
+  "status": "example_value"
+}

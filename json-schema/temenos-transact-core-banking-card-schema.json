@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Card",
+  "type": "object",
+  "description": "A debit or credit card linked to a customer account",
+  "properties": {
+    "cardId": {
+      "type": "string",
+      "description": "Unique card identifier"
+    },
+    "cardNumber": {
+      "type": "string",
+      "description": "Masked card number"
+    },
+    "cardType": {
+      "type": "string",
+      "description": "Type of card"
+    },
+    "accountId": {
+      "type": "string",
+      "description": "Linked account identifier"
+    },
+    "customerId": {
+      "type": "string",
+      "description": "Card holder customer identifier"
+    },
+    "cardholderName": {
+      "type": "string",
+      "description": "Name on the card"
+    },
+    "expiryDate": {
+      "type": "string",
+      "description": "Card expiry date (MM/YY)"
+    },
+    "status": {
+      "type": "string",
+      "description": "Card status"
+    },
+    "dailyLimit": {
+      "type": "number",
+      "description": "Daily transaction limit"
+    },
+    "availableLimit": {
+      "type": "number",
+      "description": "Available spending limit"
+    }
+  }
+}

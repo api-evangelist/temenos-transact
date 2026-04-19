@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FundTransfer",
+  "type": "object",
+  "description": "A fund transfer operation in Temenos Transact for moving funds between accounts, supporting internal transfers, domestic payments, and cross-border transactions.",
+  "properties": {
+    "transferId": {
+      "type": "string",
+      "description": "Unique transfer identifier"
+    },
+    "debitAccountId": {
+      "type": "string",
+      "description": "Source account identifier"
+    },
+    "debitCurrency": {
+      "type": "string",
+      "description": "Currency of the debit account"
+    },
+    "creditAccountId": {
+      "type": "string",
+      "description": "Destination account identifier"
+    },
+    "creditCurrency": {
+      "type": "string",
+      "description": "Currency of the credit account"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Transfer amount"
+    },
+    "creditAmount": {
+      "type": "number",
+      "description": "Amount credited (may differ due to exchange rate)"
+    },
+    "transferType": {
+      "type": "string",
+      "description": "Type of transfer"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current transfer status"
+    },
+    "valueDate": {
+      "type": "string",
+      "description": "Value date of the transfer"
+    },
+    "executionDate": {
+      "type": "string",
+      "description": "Actual execution date"
+    },
+    "exchangeRate": {
+      "type": "number",
+      "description": "Applied exchange rate for cross-currency transfers"
+    },
+    "chargesAmount": {
+      "type": "number",
+      "description": "Total charges applied"
+    },
+    "chargesCurrency": {
+      "type": "string",
+      "description": "Currency of the charges"
+    },
+    "narrative": {
+      "type": "string",
+      "description": "Transfer description or purpose"
+    },
+    "endToEndReference": {
+      "type": "string",
+      "description": "End-to-end reference for payment tracking"
+    }
+  }
+}

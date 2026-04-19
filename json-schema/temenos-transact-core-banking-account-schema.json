@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Account",
+  "type": "object",
+  "description": "A banking account arrangement in Temenos Transact. Created through the Arrangement Architecture supporting current, savings, corporate, Islamic, non-resident, and minor account types.",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "Unique system-generated account identifier"
+    },
+    "accountName": {
+      "type": "string",
+      "description": "Display name of the account"
+    },
+    "customerId": {
+      "type": "string",
+      "description": "Identifier of the owning customer"
+    },
+    "customerName": {
+      "type": "string",
+      "description": "Name of the owning customer"
+    },
+    "productId": {
+      "type": "string",
+      "description": "Product identifier from the arrangement architecture"
+    },
+    "productName": {
+      "type": "string",
+      "description": "Human-readable product name"
+    },
+    "accountType": {
+      "type": "string",
+      "description": "Type of account"
+    },
+    "currency": {
+      "type": "string",
+      "description": "Account currency in ISO 4217 format"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current account status"
+    },
+    "openingDate": {
+      "type": "string",
+      "description": "Date the account was opened"
+    },
+    "workingBalance": {
+      "type": "number",
+      "description": "Current working balance of the account"
+    },
+    "availableBalance": {
+      "type": "number",
+      "description": "Available balance including overdraft facility"
+    },
+    "accountOfficerId": {
+      "type": "integer",
+      "description": "Identifier of the assigned account officer"
+    },
+    "branchId": {
+      "type": "string",
+      "description": "Branch where the account is held"
+    },
+    "iban": {
+      "type": "string",
+      "description": "International Bank Account Number"
+    },
+    "bic": {
+      "type": "string",
+      "description": "Bank Identifier Code (SWIFT code)"
+    }
+  }
+}

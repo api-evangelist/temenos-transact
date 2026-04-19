@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Loan",
+  "type": "object",
+  "properties": {
+    "loanId": {
+      "type": "string"
+    },
+    "customerId": {
+      "type": "string"
+    },
+    "productId": {
+      "type": "string"
+    },
+    "productName": {
+      "type": "string"
+    },
+    "principalAmount": {
+      "type": "number"
+    },
+    "outstandingBalance": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "interestRate": {
+      "type": "number"
+    },
+    "effectiveRate": {
+      "type": "number"
+    },
+    "disbursementDate": {
+      "type": "string"
+    },
+    "maturityDate": {
+      "type": "string"
+    },
+    "nextPaymentDate": {
+      "type": "string"
+    },
+    "nextPaymentAmount": {
+      "type": "number"
+    },
+    "repaymentFrequency": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "overdueAmount": {
+      "type": "number"
+    },
+    "daysPastDue": {
+      "type": "integer"
+    }
+  }
+}

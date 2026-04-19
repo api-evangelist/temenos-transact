@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Country",
+  "type": "object",
+  "description": "Country definition with regulatory details",
+  "properties": {
+    "countryCode": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-2 country code"
+    },
+    "countryName": {
+      "type": "string",
+      "description": "Full country name"
+    },
+    "currencyCode": {
+      "type": "string",
+      "description": "Default currency code"
+    },
+    "ibanRequired": {
+      "type": "boolean",
+      "description": "Whether IBAN is required for payments to this country"
+    },
+    "sanctioned": {
+      "type": "boolean",
+      "description": "Whether the country is under sanctions"
+    }
+  }
+}

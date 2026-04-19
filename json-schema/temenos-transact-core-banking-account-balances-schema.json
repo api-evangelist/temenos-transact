@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AccountBalances",
+  "type": "object",
+  "description": "Balance breakdown for a banking account",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "Account identifier"
+    },
+    "currency": {
+      "type": "string",
+      "description": "Currency of the balances"
+    },
+    "workingBalance": {
+      "type": "number",
+      "description": "Current working balance including pending transactions"
+    },
+    "availableBalance": {
+      "type": "number",
+      "description": "Balance available for withdrawals and payments"
+    },
+    "clearedBalance": {
+      "type": "number",
+      "description": "Balance of cleared funds only"
+    },
+    "lockedAmount": {
+      "type": "number",
+      "description": "Amount locked or blocked on the account"
+    },
+    "overdraftLimit": {
+      "type": "number",
+      "description": "Approved overdraft facility amount"
+    },
+    "accruedInterest": {
+      "type": "number",
+      "description": "Interest accrued but not yet capitalized"
+    },
+    "pendingDeposits": {
+      "type": "number",
+      "description": "Deposits received but not yet cleared"
+    },
+    "asOfDate": {
+      "type": "string",
+      "description": "Timestamp when balances were calculated"
+    }
+  }
+}

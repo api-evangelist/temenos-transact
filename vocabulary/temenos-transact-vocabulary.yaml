@@ -1,0 +1,17 @@
+name: temenos-transact API Vocabulary
+provider: temenos-transact
+created: '2026-04-18'
+modified: '2026-04-18'
+operations: 30
+schemas: 48
+tags:
+- Accounts
+- Beneficiaries
+- Cards
+- Customers
+- Deposits
+- Loans
+- Payments
+- Products
+- Reference Data
+- Transactions

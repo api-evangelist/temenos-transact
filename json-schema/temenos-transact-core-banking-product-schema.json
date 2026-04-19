@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Product",
+  "type": "object",
+  "description": "A banking product definition from the product catalog",
+  "properties": {
+    "productId": {
+      "type": "string",
+      "description": "Unique product identifier"
+    },
+    "productName": {
+      "type": "string",
+      "description": "Name of the product"
+    },
+    "productGroup": {
+      "type": "string",
+      "description": "Product group classification"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed product description"
+    },
+    "currency": {
+      "type": "array",
+      "description": "Supported currencies"
+    },
+    "interestRate": {
+      "type": "object",
+      "description": "Interest rate conditions"
+    },
+    "minimumBalance": {
+      "type": "number",
+      "description": "Minimum balance requirement"
+    },
+    "fees": {
+      "type": "array",
+      "description": "Associated fees and charges"
+    },
+    "status": {
+      "type": "string",
+      "description": "Product availability status"
+    }
+  }
+}

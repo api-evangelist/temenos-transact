@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResponseHeader",
+  "type": "object",
+  "description": "Standard response header returned by all Transact API operations",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the resource"
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the operation (success, error)"
+    },
+    "transactionStatus": {
+      "type": "string",
+      "description": "Transaction lifecycle status"
+    },
+    "audit": {
+      "type": "object"
+    }
+  }
+}

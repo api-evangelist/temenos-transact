@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Currency",
+  "type": "object",
+  "description": "Currency definition with exchange rate information",
+  "properties": {
+    "currencyCode": {
+      "type": "string",
+      "description": "ISO 4217 currency code"
+    },
+    "currencyName": {
+      "type": "string",
+      "description": "Full currency name"
+    },
+    "numericCode": {
+      "type": "string",
+      "description": "ISO 4217 numeric code"
+    },
+    "decimalPlaces": {
+      "type": "integer",
+      "description": "Number of decimal places"
+    },
+    "buyRate": {
+      "type": "number",
+      "description": "Current buy exchange rate"
+    },
+    "sellRate": {
+      "type": "number",
+      "description": "Current sell exchange rate"
+    },
+    "midRate": {
+      "type": "number",
+      "description": "Mid-market exchange rate"
+    }
+  }
+}

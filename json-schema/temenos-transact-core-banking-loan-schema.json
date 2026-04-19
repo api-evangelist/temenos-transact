@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Loan",
+  "type": "object",
+  "description": "A loan arrangement in Temenos Transact",
+  "properties": {
+    "loanId": {
+      "type": "string",
+      "description": "Unique loan identifier"
+    },
+    "customerId": {
+      "type": "string",
+      "description": "Customer identifier"
+    },
+    "productId": {
+      "type": "string",
+      "description": "Loan product identifier"
+    },
+    "productName": {
+      "type": "string",
+      "description": "Name of the loan product"
+    },
+    "principalAmount": {
+      "type": "number",
+      "description": "Original loan principal amount"
+    },
+    "outstandingBalance": {
+      "type": "number",
+      "description": "Current outstanding balance"
+    },
+    "currency": {
+      "type": "string",
+      "description": "Loan currency"
+    },
+    "interestRate": {
+      "type": "number",
+      "description": "Applied interest rate percentage"
+    },
+    "effectiveRate": {
+      "type": "number",
+      "description": "Annual percentage rate (APR)"
+    },
+    "disbursementDate": {
+      "type": "string",
+      "description": "Date the loan was disbursed"
+    },
+    "maturityDate": {
+      "type": "string",
+      "description": "Loan maturity date"
+    },
+    "nextPaymentDate": {
+      "type": "string",
+      "description": "Next repayment due date"
+    },
+    "nextPaymentAmount": {
+      "type": "number",
+      "description": "Next repayment amount due"
+    },
+    "repaymentFrequency": {
+      "type": "string",
+      "description": "Frequency of loan repayments"
+    },
+    "status": {
+      "type": "string",
+      "description": "Loan status"
+    },
+    "overdueAmount": {
+      "type": "number",
+      "description": "Amount currently overdue"
+    },
+    "daysPastDue": {
+      "type": "integer",
+      "description": "Number of days past due"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "loanId": "500123",
+  "customerId": "500123",
+  "productId": "500123",
+  "productName": "example_value",
+  "principalAmount": 42.5,
+  "outstandingBalance": 42.5,
+  "currency": "example_value",
+  "interestRate": 42.5,
+  "effectiveRate": 42.5,
+  "disbursementDate": "example_value",
+  "maturityDate": "example_value",
+  "nextPaymentDate": "example_value",
+  "nextPaymentAmount": 42.5,
+  "repaymentFrequency": "example_value",
+  "status": "example_value",
+  "overdueAmount": 42.5,
+  "daysPastDue": 10
+}

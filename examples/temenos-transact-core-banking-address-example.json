@@ -1,0 +1,9 @@
+{
+  "addressType": "example_value",
+  "addressLine1": "example_value",
+  "addressLine2": "example_value",
+  "city": "example_value",
+  "state": "example_value",
+  "postCode": "example_value",
+  "country": "example_value"
+}

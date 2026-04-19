@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "PaymentOrder",
+  "type": "object",
+  "properties": {
+    "paymentOrderId": {
+      "type": "string"
+    },
+    "debitAccountId": {
+      "type": "string"
+    },
+    "debitAmount": {
+      "type": "number"
+    },
+    "debitCurrency": {
+      "type": "string"
+    },
+    "creditAccountId": {
+      "type": "string"
+    },
+    "creditAmount": {
+      "type": "number"
+    },
+    "creditCurrency": {
+      "type": "string"
+    },
+    "paymentType": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "valueDate": {
+      "type": "string"
+    },
+    "executionDate": {
+      "type": "string"
+    },
+    "beneficiaryName": {
+      "type": "string"
+    },
+    "beneficiaryIban": {
+      "type": "string"
+    },
+    "beneficiaryBic": {
+      "type": "string"
+    },
+    "remittanceInformation": {
+      "type": "string"
+    },
+    "chargesType": {
+      "type": "string"
+    },
+    "totalCharges": {
+      "type": "number"
+    },
+    "exchangeRate": {
+      "type": "number"
+    },
+    "rejectionReason": {
+      "type": "string"
+    }
+  }
+}

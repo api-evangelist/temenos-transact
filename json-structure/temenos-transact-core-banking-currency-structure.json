@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Currency",
+  "type": "object",
+  "properties": {
+    "currencyCode": {
+      "type": "string"
+    },
+    "currencyName": {
+      "type": "string"
+    },
+    "numericCode": {
+      "type": "string"
+    },
+    "decimalPlaces": {
+      "type": "integer"
+    },
+    "buyRate": {
+      "type": "number"
+    },
+    "sellRate": {
+      "type": "number"
+    },
+    "midRate": {
+      "type": "number"
+    }
+  }
+}

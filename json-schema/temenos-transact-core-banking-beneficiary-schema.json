@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Beneficiary",
+  "type": "object",
+  "description": "A registered payment beneficiary",
+  "properties": {
+    "beneficiaryId": {
+      "type": "string",
+      "description": "Unique beneficiary identifier"
+    },
+    "customerId": {
+      "type": "string",
+      "description": "Owning customer identifier"
+    },
+    "beneficiaryName": {
+      "type": "string",
+      "description": "Name of the beneficiary"
+    },
+    "accountNumber": {
+      "type": "string",
+      "description": "Beneficiary account number"
+    },
+    "iban": {
+      "type": "string",
+      "description": "Beneficiary IBAN"
+    },
+    "bic": {
+      "type": "string",
+      "description": "Beneficiary bank BIC/SWIFT code"
+    },
+    "bankName": {
+      "type": "string",
+      "description": "Name of the beneficiary bank"
+    },
+    "bankCountry": {
+      "type": "string",
+      "description": "Country of the beneficiary bank"
+    },
+    "currency": {
+      "type": "string",
+      "description": "Default payment currency"
+    },
+    "beneficiaryType": {
+      "type": "string",
+      "description": "Type of beneficiary"
+    },
+    "status": {
+      "type": "string",
+      "description": "Beneficiary status"
+    },
+    "nickname": {
+      "type": "string",
+      "description": "User-defined nickname for the beneficiary"
+    }
+  }
+}

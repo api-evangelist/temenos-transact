@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "Country",
+  "type": "object",
+  "properties": {
+    "countryCode": {
+      "type": "string"
+    },
+    "countryName": {
+      "type": "string"
+    },
+    "currencyCode": {
+      "type": "string"
+    },
+    "ibanRequired": {
+      "type": "boolean"
+    },
+    "sanctioned": {
+      "type": "boolean"
+    }
+  }
+}

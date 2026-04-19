@@ -1,0 +1,14 @@
+{
+  "beneficiaryId": "500123",
+  "customerId": "500123",
+  "beneficiaryName": "example_value",
+  "accountNumber": "example_value",
+  "iban": "example_value",
+  "bic": "example_value",
+  "bankName": "example_value",
+  "bankCountry": "example_value",
+  "currency": "example_value",
+  "beneficiaryType": "example_value",
+  "status": "example_value",
+  "nickname": "example_value"
+}

@@ -1,0 +1,12 @@
+{
+  "accountId": "500123",
+  "currency": "example_value",
+  "workingBalance": 42.5,
+  "availableBalance": 42.5,
+  "clearedBalance": 42.5,
+  "lockedAmount": 42.5,
+  "overdraftLimit": 42.5,
+  "accruedInterest": 42.5,
+  "pendingDeposits": 42.5,
+  "asOfDate": "example_value"
+}

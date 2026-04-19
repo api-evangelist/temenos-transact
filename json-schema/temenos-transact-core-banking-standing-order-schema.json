@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StandingOrder",
+  "type": "object",
+  "description": "A standing order instruction for recurring payments",
+  "properties": {
+    "standingOrderId": {
+      "type": "string",
+      "description": "Unique standing order identifier"
+    },
+    "accountId": {
+      "type": "string",
+      "description": "Debit account identifier"
+    },
+    "beneficiaryId": {
+      "type": "string",
+      "description": "Beneficiary identifier"
+    },
+    "beneficiaryAccountId": {
+      "type": "string",
+      "description": "Beneficiary account identifier"
+    },
+    "beneficiaryName": {
+      "type": "string",
+      "description": "Name of the beneficiary"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Recurring payment amount"
+    },
+    "currency": {
+      "type": "string",
+      "description": "Payment currency"
+    },
+    "frequency": {
+      "type": "string",
+      "description": "Payment frequency"
+    },
+    "startDate": {
+      "type": "string",
+      "description": "Date of the first payment"
+    },
+    "endDate": {
+      "type": "string",
+      "description": "Date of the last payment (optional for indefinite)"
+    },
+    "nextPaymentDate": {
+      "type": "string",
+      "description": "Date of the next scheduled payment"
+    },
+    "status": {
+      "type": "string",
+      "description": "Standing order status"
+    },
+    "narrative": {
+      "type": "string",
+      "description": "Payment description"
+    }
+  }
+}
