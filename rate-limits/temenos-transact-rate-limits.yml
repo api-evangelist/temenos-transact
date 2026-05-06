@@ -4,102 +4,31 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Temenos Transact
 providerId: temenos-transact
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
-  - Banking
-  - Core Banking
-  - Digital Banking
-  - Enterprise
-  - Financial Services
-  - Fintech
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Temenos Transact API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+  - Core Banking
+  - Financial Services
+description: >-
+  Temenos Transact APIs are exposed inside a bank-deployed product (on-premise, dedicated cloud, or Temenos
+  Banking Cloud SaaS); throughput is governed by the customer's deployment sizing and contract rather
+  than by a public shared-tenancy quota. There is no public Transact rate-limits reference for general
+  developers.
+sources:
+  - https://www.temenos.com/products/core-banking/transact/
+  - https://www.temenos.com/contact/
+notes: >-
+  No public rate-limits documentation. Limits are defined per Transact deployment / contract.
+responseCodes: {}
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Temenos Transact Core Banking API
-      - Temenos Transact Microservices APIs
-      - Temenos Transact Data Hub APIs
-      - Temenos Operational Data Store APIs
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Temenos Transact Core Banking API
-      - Temenos Transact Microservices APIs
-      - Temenos Transact Data Hub APIs
-      - Temenos Operational Data Store APIs
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Temenos Transact Core Banking API
-      - Temenos Transact Microservices APIs
-      - Temenos Transact Data Hub APIs
-      - Temenos Operational Data Store APIs
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Temenos Transact Core Banking API
-      - Temenos Transact Microservices APIs
-      - Temenos Transact Data Hub APIs
-      - Temenos Operational Data Store APIs
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
+  - name: Deployment-Defined
     scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Temenos Transact Core Banking API
-      - Temenos Transact Microservices APIs
-      - Temenos Transact Data Hub APIs
-      - Temenos Operational Data Store APIs
+    metric: varies
+    limit: defined per Temenos Transact deployment / customer contract
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Deployment Capacity
+    description: Throughput depends on deployment topology and the sizing agreed with Temenos at provisioning.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
