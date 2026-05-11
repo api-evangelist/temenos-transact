@@ -161,6 +161,10 @@ common:
         description: Integration with card issuance and processing networks for debit and credit card operations.
       - name: Regulatory Reporting
         description: Integration with regulatory bodies for compliance reporting, AML screening, and KYC verification.
+  - type: Integrations
+    url: https://www.temenos.com/partners/
+integrations:
+  - name: Become a Partner
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
