@@ -117,7 +117,7 @@ common:
     url: https://www.temenos.com/blog/the-modern-developer-portal/
   - type: Community
     url: https://basecamp.temenos.com/s/
-  - type: Sign Up
+  - type: SignUp
     url: https://tcsp-signup.temenos.com/signup/communityregistration
   - type: GitHubOrganization
     url: https://github.com/temenostech
