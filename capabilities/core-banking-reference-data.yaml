@@ -1,0 +1,144 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Temenos Transact Core Banking API — Reference Data
+  description: 'Temenos Transact Core Banking API — Reference Data. 3 operations. Lead operation: Temenos Transact List Countries.
+    Self-contained Naftiko capability covering one Temenos Transact business surface.'
+  tags:
+  - Temenos Transact
+  - Reference Data
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TEMENOS_TRANSACT_API_KEY: TEMENOS_TRANSACT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: core-banking-reference-data
+    baseUri: https://api.temenos.com/api/v1.0.0
+    description: Temenos Transact Core Banking API — Reference Data business capability. Self-contained, no shared references.
+    resources:
+    - name: reference-countries
+      path: /reference/countries
+      operations:
+      - name: getcountries
+        method: GET
+        description: Temenos Transact List Countries
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: reference-currencies
+      path: /reference/currencies
+      operations:
+      - name: getcurrencies
+        method: GET
+        description: Temenos Transact List Currencies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: reference-ibanValidation-iban
+      path: /reference/ibanValidation/{iban}
+      operations:
+      - name: validateiban
+        method: GET
+        description: Temenos Transact Validate Iban
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: iban
+          in: path
+          type: string
+          description: The IBAN to validate
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TEMENOS_TRANSACT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: core-banking-reference-data-rest
+    port: 8080
+    description: REST adapter for Temenos Transact Core Banking API — Reference Data. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/reference/countries
+      name: reference-countries
+      description: REST surface for reference-countries.
+      operations:
+      - method: GET
+        name: getcountries
+        description: Temenos Transact List Countries
+        call: core-banking-reference-data.getcountries
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/reference/currencies
+      name: reference-currencies
+      description: REST surface for reference-currencies.
+      operations:
+      - method: GET
+        name: getcurrencies
+        description: Temenos Transact List Currencies
+        call: core-banking-reference-data.getcurrencies
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/reference/ibanvalidation/{iban}
+      name: reference-ibanvalidation-iban
+      description: REST surface for reference-ibanValidation-iban.
+      operations:
+      - method: GET
+        name: validateiban
+        description: Temenos Transact Validate Iban
+        call: core-banking-reference-data.validateiban
+        with:
+          iban: rest.iban
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: core-banking-reference-data-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Temenos Transact Core Banking API — Reference Data. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: temenos-transact-list-countries
+      description: Temenos Transact List Countries
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-banking-reference-data.getcountries
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: temenos-transact-list-currencies
+      description: Temenos Transact List Currencies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-banking-reference-data.getcurrencies
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: temenos-transact-validate-iban
+      description: Temenos Transact Validate Iban
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-banking-reference-data.validateiban
+      with:
+        iban: tools.iban
+      outputParameters:
+      - type: object
+        mapping: $.

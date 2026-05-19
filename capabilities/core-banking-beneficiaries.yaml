@@ -1,0 +1,105 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Temenos Transact Core Banking API — Beneficiaries
+  description: 'Temenos Transact Core Banking API — Beneficiaries. 2 operations. Lead operation: Temenos Transact List Beneficiaries.
+    Self-contained Naftiko capability covering one Temenos Transact business surface.'
+  tags:
+  - Temenos Transact
+  - Beneficiaries
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TEMENOS_TRANSACT_API_KEY: TEMENOS_TRANSACT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: core-banking-beneficiaries
+    baseUri: https://api.temenos.com/api/v1.0.0
+    description: Temenos Transact Core Banking API — Beneficiaries business capability. Self-contained, no shared references.
+    resources:
+    - name: party-beneficiaries
+      path: /party/beneficiaries
+      operations:
+      - name: getbeneficiaries
+        method: GET
+        description: Temenos Transact List Beneficiaries
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createbeneficiary
+        method: POST
+        description: Temenos Transact Create Beneficiary
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TEMENOS_TRANSACT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: core-banking-beneficiaries-rest
+    port: 8080
+    description: REST adapter for Temenos Transact Core Banking API — Beneficiaries. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/party/beneficiaries
+      name: party-beneficiaries
+      description: REST surface for party-beneficiaries.
+      operations:
+      - method: GET
+        name: getbeneficiaries
+        description: Temenos Transact List Beneficiaries
+        call: core-banking-beneficiaries.getbeneficiaries
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createbeneficiary
+        description: Temenos Transact Create Beneficiary
+        call: core-banking-beneficiaries.createbeneficiary
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: core-banking-beneficiaries-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Temenos Transact Core Banking API — Beneficiaries. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: temenos-transact-list-beneficiaries
+      description: Temenos Transact List Beneficiaries
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-banking-beneficiaries.getbeneficiaries
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: temenos-transact-create-beneficiary
+      description: Temenos Transact Create Beneficiary
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: core-banking-beneficiaries.createbeneficiary
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

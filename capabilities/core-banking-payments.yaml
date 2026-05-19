@@ -1,0 +1,388 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Temenos Transact Core Banking API — Payments
+  description: 'Temenos Transact Core Banking API — Payments. 8 operations. Lead operation: Temenos Transact Create Fund Transfer.
+    Self-contained Naftiko capability covering one Temenos Transact business surface.'
+  tags:
+  - Temenos Transact
+  - Payments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TEMENOS_TRANSACT_API_KEY: TEMENOS_TRANSACT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: core-banking-payments
+    baseUri: https://api.temenos.com/api/v1.0.0
+    description: Temenos Transact Core Banking API — Payments business capability. Self-contained, no shared references.
+    resources:
+    - name: order-fundTransfers
+      path: /order/fundTransfers
+      operations:
+      - name: createfundtransfer
+        method: POST
+        description: Temenos Transact Create Fund Transfer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: order-fundTransfers-transferId
+      path: /order/fundTransfers/{transferId}
+      operations:
+      - name: getfundtransfer
+        method: GET
+        description: Temenos Transact Get Fund Transfer Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: transferId
+          in: path
+          type: string
+          description: Unique identifier of the fund transfer
+          required: true
+    - name: order-paymentOrders
+      path: /order/paymentOrders
+      operations:
+      - name: getpaymentorders
+        method: GET
+        description: Temenos Transact List Payment Orders
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: debitAccountId
+          in: query
+          type: string
+          description: Filter by debit account ID
+        - name: creditAccountId
+          in: query
+          type: string
+          description: Filter by credit account ID
+        - name: status
+          in: query
+          type: string
+          description: Filter by payment status
+        - name: fromDate
+          in: query
+          type: string
+          description: Start date filter (YYYY-MM-DD)
+        - name: toDate
+          in: query
+          type: string
+          description: End date filter (YYYY-MM-DD)
+      - name: createpaymentorder
+        method: POST
+        description: Temenos Transact Create Payment Order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: order-paymentOrders-paymentOrderId
+      path: /order/paymentOrders/{paymentOrderId}
+      operations:
+      - name: getpaymentorder
+        method: GET
+        description: Temenos Transact Get Payment Order Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: paymentOrderId
+          in: path
+          type: string
+          description: Unique identifier of the payment order
+          required: true
+    - name: order-paymentOrders-paymentOrderId-cancellation
+      path: /order/paymentOrders/{paymentOrderId}/cancellation
+      operations:
+      - name: cancelpaymentorder
+        method: POST
+        description: Temenos Transact Cancel Payment Order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: paymentOrderId
+          in: path
+          type: string
+          description: Unique identifier of the payment order to cancel
+          required: true
+    - name: order-standingOrders
+      path: /order/standingOrders
+      operations:
+      - name: getstandingorders
+        method: GET
+        description: Temenos Transact List Standing Orders
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: query
+          type: string
+          description: Filter by account ID
+        - name: status
+          in: query
+          type: string
+          description: Filter by standing order status
+      - name: createstandingorder
+        method: POST
+        description: Temenos Transact Create Standing Order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TEMENOS_TRANSACT_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: core-banking-payments-rest
+    port: 8080
+    description: REST adapter for Temenos Transact Core Banking API — Payments. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/order/fundtransfers
+      name: order-fundtransfers
+      description: REST surface for order-fundTransfers.
+      operations:
+      - method: POST
+        name: createfundtransfer
+        description: Temenos Transact Create Fund Transfer
+        call: core-banking-payments.createfundtransfer
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/order/fundtransfers/{transferid}
+      name: order-fundtransfers-transferid
+      description: REST surface for order-fundTransfers-transferId.
+      operations:
+      - method: GET
+        name: getfundtransfer
+        description: Temenos Transact Get Fund Transfer Details
+        call: core-banking-payments.getfundtransfer
+        with:
+          transferId: rest.transferId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/order/paymentorders
+      name: order-paymentorders
+      description: REST surface for order-paymentOrders.
+      operations:
+      - method: GET
+        name: getpaymentorders
+        description: Temenos Transact List Payment Orders
+        call: core-banking-payments.getpaymentorders
+        with:
+          debitAccountId: rest.debitAccountId
+          creditAccountId: rest.creditAccountId
+          status: rest.status
+          fromDate: rest.fromDate
+          toDate: rest.toDate
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createpaymentorder
+        description: Temenos Transact Create Payment Order
+        call: core-banking-payments.createpaymentorder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/order/paymentorders/{paymentorderid}
+      name: order-paymentorders-paymentorderid
+      description: REST surface for order-paymentOrders-paymentOrderId.
+      operations:
+      - method: GET
+        name: getpaymentorder
+        description: Temenos Transact Get Payment Order Details
+        call: core-banking-payments.getpaymentorder
+        with:
+          paymentOrderId: rest.paymentOrderId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/order/paymentorders/{paymentorderid}/cancellation
+      name: order-paymentorders-paymentorderid-cancellation
+      description: REST surface for order-paymentOrders-paymentOrderId-cancellation.
+      operations:
+      - method: POST
+        name: cancelpaymentorder
+        description: Temenos Transact Cancel Payment Order
+        call: core-banking-payments.cancelpaymentorder
+        with:
+          paymentOrderId: rest.paymentOrderId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/order/standingorders
+      name: order-standingorders
+      description: REST surface for order-standingOrders.
+      operations:
+      - method: GET
+        name: getstandingorders
+        description: Temenos Transact List Standing Orders
+        call: core-banking-payments.getstandingorders
+        with:
+          accountId: rest.accountId
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createstandingorder
+        description: Temenos Transact Create Standing Order
+        call: core-banking-payments.createstandingorder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: core-banking-payments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Temenos Transact Core Banking API — Payments. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: temenos-transact-create-fund-transfer
+      description: Temenos Transact Create Fund Transfer
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: core-banking-payments.createfundtransfer
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: temenos-transact-get-fund-transfer
+      description: Temenos Transact Get Fund Transfer Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-banking-payments.getfundtransfer
+      with:
+        transferId: tools.transferId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: temenos-transact-list-payment-orders
+      description: Temenos Transact List Payment Orders
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-banking-payments.getpaymentorders
+      with:
+        debitAccountId: tools.debitAccountId
+        creditAccountId: tools.creditAccountId
+        status: tools.status
+        fromDate: tools.fromDate
+        toDate: tools.toDate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: temenos-transact-create-payment-order
+      description: Temenos Transact Create Payment Order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: core-banking-payments.createpaymentorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: temenos-transact-get-payment-order
+      description: Temenos Transact Get Payment Order Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-banking-payments.getpaymentorder
+      with:
+        paymentOrderId: tools.paymentOrderId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: temenos-transact-cancel-payment-order
+      description: Temenos Transact Cancel Payment Order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: core-banking-payments.cancelpaymentorder
+      with:
+        paymentOrderId: tools.paymentOrderId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: temenos-transact-list-standing-orders
+      description: Temenos Transact List Standing Orders
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-banking-payments.getstandingorders
+      with:
+        accountId: tools.accountId
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: temenos-transact-create-standing-order
+      description: Temenos Transact Create Standing Order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: core-banking-payments.createstandingorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
