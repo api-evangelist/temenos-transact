@@ -1,0 +1,918 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Temenos Transact Core Banking API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/accounts",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer identifier"
+              },
+              {
+                "name": "accountType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account currency (ISO 4217 code)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account status"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of customer accounts. Supports filtering by customer, account type, status, currency, and other criteria. Returns account arrangements created through the Arrangement Architecture including current, savings, corporate, and Islamic account types."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Account Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the account arrangement"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information for a specific account arrangement including balances, product details, interest conditions, charges, and account officer assignment."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Update Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the account arrangement"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing account arrangement. Supports modifying account attributes such as posting restrictions, overdraft limits, account officer, and product conditions."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Account Balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/accounts/:accountId/balances",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the account arrangement"
+              }
+            ]
+          },
+          "docs": "Retrieve balance information for a specific account including available balance, working balance, locked amount, cleared balance, and other balance types as configured."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact List Customer Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/party/customers/:customerId/accounts",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the customer"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve all accounts associated with a specific customer, including account type, status, currency, and balance summary."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Account Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/accounts/:accountId/transactions",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the account arrangement"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for transaction history (YYYY-MM-DD)"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for transaction history (YYYY-MM-DD)"
+              },
+              {
+                "name": "transactionType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by transaction type"
+              },
+              {
+                "name": "minAmount",
+                "value": "",
+                "type": "query",
+                "description": "Minimum transaction amount filter"
+              },
+              {
+                "name": "maxAmount",
+                "value": "",
+                "type": "query",
+                "description": "Maximum transaction amount filter"
+              }
+            ]
+          },
+          "docs": "Retrieve transaction history for a specific account. Supports filtering by date range, transaction type, amount range, and booking date. Returns debit and credit entries with narrative, value date, and reference details."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/party/customers",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "customerName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer name (partial match supported)"
+              },
+              {
+                "name": "mnemonic",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer mnemonic"
+              },
+              {
+                "name": "sector",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer sector code"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer status"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of customers. Supports filtering by customer name, mnemonic, sector, status, and other criteria. Returns customer profiles with basic information."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Create Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.temenos.com/api/v1.0.0/party/customers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new customer record in Temenos Transact. Each new customer is assigned a unique system-generated customer ID. Required fields include short name, sector, and customer mnemonic. Supports creating individual and corporate customer types with full demographic, contact, and compliance information."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Customer Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/party/customers/:customerId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the customer"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information for a specific customer including personal details, contact information, KYC status, AML check results, account officer assignment, and relationship details."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Update Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.temenos.com/api/v1.0.0/party/customers/:customerId",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the customer"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing customer record. Supports modifying customer attributes such as contact details, address, communication preferences, and KYC documentation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact Create Fund Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.temenos.com/api/v1.0.0/order/fundTransfers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate a fund transfer between accounts. Supports internal transfers, domestic payments, and cross-border transfers. Validates accounts, calculates charges and exchange rates, and processes the payment according to configured payment rules and cut-off times."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Fund Transfer Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/order/fundTransfers/:transferId",
+            "params": [
+              {
+                "name": "transferId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the fund transfer"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and details of a specific fund transfer including processing status, value date, charges applied, exchange rate, and any error details."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact List Payment Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/order/paymentOrders",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "debitAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by debit account ID"
+              },
+              {
+                "name": "creditAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by credit account ID"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by payment status"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date filter (YYYY-MM-DD)"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date filter (YYYY-MM-DD)"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of payment orders. Supports filtering by status, debit account, credit account, date range, and payment type. Includes pending, processed, and rejected payment orders."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Create Payment Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.temenos.com/api/v1.0.0/order/paymentOrders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a new payment order for processing. Validates the payment details, calculates charges and execution times, and queues the payment for processing. Supports various payment types including SEPA, SWIFT, ACH, and domestic clearing."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Payment Order Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/order/paymentOrders/:paymentOrderId",
+            "params": [
+              {
+                "name": "paymentOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment order"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information for a specific payment order including status, amount, charges, exchange rate, execution date, and processing details."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Cancel Payment Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.temenos.com/api/v1.0.0/order/paymentOrders/:paymentOrderId/cancellation",
+            "params": [
+              {
+                "name": "paymentOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment order to cancel"
+              }
+            ]
+          },
+          "docs": "Request cancellation of a pending payment order. Only payment orders in PENDING or PROCESSING status can be cancelled. Returns the updated payment order status."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact List Standing Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/order/standingOrders",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account ID"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by standing order status"
+              }
+            ]
+          },
+          "docs": "Retrieve standing order instructions for recurring payments. Supports filtering by account, frequency, status, and next execution date."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Create Standing Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.temenos.com/api/v1.0.0/order/standingOrders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new standing order instruction for recurring payments. Defines the debit account, beneficiary, amount, frequency, start date, and optional end date."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deposits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Deposits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/deposits",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer identifier"
+              },
+              {
+                "name": "maturityDateFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter deposits maturing from this date (YYYY-MM-DD)"
+              },
+              {
+                "name": "maturityDateTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter deposits maturing up to this date (YYYY-MM-DD)"
+              }
+            ]
+          },
+          "docs": "Retrieve deposit arrangements including term deposits, savings deposits, and fixed deposits. Supports filtering by customer, maturity date range, status, and currency."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Deposit Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/deposits/:depositId",
+            "params": [
+              {
+                "name": "depositId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the deposit arrangement"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information for a specific deposit arrangement including principal amount, interest rate, maturity date, accrued interest, and renewal options."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Loans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Loans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/loans",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer identifier"
+              },
+              {
+                "name": "productType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by loan product type"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by loan status"
+              }
+            ]
+          },
+          "docs": "Retrieve loan arrangements including personal loans, mortgages, credit facilities, and overdraft agreements. Supports filtering by customer, product type, status, and currency."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Loan Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/loans/:loanId",
+            "params": [
+              {
+                "name": "loanId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the loan arrangement"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information for a specific loan arrangement including principal, outstanding balance, interest rate, repayment schedule, next payment date, and facility details."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Beneficiaries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Beneficiaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/party/beneficiaries",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve registered payment beneficiaries for a customer. Includes domestic and international beneficiaries with their bank details and validation status."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Create Beneficiary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.temenos.com/api/v1.0.0/party/beneficiaries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a new payment beneficiary for a customer. Validates the beneficiary bank details including IBAN, BIC/SWIFT code, and account number format."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/product/products",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "productGroup",
+                "value": "",
+                "type": "query",
+                "description": "Filter by product group (e.g., ACCOUNTS, DEPOSITS, LOANS)"
+              }
+            ]
+          },
+          "docs": "Retrieve the product catalog including account products, deposit products, loan products, and card products. Returns product definitions with their conditions, eligibility criteria, and arrangement details."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reference Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/reference/currencies",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve available currencies with their ISO 4217 codes, decimal precision, exchange rates, and market details."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact List Countries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/reference/countries",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve available countries with their ISO 3166 codes, currency details, and regulatory classification."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Validate Iban",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/reference/ibanValidation/:iban",
+            "params": [
+              {
+                "name": "iban",
+                "value": "",
+                "type": "path",
+                "description": "The IBAN to validate"
+              }
+            ]
+          },
+          "docs": "Validate an International Bank Account Number (IBAN) and return the resolved bank details including BIC, bank name, and branch information."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Cards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Cards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/cards",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve debit and credit cards associated with customer accounts. Includes card status, type, expiry date, and linked account details."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Card Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/cards/:cardId",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the card"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information for a specific card including card number (masked), status, limits, linked account, and transaction history summary."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
