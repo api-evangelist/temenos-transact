@@ -31,7 +31,7 @@ apis:
         url: https://developer.temenos.com/transact/authentication
       - type: Sandbox
         url: https://sandbox.temenos.com/transact
-      - type: SDK
+      - type: SDKs
         url: https://developer.temenos.com/transact/sdks
       - type: TermsOfService
         url: https://www.temenos.com/terms-of-service/
@@ -115,7 +115,7 @@ common:
     url: https://www.temenos.com/blog/the-modern-developer-portal/
   - type: Community
     url: https://basecamp.temenos.com/s/
-  - type: SignUp
+  - type: Signup
     url: https://tcsp-signup.temenos.com/signup/communityregistration
   - type: GitHubOrganization
     url: https://github.com/temenostech
