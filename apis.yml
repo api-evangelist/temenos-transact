@@ -103,6 +103,10 @@ apis:
       - type: Documentation
         url: https://developer.temenos.com/operational-data-store
 common:
+  - type: DomainSecurity
+    url: security/temenos-transact-domain-security.yml
+  - type: Authentication
+    url: authentication/temenos-transact-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/temenos
   - type: Portal

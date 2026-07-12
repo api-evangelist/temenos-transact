@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/temenos-transact-core-banking-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: OAuth 2.0 Bearer token authentication. Obtain a token from the Temenos authentication
+    endpoint using client credentials or authorization code flow.
+  sources:
+  - openapi/temenos-transact-core-banking-openapi.yml
