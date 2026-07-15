@@ -103,6 +103,8 @@ apis:
       - type: Documentation
         url: https://developer.temenos.com/operational-data-store
 common:
+  - type: AgenticAccess
+    url: agentic-access/temenos-transact-agentic-access.yml
   - type: DomainSecurity
     url: security/temenos-transact-domain-security.yml
   - type: Authentication
