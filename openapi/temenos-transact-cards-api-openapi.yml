@@ -1,0 +1,304 @@
+openapi: 3.1.0
+info:
+  title: Temenos Transact Core Banking Accounts Cards API
+  description: RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.
+  version: 1.0.0
+  contact:
+    name: Temenos Developer Support
+    url: https://developer.temenos.com/
+    email: api.support@temenos.com
+  license:
+    name: Temenos Terms of Service
+    url: https://www.temenos.com/terms-of-service/
+  termsOfService: https://www.temenos.com/terms-of-service/
+servers:
+- url: https://api.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Production
+- url: https://sandbox.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Cards
+  description: Manage debit and credit card operations including card issuance, activation, blocking, and limit management.
+paths:
+  /holdings/cards:
+    get:
+      operationId: getCards
+      summary: Temenos Transact List Cards
+      description: Retrieve debit and credit cards associated with customer accounts. Includes card status, type, expiry date, and linked account details.
+      tags:
+      - Cards
+      parameters:
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Successful retrieval of cards
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /holdings/cards/{cardId}:
+    get:
+      operationId: getCard
+      summary: Temenos Transact Get Card Details
+      description: Retrieve detailed information for a specific card including card number (masked), status, limits, linked account, and transaction history summary.
+      tags:
+      - Cards
+      parameters:
+      - name: cardId
+        in: path
+        required: true
+        description: Unique identifier of the card
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of card details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardDetailsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    CardDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Card'
+    CardsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+      - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+          example: example_value
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
+          example: example_value
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
+    Card:
+      type: object
+      description: A debit or credit card linked to a customer account
+      properties:
+        cardId:
+          type: string
+          description: Unique card identifier
+          example: '500123'
+        cardNumber:
+          type: string
+          description: Masked card number
+          examples:
+          - '****-****-****-1234'
+        cardType:
+          type: string
+          description: Type of card
+          enum:
+          - DEBIT
+          - CREDIT
+          - PREPAID
+          example: DEBIT
+        accountId:
+          type: string
+          description: Linked account identifier
+          example: '500123'
+        customerId:
+          type: string
+          description: Card holder customer identifier
+          example: '500123'
+        cardholderName:
+          type: string
+          description: Name on the card
+          example: example_value
+        expiryDate:
+          type: string
+          description: Card expiry date (MM/YY)
+          pattern: ^(0[1-9]|1[0-2])/[0-9]{2}$
+          example: example_value
+        status:
+          type: string
+          description: Card status
+          enum:
+          - ACTIVE
+          - BLOCKED
+          - EXPIRED
+          - CANCELLED
+          - PENDING_ACTIVATION
+          example: ACTIVE
+        dailyLimit:
+          type: number
+          description: Daily transaction limit
+          example: 42.5
+        availableLimit:
+          type: number
+          description: Available spending limit
+          example: 42.5
+  responses:
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    pageSize:
+      name: page_size
+      in: query
+      description: Number of records to return per page (default 25, max 100)
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        maximum: 100
+    customerId:
+      name: customerId
+      in: query
+      description: Filter by customer identifier
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token authentication. Obtain a token from the Temenos authentication endpoint using client credentials or authorization code flow.

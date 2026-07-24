@@ -1,0 +1,793 @@
+openapi: 3.1.0
+info:
+  title: Temenos Transact Core Banking Accounts Customers API
+  description: RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.
+  version: 1.0.0
+  contact:
+    name: Temenos Developer Support
+    url: https://developer.temenos.com/
+    email: api.support@temenos.com
+  license:
+    name: Temenos Terms of Service
+    url: https://www.temenos.com/terms-of-service/
+  termsOfService: https://www.temenos.com/terms-of-service/
+servers:
+- url: https://api.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Production
+- url: https://sandbox.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Customers
+  description: Create, update, and manage customer profiles, contact details, KYC documentation, compliance records, communication preferences, and party relationships.
+paths:
+  /party/customers:
+    get:
+      operationId: getCustomers
+      summary: Temenos Transact List Customers
+      description: Retrieve a list of customers. Supports filtering by customer name, mnemonic, sector, status, and other criteria. Returns customer profiles with basic information.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - name: customerName
+        in: query
+        description: Filter by customer name (partial match supported)
+        schema:
+          type: string
+      - name: mnemonic
+        in: query
+        description: Filter by customer mnemonic
+        schema:
+          type: string
+      - name: sector
+        in: query
+        description: Filter by customer sector code
+        schema:
+          type: integer
+      - name: status
+        in: query
+        description: Filter by customer status
+        schema:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - DECEASED
+          - CLOSED
+      responses:
+        '200':
+          description: Successful retrieval of customers list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomersResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createCustomer
+      summary: Temenos Transact Create Customer
+      description: Create a new customer record in Temenos Transact. Each new customer is assigned a unique system-generated customer ID. Required fields include short name, sector, and customer mnemonic. Supports creating individual and corporate customer types with full demographic, contact, and compliance information.
+      tags:
+      - Customers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerCreateRequest'
+      responses:
+        '201':
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDetailsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          description: Conflict - customer mnemonic already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /party/customers/{customerId}:
+    get:
+      operationId: getCustomer
+      summary: Temenos Transact Get Customer Details
+      description: Retrieve detailed information for a specific customer including personal details, contact information, KYC status, AML check results, account officer assignment, and relationship details.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/customerIdPath'
+      responses:
+        '200':
+          description: Successful retrieval of customer details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDetailsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateCustomer
+      summary: Temenos Transact Update Customer
+      description: Update an existing customer record. Supports modifying customer attributes such as contact details, address, communication preferences, and KYC documentation.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/customerIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdateRequest'
+      responses:
+        '200':
+          description: Customer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDetailsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /party/customers/{customerId}/accounts:
+    get:
+      operationId: getCustomerAccounts
+      summary: Temenos Transact List Customer Accounts
+      description: Retrieve all accounts associated with a specific customer, including account type, status, currency, and balance summary.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/customerIdPath'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      responses:
+        '200':
+          description: Successful retrieval of customer accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    Address:
+      type: object
+      description: Physical or mailing address
+      properties:
+        addressType:
+          type: string
+          description: Type of address
+          enum:
+          - RESIDENTIAL
+          - CORRESPONDENCE
+          - BUSINESS
+          - REGISTERED
+          example: RESIDENTIAL
+        addressLine1:
+          type: string
+          description: First line of address
+          example: example_value
+        addressLine2:
+          type: string
+          description: Second line of address
+          example: example_value
+        city:
+          type: string
+          description: City name
+          example: example_value
+        state:
+          type: string
+          description: State or province
+          example: example_value
+        postCode:
+          type: string
+          description: Postal or ZIP code
+          example: example_value
+        country:
+          type: string
+          description: Country code (ISO 3166)
+          pattern: ^[A-Z]{2}$
+          example: example_value
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+      - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+          example: example_value
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
+          example: example_value
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    AccountsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+    Customer:
+      type: object
+      description: A customer record in Temenos Transact representing an individual or corporate entity with a banking relationship.
+      properties:
+        customerId:
+          type: string
+          description: Unique system-generated customer identifier
+          examples:
+          - '100282'
+        customerMnemonic:
+          type: string
+          description: Short alphanumeric code identifying the customer (3-10 characters, first character alphabetic)
+          pattern: ^[A-Z][A-Z0-9]{2,9}$
+          examples:
+          - JSMITH01
+        shortName:
+          type: string
+          description: Short name of the customer (3-35 characters, uppercase)
+          examples:
+          - JOHN SMITH
+        customerNames:
+          type: array
+          description: Full name entries for the customer
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Customer name line
+          example: []
+        displayNames:
+          type: array
+          description: Display name entries for the customer
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Display name
+          example: []
+        title:
+          type: string
+          description: Customer title
+          enum:
+          - MR
+          - MRS
+          - MS
+          - MISS
+          - DR
+          - REV
+          example: MR
+        gender:
+          type: string
+          description: Customer gender
+          enum:
+          - MALE
+          - FEMALE
+          example: MALE
+        dateOfBirth:
+          type: string
+          format: date
+          description: Customer date of birth
+          example: '2026-01-15'
+        nationalityId:
+          type: string
+          description: Nationality code
+          example: '500123'
+        residenceId:
+          type: string
+          description: Country of residence code
+          example: '500123'
+        language:
+          type: integer
+          description: Preferred language code
+          example: 10
+        customerStatus:
+          type: integer
+          description: Customer status code (1 = active)
+          example: 10
+        sectorId:
+          type: integer
+          description: Customer sector classification (1-4 digits)
+          examples:
+          - 1000
+        industryId:
+          type: integer
+          description: Industry classification code
+          examples:
+          - 1000
+        accountOfficerId:
+          type: integer
+          description: Assigned account officer identifier
+          examples:
+          - 6
+        target:
+          type: integer
+          description: Target market segment
+          example: 10
+        communicationDevices:
+          type: array
+          description: Contact communication devices (phone, email)
+          items:
+            type: object
+            properties:
+              deviceType:
+                type: string
+                description: Type of communication device
+                enum:
+                - PHONE
+                - EMAIL
+                - MOBILE
+                - FAX
+              deviceValue:
+                type: string
+                description: Contact value (phone number or email address)
+              preferredChannel:
+                type: boolean
+                description: Whether this is the preferred contact channel
+          example: []
+        addresses:
+          type: array
+          description: Customer address records
+          items:
+            $ref: '#/components/schemas/Address'
+          example: []
+        customerCompany:
+          type: string
+          description: Company identifier the customer belongs to
+          example: example_value
+        amlCheck:
+          type: string
+          description: AML verification check status
+          example: example_value
+        amlResult:
+          type: string
+          description: AML verification result
+          example: example_value
+        kycStatus:
+          type: string
+          description: KYC compliance status
+          enum:
+          - VERIFIED
+          - PENDING
+          - EXPIRED
+          - NOT_CHECKED
+          example: VERIFIED
+    CustomerCreateRequest:
+      type: object
+      required:
+      - body
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+              description: Override warnings and proceed
+          example: example_value
+        body:
+          type: object
+          required:
+          - shortName
+          - customerMnemonic
+          - sectorId
+          properties:
+            shortName:
+              type: string
+              description: Customer short name (3-35 chars, uppercase alphanumeric)
+              minLength: 3
+              maxLength: 35
+            customerMnemonic:
+              type: string
+              description: Customer mnemonic (3-10 chars, first char alphabetic)
+              pattern: ^[A-Z][A-Z0-9]{2,9}$
+            customerNames:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+            displayNames:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+            title:
+              type: string
+              enum:
+              - MR
+              - MRS
+              - MS
+              - MISS
+              - DR
+              - REV
+            gender:
+              type: string
+              enum:
+              - MALE
+              - FEMALE
+            dateOfBirth:
+              type: string
+              format: date
+            nationalityId:
+              type: string
+            sectorId:
+              type: integer
+              description: Sector classification (1-4 digits)
+            industryId:
+              type: integer
+            accountOfficerId:
+              type: integer
+            target:
+              type: integer
+            language:
+              type: integer
+            communicationDevices:
+              type: array
+              items:
+                type: object
+                properties:
+                  deviceType:
+                    type: string
+                    enum:
+                    - PHONE
+                    - EMAIL
+                    - MOBILE
+                    - FAX
+                  deviceValue:
+                    type: string
+            addresses:
+              type: array
+              items:
+                $ref: '#/components/schemas/Address'
+          example: example_value
+    CustomerUpdateRequest:
+      type: object
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+          example: example_value
+        body:
+          type: object
+          properties:
+            customerNames:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+            displayNames:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+            communicationDevices:
+              type: array
+              items:
+                type: object
+                properties:
+                  deviceType:
+                    type: string
+                  deviceValue:
+                    type: string
+            addresses:
+              type: array
+              items:
+                $ref: '#/components/schemas/Address'
+          example: example_value
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
+    CustomerDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Customer'
+    CustomersResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+    Account:
+      type: object
+      description: A banking account arrangement in Temenos Transact. Created through the Arrangement Architecture supporting current, savings, corporate, Islamic, non-resident, and minor account types.
+      properties:
+        accountId:
+          type: string
+          description: Unique system-generated account identifier
+          examples:
+          - AA2014500001
+        accountName:
+          type: string
+          description: Display name of the account
+          example: example_value
+        customerId:
+          type: string
+          description: Identifier of the owning customer
+          example: '500123'
+        customerName:
+          type: string
+          description: Name of the owning customer
+          example: example_value
+        productId:
+          type: string
+          description: Product identifier from the arrangement architecture
+          example: '500123'
+        productName:
+          type: string
+          description: Human-readable product name
+          example: example_value
+        accountType:
+          type: string
+          description: Type of account
+          enum:
+          - CURRENT
+          - SAVINGS
+          - CORPORATE
+          - ISLAMIC
+          - NON_RESIDENT
+          - MINOR
+          example: CURRENT
+        currency:
+          type: string
+          description: Account currency in ISO 4217 format
+          pattern: ^[A-Z]{3}$
+          examples:
+          - USD
+          - EUR
+          - GBP
+        status:
+          type: string
+          description: Current account status
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - CLOSED
+          - PENDING
+          - DORMANT
+          example: ACTIVE
+        openingDate:
+          type: string
+          format: date
+          description: Date the account was opened
+          example: '2026-01-15'
+        workingBalance:
+          type: number
+          description: Current working balance of the account
+          example: 42.5
+        availableBalance:
+          type: number
+          description: Available balance including overdraft facility
+          example: 42.5
+        accountOfficerId:
+          type: integer
+          description: Identifier of the assigned account officer
+          example: '500123'
+        branchId:
+          type: string
+          description: Branch where the account is held
+          example: '500123'
+        iban:
+          type: string
+          description: International Bank Account Number
+          example: example_value
+        bic:
+          type: string
+          description: Bank Identifier Code (SWIFT code)
+          example: example_value
+  responses:
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Insufficient permissions to access this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    customerIdPath:
+      name: customerId
+      in: path
+      required: true
+      description: Unique identifier of the customer
+      schema:
+        type: string
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    pageSize:
+      name: page_size
+      in: query
+      description: Number of records to return per page (default 25, max 100)
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        maximum: 100
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token authentication. Obtain a token from the Temenos authentication endpoint using client credentials or authorization code flow.

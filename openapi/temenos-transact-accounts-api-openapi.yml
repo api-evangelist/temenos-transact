@@ -1,0 +1,542 @@
+openapi: 3.1.0
+info:
+  title: Temenos Transact Core Banking Accounts API
+  description: RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.
+  version: 1.0.0
+  contact:
+    name: Temenos Developer Support
+    url: https://developer.temenos.com/
+    email: api.support@temenos.com
+  license:
+    name: Temenos Terms of Service
+    url: https://www.temenos.com/terms-of-service/
+  termsOfService: https://www.temenos.com/terms-of-service/
+servers:
+- url: https://api.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Production
+- url: https://sandbox.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Accounts
+  description: Manage customer accounts created using the Arrangement Architecture including current accounts, savings accounts, corporate accounts, Islamic accounts, non-resident and minor accounts.
+paths:
+  /holdings/accounts:
+    get:
+      operationId: getAccounts
+      summary: Temenos Transact List Accounts
+      description: Retrieve a list of customer accounts. Supports filtering by customer, account type, status, currency, and other criteria. Returns account arrangements created through the Arrangement Architecture including current, savings, corporate, and Islamic account types.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - $ref: '#/components/parameters/customerId'
+      - name: accountType
+        in: query
+        description: Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)
+        schema:
+          type: string
+      - name: currency
+        in: query
+        description: Filter by account currency (ISO 4217 code)
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Filter by account status
+        schema:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - CLOSED
+          - PENDING
+      responses:
+        '200':
+          description: Successful retrieval of accounts list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /holdings/accounts/{accountId}:
+    get:
+      operationId: getAccount
+      summary: Temenos Transact Get Account Details
+      description: Retrieve detailed information for a specific account arrangement including balances, product details, interest conditions, charges, and account officer assignment.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      responses:
+        '200':
+          description: Successful retrieval of account details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDetailsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateAccount
+      summary: Temenos Transact Update Account
+      description: Update an existing account arrangement. Supports modifying account attributes such as posting restrictions, overdraft limits, account officer, and product conditions.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpdateRequest'
+      responses:
+        '200':
+          description: Account updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDetailsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /holdings/accounts/{accountId}/balances:
+    get:
+      operationId: getAccountBalances
+      summary: Temenos Transact Get Account Balances
+      description: Retrieve balance information for a specific account including available balance, working balance, locked amount, cleared balance, and other balance types as configured.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      responses:
+        '200':
+          description: Successful retrieval of account balances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountBalancesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /party/customers/{customerId}/accounts:
+    get:
+      operationId: getCustomerAccounts
+      summary: Temenos Transact List Customer Accounts
+      description: Retrieve all accounts associated with a specific customer, including account type, status, currency, and balance summary.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/customerIdPath'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      responses:
+        '200':
+          description: Successful retrieval of customer accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    AccountBalances:
+      type: object
+      description: Balance breakdown for a banking account
+      properties:
+        accountId:
+          type: string
+          description: Account identifier
+          example: '500123'
+        currency:
+          type: string
+          description: Currency of the balances
+          example: example_value
+        workingBalance:
+          type: number
+          description: Current working balance including pending transactions
+          example: 42.5
+        availableBalance:
+          type: number
+          description: Balance available for withdrawals and payments
+          example: 42.5
+        clearedBalance:
+          type: number
+          description: Balance of cleared funds only
+          example: 42.5
+        lockedAmount:
+          type: number
+          description: Amount locked or blocked on the account
+          example: 42.5
+        overdraftLimit:
+          type: number
+          description: Approved overdraft facility amount
+          example: 42.5
+        accruedInterest:
+          type: number
+          description: Interest accrued but not yet capitalized
+          example: 42.5
+        pendingDeposits:
+          type: number
+          description: Deposits received but not yet cleared
+          example: 42.5
+        asOfDate:
+          type: string
+          format: date-time
+          description: Timestamp when balances were calculated
+          example: '2026-01-15T10:30:00Z'
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+      - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+          example: example_value
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
+          example: example_value
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    AccountsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+    AccountDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Account'
+    AccountBalancesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/AccountBalances'
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
+    AccountUpdateRequest:
+      type: object
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+              description: Override warnings and proceed
+          example: example_value
+        body:
+          type: object
+          properties:
+            accountName:
+              type: string
+            accountOfficerId:
+              type: integer
+            overdraftLimit:
+              type: number
+            postingRestriction:
+              type: string
+          example: example_value
+    Account:
+      type: object
+      description: A banking account arrangement in Temenos Transact. Created through the Arrangement Architecture supporting current, savings, corporate, Islamic, non-resident, and minor account types.
+      properties:
+        accountId:
+          type: string
+          description: Unique system-generated account identifier
+          examples:
+          - AA2014500001
+        accountName:
+          type: string
+          description: Display name of the account
+          example: example_value
+        customerId:
+          type: string
+          description: Identifier of the owning customer
+          example: '500123'
+        customerName:
+          type: string
+          description: Name of the owning customer
+          example: example_value
+        productId:
+          type: string
+          description: Product identifier from the arrangement architecture
+          example: '500123'
+        productName:
+          type: string
+          description: Human-readable product name
+          example: example_value
+        accountType:
+          type: string
+          description: Type of account
+          enum:
+          - CURRENT
+          - SAVINGS
+          - CORPORATE
+          - ISLAMIC
+          - NON_RESIDENT
+          - MINOR
+          example: CURRENT
+        currency:
+          type: string
+          description: Account currency in ISO 4217 format
+          pattern: ^[A-Z]{3}$
+          examples:
+          - USD
+          - EUR
+          - GBP
+        status:
+          type: string
+          description: Current account status
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - CLOSED
+          - PENDING
+          - DORMANT
+          example: ACTIVE
+        openingDate:
+          type: string
+          format: date
+          description: Date the account was opened
+          example: '2026-01-15'
+        workingBalance:
+          type: number
+          description: Current working balance of the account
+          example: 42.5
+        availableBalance:
+          type: number
+          description: Available balance including overdraft facility
+          example: 42.5
+        accountOfficerId:
+          type: integer
+          description: Identifier of the assigned account officer
+          example: '500123'
+        branchId:
+          type: string
+          description: Branch where the account is held
+          example: '500123'
+        iban:
+          type: string
+          description: International Bank Account Number
+          example: example_value
+        bic:
+          type: string
+          description: Bank Identifier Code (SWIFT code)
+          example: example_value
+  responses:
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Insufficient permissions to access this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    customerIdPath:
+      name: customerId
+      in: path
+      required: true
+      description: Unique identifier of the customer
+      schema:
+        type: string
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      description: Unique identifier of the account arrangement
+      schema:
+        type: string
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    customerId:
+      name: customerId
+      in: query
+      description: Filter by customer identifier
+      schema:
+        type: string
+    pageSize:
+      name: page_size
+      in: query
+      description: Number of records to return per page (default 25, max 100)
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        maximum: 100
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token authentication. Obtain a token from the Temenos authentication endpoint using client credentials or authorization code flow.

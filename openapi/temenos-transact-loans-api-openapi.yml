@@ -1,0 +1,357 @@
+openapi: 3.1.0
+info:
+  title: Temenos Transact Core Banking Accounts Loans API
+  description: RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.
+  version: 1.0.0
+  contact:
+    name: Temenos Developer Support
+    url: https://developer.temenos.com/
+    email: api.support@temenos.com
+  license:
+    name: Temenos Terms of Service
+    url: https://www.temenos.com/terms-of-service/
+  termsOfService: https://www.temenos.com/terms-of-service/
+servers:
+- url: https://api.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Production
+- url: https://sandbox.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Loans
+  description: Create and manage loan arrangements, credit facilities, repayment schedules, drawdowns, and loan lifecycle operations.
+paths:
+  /holdings/loans:
+    get:
+      operationId: getLoans
+      summary: Temenos Transact List Loans
+      description: Retrieve loan arrangements including personal loans, mortgages, credit facilities, and overdraft agreements. Supports filtering by customer, product type, status, and currency.
+      tags:
+      - Loans
+      parameters:
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      - $ref: '#/components/parameters/customerId'
+      - name: productType
+        in: query
+        description: Filter by loan product type
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Filter by loan status
+        schema:
+          type: string
+          enum:
+          - ACTIVE
+          - MATURED
+          - DELINQUENT
+          - CLOSED
+      responses:
+        '200':
+          description: Successful retrieval of loans
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoansResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /holdings/loans/{loanId}:
+    get:
+      operationId: getLoan
+      summary: Temenos Transact Get Loan Details
+      description: Retrieve detailed information for a specific loan arrangement including principal, outstanding balance, interest rate, repayment schedule, next payment date, and facility details.
+      tags:
+      - Loans
+      parameters:
+      - name: loanId
+        in: path
+        required: true
+        description: Unique identifier of the loan arrangement
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful retrieval of loan details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanDetailsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    Loan:
+      type: object
+      description: A loan arrangement in Temenos Transact
+      properties:
+        loanId:
+          type: string
+          description: Unique loan identifier
+          example: '500123'
+        customerId:
+          type: string
+          description: Customer identifier
+          example: '500123'
+        productId:
+          type: string
+          description: Loan product identifier
+          example: '500123'
+        productName:
+          type: string
+          description: Name of the loan product
+          example: example_value
+        principalAmount:
+          type: number
+          description: Original loan principal amount
+          example: 42.5
+        outstandingBalance:
+          type: number
+          description: Current outstanding balance
+          example: 42.5
+        currency:
+          type: string
+          description: Loan currency
+          example: example_value
+        interestRate:
+          type: number
+          description: Applied interest rate percentage
+          example: 42.5
+        effectiveRate:
+          type: number
+          description: Annual percentage rate (APR)
+          example: 42.5
+        disbursementDate:
+          type: string
+          format: date
+          description: Date the loan was disbursed
+          example: '2026-01-15'
+        maturityDate:
+          type: string
+          format: date
+          description: Loan maturity date
+          example: '2026-01-15'
+        nextPaymentDate:
+          type: string
+          format: date
+          description: Next repayment due date
+          example: '2026-01-15'
+        nextPaymentAmount:
+          type: number
+          description: Next repayment amount due
+          example: 42.5
+        repaymentFrequency:
+          type: string
+          description: Frequency of loan repayments
+          enum:
+          - MONTHLY
+          - QUARTERLY
+          - SEMI_ANNUALLY
+          - ANNUALLY
+          example: MONTHLY
+        status:
+          type: string
+          description: Loan status
+          enum:
+          - ACTIVE
+          - MATURED
+          - DELINQUENT
+          - CLOSED
+          - WRITTEN_OFF
+          example: ACTIVE
+        overdueAmount:
+          type: number
+          description: Amount currently overdue
+          example: 42.5
+        daysPastDue:
+          type: integer
+          description: Number of days past due
+          example: 10
+    LoanDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Loan'
+    LoansResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Loan'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+      - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+          example: example_value
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
+          example: example_value
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
+  responses:
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    pageSize:
+      name: page_size
+      in: query
+      description: Number of records to return per page (default 25, max 100)
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        maximum: 100
+    customerId:
+      name: customerId
+      in: query
+      description: Filter by customer identifier
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token authentication. Obtain a token from the Temenos authentication endpoint using client credentials or authorization code flow.

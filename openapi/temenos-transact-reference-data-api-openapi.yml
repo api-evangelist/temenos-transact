@@ -1,0 +1,353 @@
+openapi: 3.1.0
+info:
+  title: Temenos Transact Core Banking Accounts Reference Data API
+  description: RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.
+  version: 1.0.0
+  contact:
+    name: Temenos Developer Support
+    url: https://developer.temenos.com/
+    email: api.support@temenos.com
+  license:
+    name: Temenos Terms of Service
+    url: https://www.temenos.com/terms-of-service/
+  termsOfService: https://www.temenos.com/terms-of-service/
+servers:
+- url: https://api.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Production
+- url: https://sandbox.temenos.com/api/v1.0.0
+  description: Temenos Transact API - Sandbox
+security:
+- bearerAuth: []
+tags:
+- name: Reference Data
+  description: Access system-wide lookup and configuration data including currencies, countries, IBAN/BIC validation, interest rate tables, and balance type definitions.
+paths:
+  /reference/currencies:
+    get:
+      operationId: getCurrencies
+      summary: Temenos Transact List Currencies
+      description: Retrieve available currencies with their ISO 4217 codes, decimal precision, exchange rates, and market details.
+      tags:
+      - Reference Data
+      parameters:
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      responses:
+        '200':
+          description: Successful retrieval of currencies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrenciesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /reference/countries:
+    get:
+      operationId: getCountries
+      summary: Temenos Transact List Countries
+      description: Retrieve available countries with their ISO 3166 codes, currency details, and regulatory classification.
+      tags:
+      - Reference Data
+      parameters:
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageStart'
+      responses:
+        '200':
+          description: Successful retrieval of countries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountriesResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /reference/ibanValidation/{iban}:
+    get:
+      operationId: validateIban
+      summary: Temenos Transact Validate Iban
+      description: Validate an International Bank Account Number (IBAN) and return the resolved bank details including BIC, bank name, and branch information.
+      tags:
+      - Reference Data
+      parameters:
+      - name: iban
+        in: path
+        required: true
+        description: The IBAN to validate
+        schema:
+          type: string
+      responses:
+        '200':
+          description: IBAN validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IbanValidationResponse'
+        '400':
+          description: Invalid IBAN format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    Currency:
+      type: object
+      description: Currency definition with exchange rate information
+      properties:
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+          pattern: ^[A-Z]{3}$
+          example: example_value
+        currencyName:
+          type: string
+          description: Full currency name
+          example: example_value
+        numericCode:
+          type: string
+          description: ISO 4217 numeric code
+          example: example_value
+        decimalPlaces:
+          type: integer
+          description: Number of decimal places
+          example: 10
+        buyRate:
+          type: number
+          description: Current buy exchange rate
+          example: 42.5
+        sellRate:
+          type: number
+          description: Current sell exchange rate
+          example: 42.5
+        midRate:
+          type: number
+          description: Mid-market exchange rate
+          example: 42.5
+    CurrenciesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Currency'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+    Country:
+      type: object
+      description: Country definition with regulatory details
+      properties:
+        countryCode:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+          pattern: ^[A-Z]{2}$
+          example: example_value
+        countryName:
+          type: string
+          description: Full country name
+          example: example_value
+        currencyCode:
+          type: string
+          description: Default currency code
+          example: example_value
+        ibanRequired:
+          type: boolean
+          description: Whether IBAN is required for payments to this country
+          example: true
+        sanctioned:
+          type: boolean
+          description: Whether the country is under sanctions
+          example: true
+    CountriesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Country'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+      - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+          example: example_value
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
+          example: example_value
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
+    IbanValidationResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: object
+          properties:
+            iban:
+              type: string
+              description: The validated IBAN
+            valid:
+              type: boolean
+              description: Whether the IBAN is valid
+            bic:
+              type: string
+              description: Resolved BIC/SWIFT code
+            bankName:
+              type: string
+              description: Name of the bank
+            branchName:
+              type: string
+              description: Name of the branch
+            country:
+              type: string
+              description: Country code
+          example: example_value
+  responses:
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    pageSize:
+      name: page_size
+      in: query
+      description: Number of records to return per page (default 25, max 100)
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        maximum: 100
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer token authentication. Obtain a token from the Temenos authentication endpoint using client credentials or authorization code flow.
