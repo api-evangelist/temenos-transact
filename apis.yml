@@ -2,106 +2,411 @@ name: Temenos Transact
 description: >-
   Core banking APIs from Temenos Transact, providing comprehensive banking functionality including accounts,
   transactions, payments, loans, and customer management.
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://www.temenos.com/wp-content/uploads/2023/01/temenos-logo.svg
 url: https://www.temenos.com/products/transact/
 created: '2024'
 modified: '2026-05-19'
 specificationVersion: '0.18'
 apis:
-  - name: Temenos Transact Core Banking API
-    description: >-
-      RESTful APIs for core banking operations including account management, customer data, transactions, and payment
-      processing.
-    image: https://www.temenos.com/wp-content/uploads/2023/01/temenos-logo.svg
-    humanURL: https://www.temenos.com/products/transact/
-    baseURL: https://api.temenos.com/transact/v1
-    tags:
-      - Accounts
-      - Banking
-      - Core Banking
-      - Customers
-      - Payments
-      - Transactions
-    properties:
-      - type: Documentation
-        url: https://developer.temenos.com/transact/documentation
-      - type: OpenAPI
-        url: https://developer.temenos.com/transact/openapi.json
-      - type: Authentication
-        url: https://developer.temenos.com/transact/authentication
-      - type: Sandbox
-        url: https://sandbox.temenos.com/transact
-      - type: SDKs
-        url: https://developer.temenos.com/transact/sdks
-      - type: TermsOfService
-        url: https://www.temenos.com/terms-of-service/
-      - type: PrivacyPolicy
-        url: https://www.temenos.com/privacy-policy/
-      - type: Support
-        url: https://support.temenos.com
-      - type: StatusPage
-        url: https://status.temenos.com
-      - type: ChangeLog
-        url: https://developer.temenos.com/transact/changelog
-      - type: OpenAPI
-        url: openapi/temenos-transact-core-banking-openapi.yml
-      - type: JSONSchema
-        url: json-schema/temenos-transaction-schema.json
-      - type: JSONLD
-        url: json-ld/temenos-transact-context.jsonld
-    contact:
-      - type: Support
-        url: https://support.temenos.com
-      - type: Email
-        email: api.support@temenos.com
-      - type: Sales
-        url: https://www.temenos.com/contact/
-  - name: Temenos Transact Microservices APIs
-    description: >-
-      APIs for Temenos Transact microservices including callback registry, configuration management, user entitlements,
-      and service orchestration for building event-driven and composable banking applications.
-    image: https://www.temenos.com/wp-content/uploads/2023/01/temenos-logo.svg
-    humanURL: https://developer.temenos.com/transact-microservice-apis
-    baseURL: https://api.temenos.com/transact/v1
-    tags:
-      - Configuration
-      - Entitlements
-      - Microservices
-      - Orchestration
-    properties:
-      - type: Documentation
-        url: https://developer.temenos.com/transact-microservice-apis
-  - name: Temenos Transact Data Hub APIs
-    description: >-
-      High-performance APIs built on the near real-time Analytics Data Store and Operational Data Store from Temenos
-      Transact Data Hub, providing banking-specific analytical and operational data for reporting and integration use
-      cases.
-    image: https://www.temenos.com/wp-content/uploads/2023/01/temenos-logo.svg
-    humanURL: https://developer.temenos.com/transact-data-hub
-    baseURL: https://api.temenos.com/transact/v1
-    tags:
-      - Analytics
-      - Data Hub
-      - Data Store
-      - Reporting
-    properties:
-      - type: Documentation
-        url: https://developer.temenos.com/transact-data-hub
-  - name: Temenos Operational Data Store APIs
-    description: >-
-      APIs built on the near real-time Operational Data Store from Temenos Transact Data Hub, presenting data in
-      specific formats for operational and API use cases utilizing real-time data streams and ETL transformations.
-    image: https://www.temenos.com/wp-content/uploads/2023/01/temenos-logo.svg
-    humanURL: https://developer.temenos.com/operational-data-store
-    baseURL: https://api.temenos.com/transact/v1
-    tags:
-      - Data Streams
-      - ETL
-      - Operational Data
-      - Real-Time
-    properties:
-      - type: Documentation
-        url: https://developer.temenos.com/operational-data-store
+- name: Temenos Transact Microservices APIs
+  description: >-
+    APIs for Temenos Transact microservices including callback registry, configuration management, user
+    entitlements, and service orchestration for building event-driven and composable banking applications.
+  image: https://www.temenos.com/wp-content/uploads/2023/01/temenos-logo.svg
+  humanURL: https://developer.temenos.com/transact-microservice-apis
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Configuration
+  - Entitlements
+  - Microservices
+  - Orchestration
+  properties:
+  - type: Documentation
+    url: https://developer.temenos.com/transact-microservice-apis
+- name: Temenos Transact Data Hub APIs
+  description: >-
+    High-performance APIs built on the near real-time Analytics Data Store and Operational Data Store
+    from Temenos Transact Data Hub, providing banking-specific analytical and operational data for reporting
+    and integration use cases.
+  image: https://www.temenos.com/wp-content/uploads/2023/01/temenos-logo.svg
+  humanURL: https://developer.temenos.com/transact-data-hub
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Analytics
+  - Data Hub
+  - Data Store
+  - Reporting
+  properties:
+  - type: Documentation
+    url: https://developer.temenos.com/transact-data-hub
+- name: Temenos Operational Data Store APIs
+  description: >-
+    APIs built on the near real-time Operational Data Store from Temenos Transact Data Hub, presenting
+    data in specific formats for operational and API use cases utilizing real-time data streams and ETL
+    transformations.
+  image: https://www.temenos.com/wp-content/uploads/2023/01/temenos-logo.svg
+  humanURL: https://developer.temenos.com/operational-data-store
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Data Streams
+  - ETL
+  - Operational Data
+  - Real-Time
+  properties:
+  - type: Documentation
+    url: https://developer.temenos.com/operational-data-store
+- aid: temenos-transact:temenos-transact-accounts-api
+  name: Temenos Transact Accounts API
+  description: >-
+    Manage customer accounts created using the Arrangement Architecture including current accounts, savings
+    accounts, corporate accounts, Islamic accounts, non-resident and minor accounts.
+  humanURL: https://www.temenos.com/products/transact/
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/temenos-transact-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.temenos.com/transact/documentation
+  - type: Authentication
+    url: https://developer.temenos.com/transact/authentication
+  - type: Sandbox
+    url: https://sandbox.temenos.com/transact
+  - type: SDKs
+    url: https://developer.temenos.com/transact/sdks
+  - type: TermsOfService
+    url: https://www.temenos.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://www.temenos.com/privacy-policy/
+  - type: Support
+    url: https://support.temenos.com
+  - type: StatusPage
+    url: https://status.temenos.com
+  - type: ChangeLog
+    url: https://developer.temenos.com/transact/changelog
+  - type: JSONSchema
+    url: json-schema/temenos-transaction-schema.json
+  - type: JSONLD
+    url: json-ld/temenos-transact-context.jsonld
+- aid: temenos-transact:temenos-transact-beneficiaries-api
+  name: Temenos Transact Beneficiaries API
+  description: >-
+    Manage payment beneficiaries including domestic and international beneficiary registration, validation,
+    and maintenance.
+  humanURL: https://www.temenos.com/products/transact/
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Beneficiaries
+  properties:
+  - type: OpenAPI
+    url: openapi/temenos-transact-beneficiaries-api-openapi.yml
+  - type: Documentation
+    url: https://developer.temenos.com/transact/documentation
+  - type: Authentication
+    url: https://developer.temenos.com/transact/authentication
+  - type: Sandbox
+    url: https://sandbox.temenos.com/transact
+  - type: SDKs
+    url: https://developer.temenos.com/transact/sdks
+  - type: TermsOfService
+    url: https://www.temenos.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://www.temenos.com/privacy-policy/
+  - type: Support
+    url: https://support.temenos.com
+  - type: StatusPage
+    url: https://status.temenos.com
+  - type: ChangeLog
+    url: https://developer.temenos.com/transact/changelog
+  - type: JSONSchema
+    url: json-schema/temenos-transaction-schema.json
+  - type: JSONLD
+    url: json-ld/temenos-transact-context.jsonld
+- aid: temenos-transact:temenos-transact-cards-api
+  name: Temenos Transact Cards API
+  description: >-
+    Manage debit and credit card operations including card issuance, activation, blocking, and limit management.
+  humanURL: https://www.temenos.com/products/transact/
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Cards
+  properties:
+  - type: OpenAPI
+    url: openapi/temenos-transact-cards-api-openapi.yml
+  - type: Documentation
+    url: https://developer.temenos.com/transact/documentation
+  - type: Authentication
+    url: https://developer.temenos.com/transact/authentication
+  - type: Sandbox
+    url: https://sandbox.temenos.com/transact
+  - type: SDKs
+    url: https://developer.temenos.com/transact/sdks
+  - type: TermsOfService
+    url: https://www.temenos.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://www.temenos.com/privacy-policy/
+  - type: Support
+    url: https://support.temenos.com
+  - type: StatusPage
+    url: https://status.temenos.com
+  - type: ChangeLog
+    url: https://developer.temenos.com/transact/changelog
+  - type: JSONSchema
+    url: json-schema/temenos-transaction-schema.json
+  - type: JSONLD
+    url: json-ld/temenos-transact-context.jsonld
+- aid: temenos-transact:temenos-transact-customers-api
+  name: Temenos Transact Customers API
+  description: >-
+    Create, update, and manage customer profiles, contact details, KYC documentation, compliance records,
+    communication preferences, and party relationships.
+  humanURL: https://www.temenos.com/products/transact/
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/temenos-transact-customers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.temenos.com/transact/documentation
+  - type: Authentication
+    url: https://developer.temenos.com/transact/authentication
+  - type: Sandbox
+    url: https://sandbox.temenos.com/transact
+  - type: SDKs
+    url: https://developer.temenos.com/transact/sdks
+  - type: TermsOfService
+    url: https://www.temenos.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://www.temenos.com/privacy-policy/
+  - type: Support
+    url: https://support.temenos.com
+  - type: StatusPage
+    url: https://status.temenos.com
+  - type: ChangeLog
+    url: https://developer.temenos.com/transact/changelog
+  - type: JSONSchema
+    url: json-schema/temenos-transaction-schema.json
+  - type: JSONLD
+    url: json-ld/temenos-transact-context.jsonld
+- aid: temenos-transact:temenos-transact-deposits-api
+  name: Temenos Transact Deposits API
+  description: >-
+    Manage deposit arrangements including term deposits, savings deposits, and fixed deposit products
+    with maturity tracking and renewal capabilities.
+  humanURL: https://www.temenos.com/products/transact/
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Deposits
+  properties:
+  - type: OpenAPI
+    url: openapi/temenos-transact-deposits-api-openapi.yml
+  - type: Documentation
+    url: https://developer.temenos.com/transact/documentation
+  - type: Authentication
+    url: https://developer.temenos.com/transact/authentication
+  - type: Sandbox
+    url: https://sandbox.temenos.com/transact
+  - type: SDKs
+    url: https://developer.temenos.com/transact/sdks
+  - type: TermsOfService
+    url: https://www.temenos.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://www.temenos.com/privacy-policy/
+  - type: Support
+    url: https://support.temenos.com
+  - type: StatusPage
+    url: https://status.temenos.com
+  - type: ChangeLog
+    url: https://developer.temenos.com/transact/changelog
+  - type: JSONSchema
+    url: json-schema/temenos-transaction-schema.json
+  - type: JSONLD
+    url: json-ld/temenos-transact-context.jsonld
+- aid: temenos-transact:temenos-transact-loans-api
+  name: Temenos Transact Loans API
+  description: >-
+    Create and manage loan arrangements, credit facilities, repayment schedules, drawdowns, and loan lifecycle
+    operations.
+  humanURL: https://www.temenos.com/products/transact/
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Loans
+  properties:
+  - type: OpenAPI
+    url: openapi/temenos-transact-loans-api-openapi.yml
+  - type: Documentation
+    url: https://developer.temenos.com/transact/documentation
+  - type: Authentication
+    url: https://developer.temenos.com/transact/authentication
+  - type: Sandbox
+    url: https://sandbox.temenos.com/transact
+  - type: SDKs
+    url: https://developer.temenos.com/transact/sdks
+  - type: TermsOfService
+    url: https://www.temenos.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://www.temenos.com/privacy-policy/
+  - type: Support
+    url: https://support.temenos.com
+  - type: StatusPage
+    url: https://status.temenos.com
+  - type: ChangeLog
+    url: https://developer.temenos.com/transact/changelog
+  - type: JSONSchema
+    url: json-schema/temenos-transaction-schema.json
+  - type: JSONLD
+    url: json-ld/temenos-transact-context.jsonld
+- aid: temenos-transact:temenos-transact-payments-api
+  name: Temenos Transact Payments API
+  description: >-
+    Process fund transfers, standing orders, direct debits, payment orders, sweeps, and cross-border payments.
+    Includes payment validation, cost calculation, status tracking, and cancellation.
+  humanURL: https://www.temenos.com/products/transact/
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/temenos-transact-payments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.temenos.com/transact/documentation
+  - type: Authentication
+    url: https://developer.temenos.com/transact/authentication
+  - type: Sandbox
+    url: https://sandbox.temenos.com/transact
+  - type: SDKs
+    url: https://developer.temenos.com/transact/sdks
+  - type: TermsOfService
+    url: https://www.temenos.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://www.temenos.com/privacy-policy/
+  - type: Support
+    url: https://support.temenos.com
+  - type: StatusPage
+    url: https://status.temenos.com
+  - type: ChangeLog
+    url: https://developer.temenos.com/transact/changelog
+  - type: JSONSchema
+    url: json-schema/temenos-transaction-schema.json
+  - type: JSONLD
+    url: json-ld/temenos-transact-context.jsonld
+- aid: temenos-transact:temenos-transact-products-api
+  name: Temenos Transact Products API
+  description: >-
+    Browse the product catalog and retrieve product conditions, eligibility criteria, and arrangement
+    details.
+  humanURL: https://www.temenos.com/products/transact/
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/temenos-transact-products-api-openapi.yml
+  - type: Documentation
+    url: https://developer.temenos.com/transact/documentation
+  - type: Authentication
+    url: https://developer.temenos.com/transact/authentication
+  - type: Sandbox
+    url: https://sandbox.temenos.com/transact
+  - type: SDKs
+    url: https://developer.temenos.com/transact/sdks
+  - type: TermsOfService
+    url: https://www.temenos.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://www.temenos.com/privacy-policy/
+  - type: Support
+    url: https://support.temenos.com
+  - type: StatusPage
+    url: https://status.temenos.com
+  - type: ChangeLog
+    url: https://developer.temenos.com/transact/changelog
+  - type: JSONSchema
+    url: json-schema/temenos-transaction-schema.json
+  - type: JSONLD
+    url: json-ld/temenos-transact-context.jsonld
+- aid: temenos-transact:temenos-transact-reference-data-api
+  name: Temenos Transact Reference Data API
+  description: >-
+    Access system-wide lookup and configuration data including currencies, countries, IBAN/BIC validation,
+    interest rate tables, and balance type definitions.
+  humanURL: https://www.temenos.com/products/transact/
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Reference Data
+  properties:
+  - type: OpenAPI
+    url: openapi/temenos-transact-reference-data-api-openapi.yml
+  - type: Documentation
+    url: https://developer.temenos.com/transact/documentation
+  - type: Authentication
+    url: https://developer.temenos.com/transact/authentication
+  - type: Sandbox
+    url: https://sandbox.temenos.com/transact
+  - type: SDKs
+    url: https://developer.temenos.com/transact/sdks
+  - type: TermsOfService
+    url: https://www.temenos.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://www.temenos.com/privacy-policy/
+  - type: Support
+    url: https://support.temenos.com
+  - type: StatusPage
+    url: https://status.temenos.com
+  - type: ChangeLog
+    url: https://developer.temenos.com/transact/changelog
+  - type: JSONSchema
+    url: json-schema/temenos-transaction-schema.json
+  - type: JSONLD
+    url: json-ld/temenos-transact-context.jsonld
+- aid: temenos-transact:temenos-transact-transactions-api
+  name: Temenos Transact Transactions API
+  description: >-
+    Retrieve transaction history, statement details, and account activity records for all account types
+    and arrangements.
+  humanURL: https://www.temenos.com/products/transact/
+  baseURL: https://api.temenos.com/transact/v1
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/temenos-transact-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.temenos.com/transact/documentation
+  - type: Authentication
+    url: https://developer.temenos.com/transact/authentication
+  - type: Sandbox
+    url: https://sandbox.temenos.com/transact
+  - type: SDKs
+    url: https://developer.temenos.com/transact/sdks
+  - type: TermsOfService
+    url: https://www.temenos.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://www.temenos.com/privacy-policy/
+  - type: Support
+    url: https://support.temenos.com
+  - type: StatusPage
+    url: https://status.temenos.com
+  - type: ChangeLog
+    url: https://developer.temenos.com/transact/changelog
+  - type: JSONSchema
+    url: json-schema/temenos-transaction-schema.json
+  - type: JSONLD
+    url: json-ld/temenos-transact-context.jsonld
 common:
   - type: AgenticAccess
     url: agentic-access/temenos-transact-agentic-access.yml
