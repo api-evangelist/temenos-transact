@@ -1,0 +1,32 @@
+{
+  "provider": "temenos-transact",
+  "sources": [
+    "temenos-transact-accounts-api-openapi.yml",
+    "temenos-transact-beneficiaries-api-openapi.yml",
+    "temenos-transact-cards-api-openapi.yml",
+    "temenos-transact-customers-api-openapi.yml",
+    "temenos-transact-deposits-api-openapi.yml",
+    "temenos-transact-loans-api-openapi.yml",
+    "temenos-transact-payments-api-openapi.yml",
+    "temenos-transact-products-api-openapi.yml",
+    "temenos-transact-reference-data-api-openapi.yml",
+    "temenos-transact-transactions-api-openapi.yml"
+  ],
+  "outputs": [
+    "temenos-transact-accounts-api-openapi.yml",
+    "temenos-transact-beneficiaries-api-openapi.yml",
+    "temenos-transact-cards-api-openapi.yml",
+    "temenos-transact-customers-api-openapi.yml",
+    "temenos-transact-deposits-api-openapi.yml",
+    "temenos-transact-loans-api-openapi.yml",
+    "temenos-transact-payments-api-openapi.yml",
+    "temenos-transact-products-api-openapi.yml",
+    "temenos-transact-reference-data-api-openapi.yml",
+    "temenos-transact-transactions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
