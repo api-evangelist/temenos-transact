@@ -1,0 +1,218 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Temenos Transact Core Banking Accounts Payments API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact Create Fund Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.temenos.com/api/v1.0.0/order/fundTransfers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate a fund transfer between accounts. Supports internal transfers, domestic payments, and cross-border transfers. Validates accounts, calculates charges and exchange rates, and processes the payment according to configured payment rules and cut-off times."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Fund Transfer Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/order/fundTransfers/:transferId",
+            "params": [
+              {
+                "name": "transferId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the fund transfer"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and details of a specific fund transfer including processing status, value date, charges applied, exchange rate, and any error details."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact List Payment Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/order/paymentOrders",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "debitAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by debit account ID"
+              },
+              {
+                "name": "creditAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by credit account ID"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by payment status"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date filter (YYYY-MM-DD)"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date filter (YYYY-MM-DD)"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of payment orders. Supports filtering by status, debit account, credit account, date range, and payment type. Includes pending, processed, and rejected payment orders."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Create Payment Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.temenos.com/api/v1.0.0/order/paymentOrders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a new payment order for processing. Validates the payment details, calculates charges and execution times, and queues the payment for processing. Supports various payment types including SEPA, SWIFT, ACH, and domestic clearing."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Payment Order Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/order/paymentOrders/:paymentOrderId",
+            "params": [
+              {
+                "name": "paymentOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment order"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information for a specific payment order including status, amount, charges, exchange rate, execution date, and processing details."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Cancel Payment Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.temenos.com/api/v1.0.0/order/paymentOrders/:paymentOrderId/cancellation",
+            "params": [
+              {
+                "name": "paymentOrderId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the payment order to cancel"
+              }
+            ]
+          },
+          "docs": "Request cancellation of a pending payment order. Only payment orders in PENDING or PROCESSING status can be cancelled. Returns the updated payment order status."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact List Standing Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/order/standingOrders",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account ID"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by standing order status"
+              }
+            ]
+          },
+          "docs": "Retrieve standing order instructions for recurring payments. Supports filtering by account, frequency, status, and next execution date."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Create Standing Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.temenos.com/api/v1.0.0/order/standingOrders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new standing order instruction for recurring payments. Defines the debit account, beneficiary, amount, frequency, start date, and optional end date."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

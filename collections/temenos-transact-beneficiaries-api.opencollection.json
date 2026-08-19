@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Temenos Transact Core Banking Accounts Beneficiaries API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Beneficiaries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Beneficiaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/party/beneficiaries",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve registered payment beneficiaries for a customer. Includes domestic and international beneficiaries with their bank details and validation status."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Create Beneficiary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.temenos.com/api/v1.0.0/party/beneficiaries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a new payment beneficiary for a customer. Validates the beneficiary bank details including IBAN, BIC/SWIFT code, and account number format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

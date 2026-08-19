@@ -1,0 +1,576 @@
+{
+  "item": [
+    {
+      "id": "31ccae25-3f8b-4fbc-acfa-5e89a7a53ff3",
+      "name": "Beneficiaries",
+      "description": {
+        "content": "Manage payment beneficiaries including domestic and international beneficiary registration, validation, and maintenance.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "089fba5e-0120-445f-bd10-a71906944975",
+          "name": "Temenos Transact List Beneficiaries",
+          "request": {
+            "name": "Temenos Transact List Beneficiaries",
+            "description": {
+              "content": "Retrieve registered payment beneficiaries for a customer. Includes domestic and international beneficiaries with their bank details and validation status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "party",
+                "beneficiaries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "25",
+                  "description": "Number of records to return per page (default 25, max 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_start",
+                  "value": "0",
+                  "description": "Page token or offset for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "customerId",
+                  "value": "<string>",
+                  "description": "Filter by customer identifier"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ce2a11f8-4da2-40b9-b9c5-cf15995bae48",
+              "name": "Successful retrieval of beneficiaries",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "beneficiaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page_start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "customerId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 609,\n      \"responseParse\": 4261\n    }\n  },\n  \"page\": {\n    \"pageSize\": 10,\n    \"pageStart\": 10,\n    \"totalRecords\": 10\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a868ec5-eb50-4b7b-bbae-c7929008e655",
+              "name": "Authentication required or token expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "beneficiaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page_start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "customerId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d91a2459-5456-4859-b19a-f09ff24f81e8",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "beneficiaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page_start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "customerId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e15259c-99f3-40b6-953f-7b61b9034e11",
+          "name": "Temenos Transact Create Beneficiary",
+          "request": {
+            "name": "Temenos Transact Create Beneficiary",
+            "description": {
+              "content": "Register a new payment beneficiary for a customer. Validates the beneficiary bank details including IBAN, BIC/SWIFT code, and account number format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "party",
+                "beneficiaries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"body\": {\n    \"customerId\": \"<string>\",\n    \"beneficiaryName\": \"<string>\",\n    \"accountNumber\": \"<string>\",\n    \"iban\": \"<string>\",\n    \"bic\": \"<string>\",\n    \"bankName\": \"<string>\",\n    \"bankCountry\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"beneficiaryType\": \"<string>\",\n    \"nickname\": \"<string>\"\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8af12807-cbfa-4f33-af2e-a92994565376",
+              "name": "Beneficiary created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "beneficiaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"customerId\": \"<string>\",\n    \"beneficiaryName\": \"<string>\",\n    \"accountNumber\": \"<string>\",\n    \"iban\": \"<string>\",\n    \"bic\": \"<string>\",\n    \"bankName\": \"<string>\",\n    \"bankCountry\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"beneficiaryType\": \"<string>\",\n    \"nickname\": \"<string>\"\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 227,\n      \"responseParse\": 7631\n    }\n  },\n  \"body\": {\n    \"beneficiaryId\": \"500123\",\n    \"customerId\": \"500123\",\n    \"beneficiaryName\": \"example_value\",\n    \"accountNumber\": \"example_value\",\n    \"iban\": \"example_value\",\n    \"bic\": \"example_value\",\n    \"bankName\": \"example_value\",\n    \"bankCountry\": \"example_value\",\n    \"currency\": \"example_value\",\n    \"beneficiaryType\": \"DOMESTIC\",\n    \"status\": \"ACTIVE\",\n    \"nickname\": \"example_value\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c28d74a9-7519-4a8b-9b3d-d5253cc7aab8",
+              "name": "Bad request - invalid parameters or malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "beneficiaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"customerId\": \"<string>\",\n    \"beneficiaryName\": \"<string>\",\n    \"accountNumber\": \"<string>\",\n    \"iban\": \"<string>\",\n    \"bic\": \"<string>\",\n    \"bankName\": \"<string>\",\n    \"bankCountry\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"beneficiaryType\": \"<string>\",\n    \"nickname\": \"<string>\"\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e25ec7ab-030b-4533-bab2-c26b0dff816b",
+              "name": "Authentication required or token expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "beneficiaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"customerId\": \"<string>\",\n    \"beneficiaryName\": \"<string>\",\n    \"accountNumber\": \"<string>\",\n    \"iban\": \"<string>\",\n    \"bic\": \"<string>\",\n    \"bankName\": \"<string>\",\n    \"bankCountry\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"beneficiaryType\": \"<string>\",\n    \"nickname\": \"<string>\"\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d881053c-3b5f-4ee8-82b6-ebaff374067d",
+              "name": "Beneficiary validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "beneficiaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"customerId\": \"<string>\",\n    \"beneficiaryName\": \"<string>\",\n    \"accountNumber\": \"<string>\",\n    \"iban\": \"<string>\",\n    \"bic\": \"<string>\",\n    \"bankName\": \"<string>\",\n    \"bankCountry\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"beneficiaryType\": \"<string>\",\n    \"nickname\": \"<string>\"\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8652d58-c181-4a70-a022-a078da8cdfc8",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "beneficiaries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"customerId\": \"<string>\",\n    \"beneficiaryName\": \"<string>\",\n    \"accountNumber\": \"<string>\",\n    \"iban\": \"<string>\",\n    \"bic\": \"<string>\",\n    \"bankName\": \"<string>\",\n    \"bankCountry\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"beneficiaryType\": \"<string>\",\n    \"nickname\": \"<string>\"\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.temenos.com/api/v1.0.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4abe83b9-87d3-4e54-966d-dd96c8d9b252",
+    "name": "Temenos Transact Core Banking Accounts Beneficiaries API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Temenos Transact Core Banking Accounts Cards API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Cards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/cards",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve debit and credit cards associated with customer accounts. Includes card status, type, expiry date, and linked account details."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Card Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/cards/:cardId",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the card"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information for a specific card including card number (masked), status, limits, linked account, and transaction history summary."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

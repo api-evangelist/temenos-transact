@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Temenos Transact Core Banking Accounts Products API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/product/products",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "productGroup",
+                "value": "",
+                "type": "query",
+                "description": "Filter by product group (e.g., ACCOUNTS, DEPOSITS, LOANS)"
+              }
+            ]
+          },
+          "docs": "Retrieve the product catalog including account products, deposit products, loan products, and card products. Returns product definitions with their conditions, eligibility criteria, and arrangement details."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1735 @@
+{
+  "item": [
+    {
+      "id": "ef2c52ac-41a5-4ddc-b65a-1e9db8486f1c",
+      "name": "Customers",
+      "description": {
+        "content": "Create, update, and manage customer profiles, contact details, KYC documentation, compliance records, communication preferences, and party relationships.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1520e9a4-96f9-4e6e-b006-7e288526c0b1",
+          "name": "Temenos Transact List Customers",
+          "request": {
+            "name": "Temenos Transact List Customers",
+            "description": {
+              "content": "Retrieve a list of customers. Supports filtering by customer name, mnemonic, sector, status, and other criteria. Returns customer profiles with basic information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "party",
+                "customers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "25",
+                  "description": "Number of records to return per page (default 25, max 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_start",
+                  "value": "0",
+                  "description": "Page token or offset for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "customerName",
+                  "value": "<string>",
+                  "description": "Filter by customer name (partial match supported)"
+                },
+                {
+                  "disabled": false,
+                  "key": "mnemonic",
+                  "value": "<string>",
+                  "description": "Filter by customer mnemonic"
+                },
+                {
+                  "disabled": false,
+                  "key": "sector",
+                  "value": "<integer>",
+                  "description": "Filter by customer sector code"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by customer status"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "01d197f1-bffb-4c78-84f1-74b317879bbc",
+              "name": "Successful retrieval of customers list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page_start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "customerName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mnemonic",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sector",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 5965,\n      \"responseParse\": 1248\n    }\n  },\n  \"page\": {\n    \"pageSize\": 10,\n    \"pageStart\": 10,\n    \"totalRecords\": 10\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2169ef58-debb-4142-998f-c37a9b019981",
+              "name": "Bad request - invalid parameters or malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page_start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "customerName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mnemonic",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sector",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "302c25c9-d711-4f64-a662-b35a8a5a0fdd",
+              "name": "Authentication required or token expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page_start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "customerName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mnemonic",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sector",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf6905fc-d6d3-4551-8e85-0ebf0b840ab9",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page_start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "customerName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mnemonic",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sector",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f87f765f-eed6-4328-8419-4e51db2d5e99",
+          "name": "Temenos Transact Create Customer",
+          "request": {
+            "name": "Temenos Transact Create Customer",
+            "description": {
+              "content": "Create a new customer record in Temenos Transact. Each new customer is assigned a unique system-generated customer ID. Required fields include short name, sector, and customer mnemonic. Supports creating individual and corporate customer types with full demographic, contact, and compliance information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "party",
+                "customers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"body\": {\n    \"shortName\": \"<string>\",\n    \"customerMnemonic\": \"<string>\",\n    \"sectorId\": \"<integer>\",\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"title\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"dateOfBirth\": \"<date>\",\n    \"nationalityId\": \"<string>\",\n    \"industryId\": \"<integer>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"target\": \"<integer>\",\n    \"language\": \"<integer>\",\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      {\n        \"addressType\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    ]\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ac93becf-3315-4115-868d-15f4a373373b",
+              "name": "Customer created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"shortName\": \"<string>\",\n    \"customerMnemonic\": \"<string>\",\n    \"sectorId\": \"<integer>\",\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"title\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"dateOfBirth\": \"<date>\",\n    \"nationalityId\": \"<string>\",\n    \"industryId\": \"<integer>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"target\": \"<integer>\",\n    \"language\": \"<integer>\",\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CD\"\n      },\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"LS\"\n      }\n    ]\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 9383,\n      \"responseParse\": 3927\n    }\n  },\n  \"body\": {\n    \"customerId\": \"100282\",\n    \"customerMnemonic\": \"JSMITH01\",\n    \"shortName\": \"JOHN SMITH\",\n    \"title\": \"MR\",\n    \"gender\": \"MALE\",\n    \"dateOfBirth\": \"2026-01-15\",\n    \"nationalityId\": \"500123\",\n    \"residenceId\": \"500123\",\n    \"language\": 10,\n    \"customerStatus\": 10,\n    \"sectorId\": 1000,\n    \"industryId\": 1000,\n    \"accountOfficerId\": 6,\n    \"target\": 10,\n    \"customerCompany\": \"example_value\",\n    \"amlCheck\": \"example_value\",\n    \"amlResult\": \"example_value\",\n    \"kycStatus\": \"VERIFIED\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11c8cfd6-ed29-46b2-bc4a-74df1786a518",
+              "name": "Bad request - invalid parameters or malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"shortName\": \"<string>\",\n    \"customerMnemonic\": \"<string>\",\n    \"sectorId\": \"<integer>\",\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"title\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"dateOfBirth\": \"<date>\",\n    \"nationalityId\": \"<string>\",\n    \"industryId\": \"<integer>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"target\": \"<integer>\",\n    \"language\": \"<integer>\",\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CD\"\n      },\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"LS\"\n      }\n    ]\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42ae8474-9e75-4dc1-b311-a923ac432164",
+              "name": "Authentication required or token expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"shortName\": \"<string>\",\n    \"customerMnemonic\": \"<string>\",\n    \"sectorId\": \"<integer>\",\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"title\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"dateOfBirth\": \"<date>\",\n    \"nationalityId\": \"<string>\",\n    \"industryId\": \"<integer>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"target\": \"<integer>\",\n    \"language\": \"<integer>\",\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CD\"\n      },\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"LS\"\n      }\n    ]\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bba5be8-bd3d-49e1-aad5-de5733aedc05",
+              "name": "Insufficient permissions to access this resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"shortName\": \"<string>\",\n    \"customerMnemonic\": \"<string>\",\n    \"sectorId\": \"<integer>\",\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"title\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"dateOfBirth\": \"<date>\",\n    \"nationalityId\": \"<string>\",\n    \"industryId\": \"<integer>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"target\": \"<integer>\",\n    \"language\": \"<integer>\",\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CD\"\n      },\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"LS\"\n      }\n    ]\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b12fa5d-995c-49dd-bf5f-f388abee88d1",
+              "name": "Conflict - customer mnemonic already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"shortName\": \"<string>\",\n    \"customerMnemonic\": \"<string>\",\n    \"sectorId\": \"<integer>\",\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"title\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"dateOfBirth\": \"<date>\",\n    \"nationalityId\": \"<string>\",\n    \"industryId\": \"<integer>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"target\": \"<integer>\",\n    \"language\": \"<integer>\",\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CD\"\n      },\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"LS\"\n      }\n    ]\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6e10886-5f82-4bea-ab75-4bcbba4998ac",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"body\": {\n    \"shortName\": \"<string>\",\n    \"customerMnemonic\": \"<string>\",\n    \"sectorId\": \"<integer>\",\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"title\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"dateOfBirth\": \"<date>\",\n    \"nationalityId\": \"<string>\",\n    \"industryId\": \"<integer>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"target\": \"<integer>\",\n    \"language\": \"<integer>\",\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CD\"\n      },\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"LS\"\n      }\n    ]\n  },\n  \"header\": {\n    \"override\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b769ee5-1530-43a4-981d-858177481b80",
+          "name": "Temenos Transact Get Customer Details",
+          "request": {
+            "name": "Temenos Transact Get Customer Details",
+            "description": {
+              "content": "Retrieve detailed information for a specific customer including personal details, contact information, KYC status, AML check results, account officer assignment, and relationship details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "party",
+                "customers",
+                ":customerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "customerId",
+                  "description": "(Required) Unique identifier of the customer"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "766e6f6c-5590-4e6d-a608-5dd91832ee1d",
+              "name": "Successful retrieval of customer details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 9383,\n      \"responseParse\": 3927\n    }\n  },\n  \"body\": {\n    \"customerId\": \"100282\",\n    \"customerMnemonic\": \"JSMITH01\",\n    \"shortName\": \"JOHN SMITH\",\n    \"title\": \"MR\",\n    \"gender\": \"MALE\",\n    \"dateOfBirth\": \"2026-01-15\",\n    \"nationalityId\": \"500123\",\n    \"residenceId\": \"500123\",\n    \"language\": 10,\n    \"customerStatus\": 10,\n    \"sectorId\": 1000,\n    \"industryId\": 1000,\n    \"accountOfficerId\": 6,\n    \"target\": 10,\n    \"customerCompany\": \"example_value\",\n    \"amlCheck\": \"example_value\",\n    \"amlResult\": \"example_value\",\n    \"kycStatus\": \"VERIFIED\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d63d8c1-77f4-4f14-9d34-1b5db9e3646d",
+              "name": "Authentication required or token expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "495f4dd5-ffc4-4626-818b-e2b066804185",
+              "name": "Insufficient permissions to access this resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e28d627a-bfea-4e10-9cbb-0742f3b22a9c",
+              "name": "Requested resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5e72144-d14a-4bd5-8231-8e9429d3fbad",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84072f6a-091e-4272-aae9-ffbcb0dbe844",
+          "name": "Temenos Transact Update Customer",
+          "request": {
+            "name": "Temenos Transact Update Customer",
+            "description": {
+              "content": "Update an existing customer record. Supports modifying customer attributes such as contact details, address, communication preferences, and KYC documentation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "party",
+                "customers",
+                ":customerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "customerId",
+                  "description": "(Required) Unique identifier of the customer"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"country\": \"<string>\"\n      },\n      {\n        \"addressType\": \"<string>\",\n        \"addressLine1\": \"<string>\",\n        \"addressLine2\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"postCode\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6807490b-484f-4708-83a8-f3f069f7b07c",
+              "name": "Customer updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CX\"\n      },\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CY\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 9383,\n      \"responseParse\": 3927\n    }\n  },\n  \"body\": {\n    \"customerId\": \"100282\",\n    \"customerMnemonic\": \"JSMITH01\",\n    \"shortName\": \"JOHN SMITH\",\n    \"title\": \"MR\",\n    \"gender\": \"MALE\",\n    \"dateOfBirth\": \"2026-01-15\",\n    \"nationalityId\": \"500123\",\n    \"residenceId\": \"500123\",\n    \"language\": 10,\n    \"customerStatus\": 10,\n    \"sectorId\": 1000,\n    \"industryId\": 1000,\n    \"accountOfficerId\": 6,\n    \"target\": 10,\n    \"customerCompany\": \"example_value\",\n    \"amlCheck\": \"example_value\",\n    \"amlResult\": \"example_value\",\n    \"kycStatus\": \"VERIFIED\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec6efa06-71b6-415c-9d0c-73e40ec1fe75",
+              "name": "Bad request - invalid parameters or malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CX\"\n      },\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CY\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fad7f0ca-c9a6-4e7e-8be0-fbc620e7f50b",
+              "name": "Authentication required or token expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CX\"\n      },\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CY\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb7f4209-753f-4f00-9421-2d252f966fe5",
+              "name": "Requested resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CX\"\n      },\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CY\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a6c877a-2a97-4642-8a59-063f57f29383",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"customerNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"displayNames\": [\n      {\n        \"name\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\"\n      }\n    ],\n    \"communicationDevices\": [\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      },\n      {\n        \"deviceType\": \"<string>\",\n        \"deviceValue\": \"<string>\"\n      }\n    ],\n    \"addresses\": [\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CX\"\n      },\n      {\n        \"addressType\": \"RESIDENTIAL\",\n        \"addressLine1\": \"example_value\",\n        \"addressLine2\": \"example_value\",\n        \"city\": \"example_value\",\n        \"state\": \"example_value\",\n        \"postCode\": \"example_value\",\n        \"country\": \"CY\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d2b40bd2-9c66-449e-b268-6fc254e57395",
+          "name": "Temenos Transact List Customer Accounts",
+          "request": {
+            "name": "Temenos Transact List Customer Accounts",
+            "description": {
+              "content": "Retrieve all accounts associated with a specific customer, including account type, status, currency, and balance summary.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "party",
+                "customers",
+                ":customerId",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "25",
+                  "description": "Number of records to return per page (default 25, max 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_start",
+                  "value": "0",
+                  "description": "Page token or offset for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "customerId",
+                  "description": "(Required) Unique identifier of the customer"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "95c286de-9735-4746-ab1e-8e868ba18615",
+              "name": "Successful retrieval of customer accounts",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page_start",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 698,\n      \"responseParse\": 6002\n    }\n  },\n  \"page\": {\n    \"pageSize\": 10,\n    \"pageStart\": 10,\n    \"totalRecords\": 10\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4fb47f0-897b-42e6-ab6f-ecc37bd7348e",
+              "name": "Authentication required or token expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page_start",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1eb78b4a-8f7c-4988-819b-cba81e7807aa",
+              "name": "Requested resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page_start",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b5e6696-c5f3-45fa-aebe-9877f0de200d",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "party",
+                    "customers",
+                    ":customerId",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "25"
+                    },
+                    {
+                      "key": "page_start",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) Unique identifier of the customer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.temenos.com/api/v1.0.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "74b50460-c50d-4e71-bae3-e75fd6062f7b",
+    "name": "Temenos Transact Core Banking Accounts Customers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
+      "type": "text/plain"
+    }
+  }
+}

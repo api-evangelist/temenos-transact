@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Temenos Transact Core Banking Accounts Loans API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Loans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Loans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/loans",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer identifier"
+              },
+              {
+                "name": "productType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by loan product type"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by loan status"
+              }
+            ]
+          },
+          "docs": "Retrieve loan arrangements including personal loans, mortgages, credit facilities, and overdraft agreements. Supports filtering by customer, product type, status, and currency."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Loan Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/loans/:loanId",
+            "params": [
+              {
+                "name": "loanId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the loan arrangement"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information for a specific loan arrangement including principal, outstanding balance, interest rate, repayment schedule, next payment date, and facility details."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

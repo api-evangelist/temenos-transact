@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Temenos Transact Core Banking Accounts Reference Data API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reference Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/reference/currencies",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve available currencies with their ISO 4217 codes, decimal precision, exchange rates, and market details."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact List Countries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/reference/countries",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve available countries with their ISO 3166 codes, currency details, and regulatory classification."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Validate Iban",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/reference/ibanValidation/:iban",
+            "params": [
+              {
+                "name": "iban",
+                "value": "",
+                "type": "path",
+                "description": "The IBAN to validate"
+              }
+            ]
+          },
+          "docs": "Validate an International Bank Account Number (IBAN) and return the resolved bank details including BIC, bank name, and branch information."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

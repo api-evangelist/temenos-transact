@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Temenos Transact Core Banking Accounts Deposits API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deposits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Deposits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/deposits",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer identifier"
+              },
+              {
+                "name": "maturityDateFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter deposits maturing from this date (YYYY-MM-DD)"
+              },
+              {
+                "name": "maturityDateTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter deposits maturing up to this date (YYYY-MM-DD)"
+              }
+            ]
+          },
+          "docs": "Retrieve deposit arrangements including term deposits, savings deposits, and fixed deposits. Supports filtering by customer, maturity date range, status, and currency."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Deposit Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/deposits/:depositId",
+            "params": [
+              {
+                "name": "depositId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the deposit arrangement"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information for a specific deposit arrangement including principal amount, interest rate, maturity date, accrued interest, and renewal options."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

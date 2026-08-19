@@ -1,0 +1,165 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Temenos Transact Core Banking Accounts API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Temenos Transact List Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/accounts",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by customer identifier"
+              },
+              {
+                "name": "accountType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account currency (ISO 4217 code)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account status"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of customer accounts. Supports filtering by customer, account type, status, currency, and other criteria. Returns account arrangements created through the Arrangement Architecture including current, savings, corporate, and Islamic account types."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Account Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the account arrangement"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information for a specific account arrangement including balances, product details, interest conditions, charges, and account officer assignment."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Update Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the account arrangement"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing account arrangement. Supports modifying account attributes such as posting restrictions, overdraft limits, account officer, and product conditions."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact Get Account Balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/holdings/accounts/:accountId/balances",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the account arrangement"
+              }
+            ]
+          },
+          "docs": "Retrieve balance information for a specific account including available balance, working balance, locked amount, cleared balance, and other balance types as configured."
+        },
+        {
+          "info": {
+            "name": "Temenos Transact List Customer Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.temenos.com/api/v1.0.0/party/customers/:customerId/accounts",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the customer"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (default 25, max 100)"
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Page token or offset for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve all accounts associated with a specific customer, including account type, status, currency, and balance summary."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
