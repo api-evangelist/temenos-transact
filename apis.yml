@@ -47,6 +47,11 @@ apis:
   tags:
   - Analytics
   - Data Hub
+  - Datastore
+  - Reporting
+  tags_raw:
+  - Analytics
+  - Data Hub
   - Data Store
   - Reporting
   properties:
@@ -76,6 +81,8 @@ apis:
   humanURL: https://www.temenos.com/products/transact/
   baseURL: https://api.temenos.com/transact/v1
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -313,6 +320,8 @@ apis:
   humanURL: https://www.temenos.com/products/transact/
   baseURL: https://api.temenos.com/transact/v1
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -381,6 +390,8 @@ apis:
   humanURL: https://www.temenos.com/products/transact/
   baseURL: https://api.temenos.com/transact/v1
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
@@ -483,6 +494,13 @@ maintainers:
     email: kin@apievangelist.com
     url: https://apievangelist.com
 tags:
+  - Banking
+  - Core Banking
+  - Digital Banking
+  - Enterprise
+  - Financial-Services
+  - Fintech
+tags_raw:
   - Banking
   - Core Banking
   - Digital Banking
