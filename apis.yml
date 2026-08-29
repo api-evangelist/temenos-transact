@@ -2,6 +2,18 @@ name: Temenos Transact
 description: >-
   Core banking APIs from Temenos Transact, providing comprehensive banking functionality including accounts,
   transactions, payments, loans, and customer management.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: self-serve
