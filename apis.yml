@@ -431,6 +431,9 @@ apis:
   - type: JSONLD
     url: json-ld/temenos-transact-context.jsonld
 common:
+  - type: CapabilityMap
+    url: capabilities/temenos-transact-capability-edges.yml
+    name: Temenos Transact Business Capability Map
   - type: AgenticAccess
     url: agentic-access/temenos-transact-agentic-access.yml
   - type: DomainSecurity
