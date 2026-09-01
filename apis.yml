@@ -59,7 +59,7 @@ apis:
   tags:
   - Analytics
   - Data Hub
-  - Data Store
+  - Datastore
   - Reporting
   tags_raw:
   - Analytics
