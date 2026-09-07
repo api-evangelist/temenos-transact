@@ -522,3 +522,5 @@ tags_raw:
   - Enterprise
   - Financial Services
   - Fintech
+x-parent: temenos
+x-relationship: product

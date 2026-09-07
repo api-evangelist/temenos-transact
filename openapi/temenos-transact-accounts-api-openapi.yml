@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Temenos Transact Core Banking Accounts API
   description: RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.
@@ -185,199 +185,76 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Insufficient permissions to access this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      description: Unique identifier of the account arrangement
+      schema:
+        type: string
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    pageSize:
+      name: page_size
+      in: query
+      description: Number of records to return per page (default 25, max 100)
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        maximum: 100
+    customerId:
+      name: customerId
+      in: query
+      description: Filter by customer identifier
+      schema:
+        type: string
+    customerIdPath:
+      name: customerId
+      in: path
+      required: true
+      description: Unique identifier of the customer
+      schema:
+        type: string
   schemas:
-    AccountBalances:
-      type: object
-      description: Balance breakdown for a banking account
-      properties:
-        accountId:
-          type: string
-          description: Account identifier
-          example: '500123'
-        currency:
-          type: string
-          description: Currency of the balances
-          example: example_value
-        workingBalance:
-          type: number
-          description: Current working balance including pending transactions
-          example: 42.5
-        availableBalance:
-          type: number
-          description: Balance available for withdrawals and payments
-          example: 42.5
-        clearedBalance:
-          type: number
-          description: Balance of cleared funds only
-          example: 42.5
-        lockedAmount:
-          type: number
-          description: Amount locked or blocked on the account
-          example: 42.5
-        overdraftLimit:
-          type: number
-          description: Approved overdraft facility amount
-          example: 42.5
-        accruedInterest:
-          type: number
-          description: Interest accrued but not yet capitalized
-          example: 42.5
-        pendingDeposits:
-          type: number
-          description: Deposits received but not yet cleared
-          example: 42.5
-        asOfDate:
-          type: string
-          format: date-time
-          description: Timestamp when balances were calculated
-          example: '2026-01-15T10:30:00Z'
-    ErrorResponse:
-      type: object
-      description: Standard error response structure
-      required:
-      - header
-      properties:
-        header:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Request identifier
-            status:
-              type: string
-              description: Error status
-              enum:
-              - error
-            transactionStatus:
-              type: string
-              description: Transaction status
-          example: example_value
-        error:
-          type: object
-          properties:
-            type:
-              type: string
-              description: Error type classification
-            message:
-              type: string
-              description: Human-readable error message
-            code:
-              type: string
-              description: Machine-readable error code
-            details:
-              type: array
-              description: Detailed error information
-              items:
-                type: object
-                properties:
-                  field:
-                    type: string
-                    description: Field that caused the error
-                  message:
-                    type: string
-                    description: Field-level error message
-                  code:
-                    type: string
-                    description: Field-level error code
-          example: example_value
-    PaginationInfo:
-      type: object
-      description: Pagination metadata for list responses
-      properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
-    AccountsResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/Account'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
-    AccountDetailsResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/Account'
-    AccountBalancesResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/AccountBalances'
-    ResponseHeader:
-      type: object
-      description: Standard response header returned by all Transact API operations
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the resource
-          example: abc123
-        status:
-          type: string
-          description: Status of the operation (success, error)
-          enum:
-          - success
-          - error
-          example: success
-        transactionStatus:
-          type: string
-          description: Transaction lifecycle status
-          enum:
-          - Live
-          - Unauth
-          - Hold
-          - Reversed
-          example: Live
-        audit:
-          type: object
-          properties:
-            parseTime:
-              type: integer
-              description: Time taken to parse the request in milliseconds
-            responseParse:
-              type: integer
-              description: Time taken to generate the response in milliseconds
-          example: example_value
-    AccountUpdateRequest:
-      type: object
-      properties:
-        header:
-          type: object
-          properties:
-            override:
-              type: boolean
-              description: Override warnings and proceed
-          example: example_value
-        body:
-          type: object
-          properties:
-            accountName:
-              type: string
-            accountOfficerId:
-              type: integer
-            overdraftLimit:
-              type: number
-            postingRestriction:
-              type: string
-          example: example_value
     Account:
       type: object
       description: A banking account arrangement in Temenos Transact. Created through the Arrangement Architecture supporting current, savings, corporate, Islamic, non-resident, and minor account types.
@@ -465,75 +342,198 @@ components:
           type: string
           description: Bank Identifier Code (SWIFT code)
           example: example_value
-  responses:
-    NotFound:
-      description: Requested resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Insufficient permissions to access this resource
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Authentication required or token expired
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-  parameters:
-    customerIdPath:
-      name: customerId
-      in: path
-      required: true
-      description: Unique identifier of the customer
-      schema:
-        type: string
-    accountId:
-      name: accountId
-      in: path
-      required: true
-      description: Unique identifier of the account arrangement
-      schema:
-        type: string
-    pageStart:
-      name: page_start
-      in: query
-      description: Page token or offset for pagination
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    customerId:
-      name: customerId
-      in: query
-      description: Filter by customer identifier
-      schema:
-        type: string
-    pageSize:
-      name: page_size
-      in: query
-      description: Number of records to return per page (default 25, max 100)
-      schema:
-        type: integer
-        default: 25
-        minimum: 1
-        maximum: 100
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
+    AccountDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Account'
+    AccountUpdateRequest:
+      type: object
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+              description: Override warnings and proceed
+          example: example_value
+        body:
+          type: object
+          properties:
+            accountName:
+              type: string
+            accountOfficerId:
+              type: integer
+            overdraftLimit:
+              type: number
+            postingRestriction:
+              type: string
+          example: example_value
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    AccountBalancesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/AccountBalances'
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+      - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+          example: example_value
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
+          example: example_value
+    AccountBalances:
+      type: object
+      description: Balance breakdown for a banking account
+      properties:
+        accountId:
+          type: string
+          description: Account identifier
+          example: '500123'
+        currency:
+          type: string
+          description: Currency of the balances
+          example: example_value
+        workingBalance:
+          type: number
+          description: Current working balance including pending transactions
+          example: 42.5
+        availableBalance:
+          type: number
+          description: Balance available for withdrawals and payments
+          example: 42.5
+        clearedBalance:
+          type: number
+          description: Balance of cleared funds only
+          example: 42.5
+        lockedAmount:
+          type: number
+          description: Amount locked or blocked on the account
+          example: 42.5
+        overdraftLimit:
+          type: number
+          description: Approved overdraft facility amount
+          example: 42.5
+        accruedInterest:
+          type: number
+          description: Interest accrued but not yet capitalized
+          example: 42.5
+        pendingDeposits:
+          type: number
+          description: Deposits received but not yet cleared
+          example: 42.5
+        asOfDate:
+          type: string
+          format: date-time
+          description: Timestamp when balances were calculated
+          example: '2026-01-15T10:30:00Z'
+    AccountsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
   securitySchemes:
     bearerAuth:
       type: http

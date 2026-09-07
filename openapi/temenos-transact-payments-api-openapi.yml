@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Temenos Transact Core Banking Accounts Payments API
   description: RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.
@@ -325,20 +325,8 @@ paths:
         dispatcher: FALLBACK
 components:
   responses:
-    NotFound:
-      description: Requested resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     InternalServerError:
       description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Insufficient permissions to access this resource
       content:
         application/json:
           schema:
@@ -349,78 +337,37 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     BadRequest:
       description: Bad request - invalid parameters or malformed request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Insufficient permissions to access this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    ErrorResponse:
+    StandingOrdersResponse:
       type: object
-      description: Standard error response structure
-      required:
-      - header
       properties:
         header:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Request identifier
-            status:
-              type: string
-              description: Error status
-              enum:
-              - error
-            transactionStatus:
-              type: string
-              description: Transaction status
-          example: example_value
-        error:
-          type: object
-          properties:
-            type:
-              type: string
-              description: Error type classification
-            message:
-              type: string
-              description: Human-readable error message
-            code:
-              type: string
-              description: Machine-readable error code
-            details:
-              type: array
-              description: Detailed error information
-              items:
-                type: object
-                properties:
-                  field:
-                    type: string
-                    description: Field that caused the error
-                  message:
-                    type: string
-                    description: Field-level error message
-                  code:
-                    type: string
-                    description: Field-level error code
-          example: example_value
-    PaginationInfo:
-      type: object
-      description: Pagination metadata for list responses
-      properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandingOrder'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
     StandingOrder:
       type: object
       description: A standing order instruction for recurring payments
@@ -493,6 +440,109 @@ components:
           type: string
           description: Payment description
           example: example_value
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
+    PaymentOrderRequest:
+      type: object
+      required:
+      - body
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+          example: example_value
+        body:
+          type: object
+          required:
+          - debitAccountId
+          - debitAmount
+          properties:
+            debitAccountId:
+              type: string
+            debitAmount:
+              type: number
+              minimum: 0.01
+            debitCurrency:
+              type: string
+            creditAccountId:
+              type: string
+            creditAmount:
+              type: number
+            creditCurrency:
+              type: string
+            beneficiaryId:
+              type: string
+            beneficiaryName:
+              type: string
+            beneficiaryIban:
+              type: string
+            beneficiaryBic:
+              type: string
+            paymentType:
+              type: string
+              enum:
+              - INTERNAL
+              - SEPA_CREDIT
+              - SEPA_INSTANT
+              - SWIFT_MT103
+              - ACH
+              - DOMESTIC_CLEARING
+              - RTGS
+            valueDate:
+              type: string
+              format: date
+            remittanceInformation:
+              type: string
+            chargesType:
+              type: string
+              enum:
+              - OUR
+              - BEN
+              - SHA
+            endToEndReference:
+              type: string
+          example: example_value
+    PaymentOrderResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/PaymentOrder'
     StandingOrderRequest:
       type: object
       required:
@@ -544,6 +594,139 @@ components:
               format: date
             narrative:
               type: string
+          example: example_value
+    FundTransferRequest:
+      type: object
+      required:
+      - body
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+          example: example_value
+        body:
+          type: object
+          required:
+          - debitAccountId
+          - creditAccountId
+          - amount
+          properties:
+            debitAccountId:
+              type: string
+              description: Source account identifier
+            creditAccountId:
+              type: string
+              description: Destination account identifier
+            amount:
+              type: number
+              description: Transfer amount
+              minimum: 0.01
+            currency:
+              type: string
+              description: Transfer currency (defaults to debit account currency)
+            valueDate:
+              type: string
+              format: date
+              description: Value date (defaults to current business date)
+            narrative:
+              type: string
+              description: Transfer description
+            endToEndReference:
+              type: string
+              description: End-to-end reference
+          example: example_value
+    FundTransferResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/FundTransfer'
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    PaymentOrdersResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentOrder'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+    StandingOrderResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/StandingOrder'
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+      - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+          example: example_value
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
           example: example_value
     PaymentOrder:
       type: object
@@ -728,189 +911,6 @@ components:
           type: string
           description: End-to-end reference for payment tracking
           example: example_value
-    PaymentOrderRequest:
-      type: object
-      required:
-      - body
-      properties:
-        header:
-          type: object
-          properties:
-            override:
-              type: boolean
-          example: example_value
-        body:
-          type: object
-          required:
-          - debitAccountId
-          - debitAmount
-          properties:
-            debitAccountId:
-              type: string
-            debitAmount:
-              type: number
-              minimum: 0.01
-            debitCurrency:
-              type: string
-            creditAccountId:
-              type: string
-            creditAmount:
-              type: number
-            creditCurrency:
-              type: string
-            beneficiaryId:
-              type: string
-            beneficiaryName:
-              type: string
-            beneficiaryIban:
-              type: string
-            beneficiaryBic:
-              type: string
-            paymentType:
-              type: string
-              enum:
-              - INTERNAL
-              - SEPA_CREDIT
-              - SEPA_INSTANT
-              - SWIFT_MT103
-              - ACH
-              - DOMESTIC_CLEARING
-              - RTGS
-            valueDate:
-              type: string
-              format: date
-            remittanceInformation:
-              type: string
-            chargesType:
-              type: string
-              enum:
-              - OUR
-              - BEN
-              - SHA
-            endToEndReference:
-              type: string
-          example: example_value
-    StandingOrderResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/StandingOrder'
-    PaymentOrdersResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentOrder'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
-    FundTransferRequest:
-      type: object
-      required:
-      - body
-      properties:
-        header:
-          type: object
-          properties:
-            override:
-              type: boolean
-          example: example_value
-        body:
-          type: object
-          required:
-          - debitAccountId
-          - creditAccountId
-          - amount
-          properties:
-            debitAccountId:
-              type: string
-              description: Source account identifier
-            creditAccountId:
-              type: string
-              description: Destination account identifier
-            amount:
-              type: number
-              description: Transfer amount
-              minimum: 0.01
-            currency:
-              type: string
-              description: Transfer currency (defaults to debit account currency)
-            valueDate:
-              type: string
-              format: date
-              description: Value date (defaults to current business date)
-            narrative:
-              type: string
-              description: Transfer description
-            endToEndReference:
-              type: string
-              description: End-to-end reference
-          example: example_value
-    ResponseHeader:
-      type: object
-      description: Standard response header returned by all Transact API operations
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the resource
-          example: abc123
-        status:
-          type: string
-          description: Status of the operation (success, error)
-          enum:
-          - success
-          - error
-          example: success
-        transactionStatus:
-          type: string
-          description: Transaction lifecycle status
-          enum:
-          - Live
-          - Unauth
-          - Hold
-          - Reversed
-          example: Live
-        audit:
-          type: object
-          properties:
-            parseTime:
-              type: integer
-              description: Time taken to parse the request in milliseconds
-            responseParse:
-              type: integer
-              description: Time taken to generate the response in milliseconds
-          example: example_value
-    FundTransferResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/FundTransfer'
-    StandingOrdersResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/StandingOrder'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
-    PaymentOrderResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/PaymentOrder'
   parameters:
     pageStart:
       name: page_start
