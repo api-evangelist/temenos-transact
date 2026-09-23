@@ -1,16 +1,7 @@
 {
   "provider": "temenos-transact",
   "sources": [
-    "temenos-transact-accounts-api-openapi.yml",
-    "temenos-transact-beneficiaries-api-openapi.yml",
-    "temenos-transact-cards-api-openapi.yml",
-    "temenos-transact-customers-api-openapi.yml",
-    "temenos-transact-deposits-api-openapi.yml",
-    "temenos-transact-loans-api-openapi.yml",
-    "temenos-transact-payments-api-openapi.yml",
-    "temenos-transact-products-api-openapi.yml",
-    "temenos-transact-reference-data-api-openapi.yml",
-    "temenos-transact-transactions-api-openapi.yml"
+    "_original/temenos-transact-core-banking-openapi.yml"
   ],
   "outputs": [
     "temenos-transact-accounts-api-openapi.yml",
@@ -28,17 +19,20 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "temenos-transact-accounts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "temenos-transact-beneficiaries-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "temenos-transact-cards-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "temenos-transact-customers-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "temenos-transact-deposits-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "temenos-transact-loans-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "temenos-transact-payments-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "temenos-transact-products-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "temenos-transact-reference-data-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "temenos-transact-transactions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "temenos-transact-core-banking-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "temenos-transact-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "temenos-transact-beneficiaries-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "temenos-transact-cards-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "temenos-transact-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "temenos-transact-deposits-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "temenos-transact-loans-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "temenos-transact-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "temenos-transact-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "temenos-transact-reference-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "temenos-transact-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

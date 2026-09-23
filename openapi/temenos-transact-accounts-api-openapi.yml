@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   title: Temenos Transact Core Banking Accounts API
-  description: RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.
+  description: RESTful APIs for Temenos Transact (formerly T24) core banking operations.
   version: 1.0.0
   contact:
     name: Temenos Developer Support
@@ -185,249 +185,7 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Authentication required or token expired
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Requested resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Insufficient permissions to access this resource
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-  parameters:
-    accountId:
-      name: accountId
-      in: path
-      required: true
-      description: Unique identifier of the account arrangement
-      schema:
-        type: string
-    pageStart:
-      name: page_start
-      in: query
-      description: Page token or offset for pagination
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    pageSize:
-      name: page_size
-      in: query
-      description: Number of records to return per page (default 25, max 100)
-      schema:
-        type: integer
-        default: 25
-        minimum: 1
-        maximum: 100
-    customerId:
-      name: customerId
-      in: query
-      description: Filter by customer identifier
-      schema:
-        type: string
-    customerIdPath:
-      name: customerId
-      in: path
-      required: true
-      description: Unique identifier of the customer
-      schema:
-        type: string
   schemas:
-    Account:
-      type: object
-      description: A banking account arrangement in Temenos Transact. Created through the Arrangement Architecture supporting current, savings, corporate, Islamic, non-resident, and minor account types.
-      properties:
-        accountId:
-          type: string
-          description: Unique system-generated account identifier
-          examples:
-          - AA2014500001
-        accountName:
-          type: string
-          description: Display name of the account
-          example: example_value
-        customerId:
-          type: string
-          description: Identifier of the owning customer
-          example: '500123'
-        customerName:
-          type: string
-          description: Name of the owning customer
-          example: example_value
-        productId:
-          type: string
-          description: Product identifier from the arrangement architecture
-          example: '500123'
-        productName:
-          type: string
-          description: Human-readable product name
-          example: example_value
-        accountType:
-          type: string
-          description: Type of account
-          enum:
-          - CURRENT
-          - SAVINGS
-          - CORPORATE
-          - ISLAMIC
-          - NON_RESIDENT
-          - MINOR
-          example: CURRENT
-        currency:
-          type: string
-          description: Account currency in ISO 4217 format
-          pattern: ^[A-Z]{3}$
-          examples:
-          - USD
-          - EUR
-          - GBP
-        status:
-          type: string
-          description: Current account status
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - CLOSED
-          - PENDING
-          - DORMANT
-          example: ACTIVE
-        openingDate:
-          type: string
-          format: date
-          description: Date the account was opened
-          example: '2026-01-15'
-        workingBalance:
-          type: number
-          description: Current working balance of the account
-          example: 42.5
-        availableBalance:
-          type: number
-          description: Available balance including overdraft facility
-          example: 42.5
-        accountOfficerId:
-          type: integer
-          description: Identifier of the assigned account officer
-          example: '500123'
-        branchId:
-          type: string
-          description: Branch where the account is held
-          example: '500123'
-        iban:
-          type: string
-          description: International Bank Account Number
-          example: example_value
-        bic:
-          type: string
-          description: Bank Identifier Code (SWIFT code)
-          example: example_value
-    ResponseHeader:
-      type: object
-      description: Standard response header returned by all Transact API operations
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the resource
-          example: abc123
-        status:
-          type: string
-          description: Status of the operation (success, error)
-          enum:
-          - success
-          - error
-          example: success
-        transactionStatus:
-          type: string
-          description: Transaction lifecycle status
-          enum:
-          - Live
-          - Unauth
-          - Hold
-          - Reversed
-          example: Live
-        audit:
-          type: object
-          properties:
-            parseTime:
-              type: integer
-              description: Time taken to parse the request in milliseconds
-            responseParse:
-              type: integer
-              description: Time taken to generate the response in milliseconds
-          example: example_value
-    AccountDetailsResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/Account'
-    AccountUpdateRequest:
-      type: object
-      properties:
-        header:
-          type: object
-          properties:
-            override:
-              type: boolean
-              description: Override warnings and proceed
-          example: example_value
-        body:
-          type: object
-          properties:
-            accountName:
-              type: string
-            accountOfficerId:
-              type: integer
-            overdraftLimit:
-              type: number
-            postingRestriction:
-              type: string
-          example: example_value
-    PaginationInfo:
-      type: object
-      description: Pagination metadata for list responses
-      properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
-    AccountBalancesResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/AccountBalances'
     ErrorResponse:
       type: object
       description: Standard error response structure
@@ -522,6 +280,56 @@ components:
           format: date-time
           description: Timestamp when balances were calculated
           example: '2026-01-15T10:30:00Z'
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
     AccountsResponse:
       type: object
       properties:
@@ -534,6 +342,198 @@ components:
           example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
+    AccountDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Account'
+    Account:
+      type: object
+      description: A banking account arrangement in Temenos Transact. Created through the Arrangement Architecture supporting current, savings, corporate, Islamic, non-resident, and minor account types.
+      properties:
+        accountId:
+          type: string
+          description: Unique system-generated account identifier
+          examples:
+          - AA2014500001
+        accountName:
+          type: string
+          description: Display name of the account
+          example: example_value
+        customerId:
+          type: string
+          description: Identifier of the owning customer
+          example: '500123'
+        customerName:
+          type: string
+          description: Name of the owning customer
+          example: example_value
+        productId:
+          type: string
+          description: Product identifier from the arrangement architecture
+          example: '500123'
+        productName:
+          type: string
+          description: Human-readable product name
+          example: example_value
+        accountType:
+          type: string
+          description: Type of account
+          enum:
+          - CURRENT
+          - SAVINGS
+          - CORPORATE
+          - ISLAMIC
+          - NON_RESIDENT
+          - MINOR
+          example: CURRENT
+        currency:
+          type: string
+          description: Account currency in ISO 4217 format
+          pattern: ^[A-Z]{3}$
+          examples:
+          - USD
+          - EUR
+          - GBP
+        status:
+          type: string
+          description: Current account status
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - CLOSED
+          - PENDING
+          - DORMANT
+          example: ACTIVE
+        openingDate:
+          type: string
+          format: date
+          description: Date the account was opened
+          example: '2026-01-15'
+        workingBalance:
+          type: number
+          description: Current working balance of the account
+          example: 42.5
+        availableBalance:
+          type: number
+          description: Available balance including overdraft facility
+          example: 42.5
+        accountOfficerId:
+          type: integer
+          description: Identifier of the assigned account officer
+          example: '500123'
+        branchId:
+          type: string
+          description: Branch where the account is held
+          example: '500123'
+        iban:
+          type: string
+          description: International Bank Account Number
+          example: example_value
+        bic:
+          type: string
+          description: Bank Identifier Code (SWIFT code)
+          example: example_value
+    AccountUpdateRequest:
+      type: object
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+              description: Override warnings and proceed
+          example: example_value
+        body:
+          type: object
+          properties:
+            accountName:
+              type: string
+            accountOfficerId:
+              type: integer
+            overdraftLimit:
+              type: number
+            postingRestriction:
+              type: string
+          example: example_value
+    AccountBalancesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/AccountBalances'
+  parameters:
+    pageSize:
+      name: page_size
+      in: query
+      description: Number of records to return per page (default 25, max 100)
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        maximum: 100
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      description: Unique identifier of the account arrangement
+      schema:
+        type: string
+    customerIdPath:
+      name: customerId
+      in: path
+      required: true
+      description: Unique identifier of the customer
+      schema:
+        type: string
+    customerId:
+      name: customerId
+      in: query
+      description: Filter by customer identifier
+      schema:
+        type: string
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+  responses:
+    Forbidden:
+      description: Insufficient permissions to access this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Temenos Transact Core Banking Accounts Products API
-  description: RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.
+  title: Temenos Transact Core Banking Products API
+  description: RESTful APIs for Temenos Transact (formerly T24) core banking operations.
   version: 1.0.0
   contact:
     name: Temenos Developer Support
@@ -52,54 +52,7 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Authentication required or token expired
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    ResponseHeader:
-      type: object
-      description: Standard response header returned by all Transact API operations
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the resource
-          example: abc123
-        status:
-          type: string
-          description: Status of the operation (success, error)
-          enum:
-          - success
-          - error
-          example: success
-        transactionStatus:
-          type: string
-          description: Transaction lifecycle status
-          enum:
-          - Live
-          - Unauth
-          - Hold
-          - Reversed
-          example: Live
-        audit:
-          type: object
-          properties:
-            parseTime:
-              type: integer
-              description: Time taken to parse the request in milliseconds
-            responseParse:
-              type: integer
-              description: Time taken to generate the response in milliseconds
-          example: example_value
     ErrorResponse:
       type: object
       description: Standard error response structure
@@ -149,6 +102,68 @@ components:
                     type: string
                     description: Field-level error code
           example: example_value
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
+    ProductsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
     Product:
       type: object
       description: A banking product definition from the product catalog
@@ -219,34 +234,6 @@ components:
           - DISCONTINUED
           - COMING_SOON
           example: ACTIVE
-    ProductsResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/Product'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
-    PaginationInfo:
-      type: object
-      description: Pagination metadata for list responses
-      properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
   parameters:
     pageSize:
       name: page_size
@@ -265,6 +252,19 @@ components:
         type: integer
         default: 0
         minimum: 0
+  responses:
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http
