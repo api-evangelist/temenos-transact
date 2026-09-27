@@ -79,72 +79,32 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  parameters:
+    pageSize:
+      name: page_size
+      in: query
+      description: Number of records to return per page (default 25, max 100)
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        maximum: 100
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      description: Unique identifier of the account arrangement
+      schema:
+        type: string
   schemas:
-    ErrorResponse:
-      type: object
-      description: Standard error response structure
-      required:
-      - header
-      properties:
-        header:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Request identifier
-            status:
-              type: string
-              description: Error status
-              enum:
-              - error
-            transactionStatus:
-              type: string
-              description: Transaction status
-          example: example_value
-        error:
-          type: object
-          properties:
-            type:
-              type: string
-              description: Error type classification
-            message:
-              type: string
-              description: Human-readable error message
-            code:
-              type: string
-              description: Machine-readable error code
-            details:
-              type: array
-              description: Detailed error information
-              items:
-                type: object
-                properties:
-                  field:
-                    type: string
-                    description: Field that caused the error
-                  message:
-                    type: string
-                    description: Field-level error message
-                  code:
-                    type: string
-                    description: Field-level error code
-          example: example_value
-    PaginationInfo:
-      type: object
-      description: Pagination metadata for list responses
-      properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
     TransactionsResponse:
       type: object
       properties:
@@ -247,6 +207,71 @@ components:
           type: string
           description: Statement number this transaction belongs to
           example: example_value
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+      - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+          example: example_value
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
+          example: example_value
     ResponseHeader:
       type: object
       description: Standard response header returned by all Transact API operations
@@ -282,20 +307,14 @@ components:
               description: Time taken to generate the response in milliseconds
           example: example_value
   responses:
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     Unauthorized:
       description: Authentication required or token expired
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Requested resource not found
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
       content:
         application/json:
           schema:
@@ -306,31 +325,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-  parameters:
-    pageSize:
-      name: page_size
-      in: query
-      description: Number of records to return per page (default 25, max 100)
-      schema:
-        type: integer
-        default: 25
-        minimum: 1
-        maximum: 100
-    accountId:
-      name: accountId
-      in: path
-      required: true
-      description: Unique identifier of the account arrangement
-      schema:
-        type: string
-    pageStart:
-      name: page_start
-      in: query
-      description: Page token or offset for pagination
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

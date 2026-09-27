@@ -52,106 +52,38 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  parameters:
+    pageSize:
+      name: page_size
+      in: query
+      description: Number of records to return per page (default 25, max 100)
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        maximum: 100
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+  responses:
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    ErrorResponse:
-      type: object
-      description: Standard error response structure
-      required:
-      - header
-      properties:
-        header:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Request identifier
-            status:
-              type: string
-              description: Error status
-              enum:
-              - error
-            transactionStatus:
-              type: string
-              description: Transaction status
-          example: example_value
-        error:
-          type: object
-          properties:
-            type:
-              type: string
-              description: Error type classification
-            message:
-              type: string
-              description: Human-readable error message
-            code:
-              type: string
-              description: Machine-readable error code
-            details:
-              type: array
-              description: Detailed error information
-              items:
-                type: object
-                properties:
-                  field:
-                    type: string
-                    description: Field that caused the error
-                  message:
-                    type: string
-                    description: Field-level error message
-                  code:
-                    type: string
-                    description: Field-level error code
-          example: example_value
-    PaginationInfo:
-      type: object
-      description: Pagination metadata for list responses
-      properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
-    ResponseHeader:
-      type: object
-      description: Standard response header returned by all Transact API operations
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the resource
-          example: abc123
-        status:
-          type: string
-          description: Status of the operation (success, error)
-          enum:
-          - success
-          - error
-          example: success
-        transactionStatus:
-          type: string
-          description: Transaction lifecycle status
-          enum:
-          - Live
-          - Unauth
-          - Hold
-          - Reversed
-          example: Live
-        audit:
-          type: object
-          properties:
-            parseTime:
-              type: integer
-              description: Time taken to parse the request in milliseconds
-            responseParse:
-              type: integer
-              description: Time taken to generate the response in milliseconds
-          example: example_value
     ProductsResponse:
       type: object
       properties:
@@ -234,37 +166,105 @@ components:
           - DISCONTINUED
           - COMING_SOON
           example: ACTIVE
-  parameters:
-    pageSize:
-      name: page_size
-      in: query
-      description: Number of records to return per page (default 25, max 100)
-      schema:
-        type: integer
-        default: 25
-        minimum: 1
-        maximum: 100
-    pageStart:
-      name: page_start
-      in: query
-      description: Page token or offset for pagination
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-  responses:
-    Unauthorized:
-      description: Authentication required or token expired
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+      - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+          example: example_value
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
+          example: example_value
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
   securitySchemes:
     bearerAuth:
       type: http

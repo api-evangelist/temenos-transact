@@ -325,81 +325,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      description: Standard error response structure
-      required:
-      - header
-      properties:
-        header:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Request identifier
-            status:
-              type: string
-              description: Error status
-              enum:
-              - error
-            transactionStatus:
-              type: string
-              description: Transaction status
-          example: example_value
-        error:
-          type: object
-          properties:
-            type:
-              type: string
-              description: Error type classification
-            message:
-              type: string
-              description: Human-readable error message
-            code:
-              type: string
-              description: Machine-readable error code
-            details:
-              type: array
-              description: Detailed error information
-              items:
-                type: object
-                properties:
-                  field:
-                    type: string
-                    description: Field that caused the error
-                  message:
-                    type: string
-                    description: Field-level error message
-                  code:
-                    type: string
-                    description: Field-level error code
-          example: example_value
-    FundTransferResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/FundTransfer'
-    StandingOrderResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/StandingOrder'
-    PaymentOrdersResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentOrder'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
     StandingOrderRequest:
       type: object
       required:
@@ -452,6 +377,270 @@ components:
             narrative:
               type: string
           example: example_value
+    FundTransferRequest:
+      type: object
+      required:
+      - body
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+          example: example_value
+        body:
+          type: object
+          required:
+          - debitAccountId
+          - creditAccountId
+          - amount
+          properties:
+            debitAccountId:
+              type: string
+              description: Source account identifier
+            creditAccountId:
+              type: string
+              description: Destination account identifier
+            amount:
+              type: number
+              description: Transfer amount
+              minimum: 0.01
+            currency:
+              type: string
+              description: Transfer currency (defaults to debit account currency)
+            valueDate:
+              type: string
+              format: date
+              description: Value date (defaults to current business date)
+            narrative:
+              type: string
+              description: Transfer description
+            endToEndReference:
+              type: string
+              description: End-to-end reference
+          example: example_value
+    PaymentOrderResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/PaymentOrder'
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
+    FundTransferResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/FundTransfer'
+    StandingOrderResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/StandingOrder'
+    StandingOrder:
+      type: object
+      description: A standing order instruction for recurring payments
+      properties:
+        standingOrderId:
+          type: string
+          description: Unique standing order identifier
+          example: '500123'
+        accountId:
+          type: string
+          description: Debit account identifier
+          example: '500123'
+        beneficiaryId:
+          type: string
+          description: Beneficiary identifier
+          example: '500123'
+        beneficiaryAccountId:
+          type: string
+          description: Beneficiary account identifier
+          example: '500123'
+        beneficiaryName:
+          type: string
+          description: Name of the beneficiary
+          example: example_value
+        amount:
+          type: number
+          description: Recurring payment amount
+          example: 42.5
+        currency:
+          type: string
+          description: Payment currency
+          example: example_value
+        frequency:
+          type: string
+          description: Payment frequency
+          enum:
+          - DAILY
+          - WEEKLY
+          - BIWEEKLY
+          - MONTHLY
+          - QUARTERLY
+          - SEMI_ANNUALLY
+          - ANNUALLY
+          example: DAILY
+        startDate:
+          type: string
+          format: date
+          description: Date of the first payment
+          example: '2026-01-15'
+        endDate:
+          type: string
+          format: date
+          description: Date of the last payment (optional for indefinite)
+          example: '2026-01-15'
+        nextPaymentDate:
+          type: string
+          format: date
+          description: Date of the next scheduled payment
+          example: '2026-01-15'
+        status:
+          type: string
+          description: Standing order status
+          enum:
+          - ACTIVE
+          - SUSPENDED
+          - EXPIRED
+          - CANCELLED
+          example: ACTIVE
+        narrative:
+          type: string
+          description: Payment description
+          example: example_value
+    FundTransfer:
+      type: object
+      description: A fund transfer operation in Temenos Transact for moving funds between accounts, supporting internal transfers, domestic payments, and cross-border transactions.
+      properties:
+        transferId:
+          type: string
+          description: Unique transfer identifier
+          examples:
+          - FT2014500001
+        debitAccountId:
+          type: string
+          description: Source account identifier
+          example: '500123'
+        debitCurrency:
+          type: string
+          description: Currency of the debit account
+          example: example_value
+        creditAccountId:
+          type: string
+          description: Destination account identifier
+          example: '500123'
+        creditCurrency:
+          type: string
+          description: Currency of the credit account
+          example: example_value
+        amount:
+          type: number
+          description: Transfer amount
+          example: 42.5
+        creditAmount:
+          type: number
+          description: Amount credited (may differ due to exchange rate)
+          example: 42.5
+        transferType:
+          type: string
+          description: Type of transfer
+          enum:
+          - INTERNAL
+          - DOMESTIC
+          - INTERNATIONAL
+          - SEPA
+          - SWIFT
+          example: INTERNAL
+        status:
+          type: string
+          description: Current transfer status
+          enum:
+          - PENDING
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          - REVERSED
+          example: PENDING
+        valueDate:
+          type: string
+          format: date
+          description: Value date of the transfer
+          example: '2026-01-15'
+        executionDate:
+          type: string
+          format: date
+          description: Actual execution date
+          example: '2026-01-15'
+        exchangeRate:
+          type: number
+          description: Applied exchange rate for cross-currency transfers
+          example: 42.5
+        chargesAmount:
+          type: number
+          description: Total charges applied
+          example: 42.5
+        chargesCurrency:
+          type: string
+          description: Currency of the charges
+          example: example_value
+        narrative:
+          type: string
+          description: Transfer description or purpose
+          example: example_value
+        endToEndReference:
+          type: string
+          description: End-to-end reference for payment tracking
+          example: example_value
+    PaymentOrdersResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentOrder'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
     PaymentOrder:
       type: object
       description: A payment order in Temenos Transact for submitting payment instructions through various clearing systems.
@@ -552,56 +741,18 @@ components:
           type: string
           description: Reason for rejection if applicable
           example: example_value
-    PaginationInfo:
+    StandingOrdersResponse:
       type: object
-      description: Pagination metadata for list responses
       properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
-    ResponseHeader:
-      type: object
-      description: Standard response header returned by all Transact API operations
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the resource
-          example: abc123
-        status:
-          type: string
-          description: Status of the operation (success, error)
-          enum:
-          - success
-          - error
-          example: success
-        transactionStatus:
-          type: string
-          description: Transaction lifecycle status
-          enum:
-          - Live
-          - Unauth
-          - Hold
-          - Reversed
-          example: Live
-        audit:
-          type: object
-          properties:
-            parseTime:
-              type: integer
-              description: Time taken to parse the request in milliseconds
-            responseParse:
-              type: integer
-              description: Time taken to generate the response in milliseconds
-          example: example_value
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandingOrder'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
     PaymentOrderRequest:
       type: object
       required:
@@ -664,221 +815,70 @@ components:
             endToEndReference:
               type: string
           example: example_value
-    PaymentOrderResponse:
+    PaginationInfo:
       type: object
+      description: Pagination metadata for list responses
       properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/PaymentOrder'
-    StandingOrdersResponse:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    ErrorResponse:
       type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/StandingOrder'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
-    StandingOrder:
-      type: object
-      description: A standing order instruction for recurring payments
-      properties:
-        standingOrderId:
-          type: string
-          description: Unique standing order identifier
-          example: '500123'
-        accountId:
-          type: string
-          description: Debit account identifier
-          example: '500123'
-        beneficiaryId:
-          type: string
-          description: Beneficiary identifier
-          example: '500123'
-        beneficiaryAccountId:
-          type: string
-          description: Beneficiary account identifier
-          example: '500123'
-        beneficiaryName:
-          type: string
-          description: Name of the beneficiary
-          example: example_value
-        amount:
-          type: number
-          description: Recurring payment amount
-          example: 42.5
-        currency:
-          type: string
-          description: Payment currency
-          example: example_value
-        frequency:
-          type: string
-          description: Payment frequency
-          enum:
-          - DAILY
-          - WEEKLY
-          - BIWEEKLY
-          - MONTHLY
-          - QUARTERLY
-          - SEMI_ANNUALLY
-          - ANNUALLY
-          example: DAILY
-        startDate:
-          type: string
-          format: date
-          description: Date of the first payment
-          example: '2026-01-15'
-        endDate:
-          type: string
-          format: date
-          description: Date of the last payment (optional for indefinite)
-          example: '2026-01-15'
-        nextPaymentDate:
-          type: string
-          format: date
-          description: Date of the next scheduled payment
-          example: '2026-01-15'
-        status:
-          type: string
-          description: Standing order status
-          enum:
-          - ACTIVE
-          - SUSPENDED
-          - EXPIRED
-          - CANCELLED
-          example: ACTIVE
-        narrative:
-          type: string
-          description: Payment description
-          example: example_value
-    FundTransferRequest:
-      type: object
+      description: Standard error response structure
       required:
-      - body
+      - header
       properties:
         header:
           type: object
           properties:
-            override:
-              type: boolean
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
           example: example_value
-        body:
+        error:
           type: object
-          required:
-          - debitAccountId
-          - creditAccountId
-          - amount
           properties:
-            debitAccountId:
+            type:
               type: string
-              description: Source account identifier
-            creditAccountId:
+              description: Error type classification
+            message:
               type: string
-              description: Destination account identifier
-            amount:
-              type: number
-              description: Transfer amount
-              minimum: 0.01
-            currency:
+              description: Human-readable error message
+            code:
               type: string
-              description: Transfer currency (defaults to debit account currency)
-            valueDate:
-              type: string
-              format: date
-              description: Value date (defaults to current business date)
-            narrative:
-              type: string
-              description: Transfer description
-            endToEndReference:
-              type: string
-              description: End-to-end reference
-          example: example_value
-    FundTransfer:
-      type: object
-      description: A fund transfer operation in Temenos Transact for moving funds between accounts, supporting internal transfers, domestic payments, and cross-border transactions.
-      properties:
-        transferId:
-          type: string
-          description: Unique transfer identifier
-          examples:
-          - FT2014500001
-        debitAccountId:
-          type: string
-          description: Source account identifier
-          example: '500123'
-        debitCurrency:
-          type: string
-          description: Currency of the debit account
-          example: example_value
-        creditAccountId:
-          type: string
-          description: Destination account identifier
-          example: '500123'
-        creditCurrency:
-          type: string
-          description: Currency of the credit account
-          example: example_value
-        amount:
-          type: number
-          description: Transfer amount
-          example: 42.5
-        creditAmount:
-          type: number
-          description: Amount credited (may differ due to exchange rate)
-          example: 42.5
-        transferType:
-          type: string
-          description: Type of transfer
-          enum:
-          - INTERNAL
-          - DOMESTIC
-          - INTERNATIONAL
-          - SEPA
-          - SWIFT
-          example: INTERNAL
-        status:
-          type: string
-          description: Current transfer status
-          enum:
-          - PENDING
-          - PROCESSING
-          - COMPLETED
-          - FAILED
-          - REVERSED
-          example: PENDING
-        valueDate:
-          type: string
-          format: date
-          description: Value date of the transfer
-          example: '2026-01-15'
-        executionDate:
-          type: string
-          format: date
-          description: Actual execution date
-          example: '2026-01-15'
-        exchangeRate:
-          type: number
-          description: Applied exchange rate for cross-currency transfers
-          example: 42.5
-        chargesAmount:
-          type: number
-          description: Total charges applied
-          example: 42.5
-        chargesCurrency:
-          type: string
-          description: Currency of the charges
-          example: example_value
-        narrative:
-          type: string
-          description: Transfer description or purpose
-          example: example_value
-        endToEndReference:
-          type: string
-          description: End-to-end reference for payment tracking
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
           example: example_value
   parameters:
     pageSize:
@@ -899,14 +899,8 @@ components:
         default: 0
         minimum: 0
   responses:
-    Forbidden:
-      description: Insufficient permissions to access this resource
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Authentication required or token expired
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
       content:
         application/json:
           schema:
@@ -923,8 +917,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
+    Forbidden:
+      description: Insufficient permissions to access this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required or token expired
       content:
         application/json:
           schema:

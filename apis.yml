@@ -513,7 +513,7 @@ tags:
   - Core Banking
   - Digital Banking
   - Enterprise
-  - Financial-Services
+  - Financial Services
   - Fintech
 tags_raw:
   - Banking
@@ -522,5 +522,6 @@ tags_raw:
   - Enterprise
   - Financial Services
   - Fintech
+  - Financial-Services
 x-parent: temenos
 x-relationship: product

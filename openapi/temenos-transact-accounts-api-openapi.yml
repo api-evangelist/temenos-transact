@@ -185,56 +185,83 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  parameters:
+    pageSize:
+      name: page_size
+      in: query
+      description: Number of records to return per page (default 25, max 100)
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        maximum: 100
+    customerIdPath:
+      name: customerId
+      in: path
+      required: true
+      description: Unique identifier of the customer
+      schema:
+        type: string
+    customerId:
+      name: customerId
+      in: query
+      description: Filter by customer identifier
+      schema:
+        type: string
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      description: Unique identifier of the account arrangement
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Insufficient permissions to access this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    ErrorResponse:
+    AccountBalancesResponse:
       type: object
-      description: Standard error response structure
-      required:
-      - header
       properties:
         header:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Request identifier
-            status:
-              type: string
-              description: Error status
-              enum:
-              - error
-            transactionStatus:
-              type: string
-              description: Transaction status
-          example: example_value
-        error:
-          type: object
-          properties:
-            type:
-              type: string
-              description: Error type classification
-            message:
-              type: string
-              description: Human-readable error message
-            code:
-              type: string
-              description: Machine-readable error code
-            details:
-              type: array
-              description: Detailed error information
-              items:
-                type: object
-                properties:
-                  field:
-                    type: string
-                    description: Field that caused the error
-                  message:
-                    type: string
-                    description: Field-level error message
-                  code:
-                    type: string
-                    description: Field-level error code
-          example: example_value
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/AccountBalances'
     AccountBalances:
       type: object
       description: Balance breakdown for a banking account
@@ -280,22 +307,6 @@ components:
           format: date-time
           description: Timestamp when balances were calculated
           example: '2026-01-15T10:30:00Z'
-    PaginationInfo:
-      type: object
-      description: Pagination metadata for list responses
-      properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
     ResponseHeader:
       type: object
       description: Standard response header returned by all Transact API operations
@@ -330,6 +341,28 @@ components:
               type: integer
               description: Time taken to generate the response in milliseconds
           example: example_value
+    AccountUpdateRequest:
+      type: object
+      properties:
+        header:
+          type: object
+          properties:
+            override:
+              type: boolean
+              description: Override warnings and proceed
+          example: example_value
+        body:
+          type: object
+          properties:
+            accountName:
+              type: string
+            accountOfficerId:
+              type: integer
+            overdraftLimit:
+              type: number
+            postingRestriction:
+              type: string
+          example: example_value
     AccountsResponse:
       type: object
       properties:
@@ -342,13 +375,6 @@ components:
           example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
-    AccountDetailsResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/Account'
     Account:
       type: object
       description: A banking account arrangement in Temenos Transact. Created through the Arrangement Architecture supporting current, savings, corporate, Islamic, non-resident, and minor account types.
@@ -436,104 +462,78 @@ components:
           type: string
           description: Bank Identifier Code (SWIFT code)
           example: example_value
-    AccountUpdateRequest:
-      type: object
-      properties:
-        header:
-          type: object
-          properties:
-            override:
-              type: boolean
-              description: Override warnings and proceed
-          example: example_value
-        body:
-          type: object
-          properties:
-            accountName:
-              type: string
-            accountOfficerId:
-              type: integer
-            overdraftLimit:
-              type: number
-            postingRestriction:
-              type: string
-          example: example_value
-    AccountBalancesResponse:
+    AccountDetailsResponse:
       type: object
       properties:
         header:
           $ref: '#/components/schemas/ResponseHeader'
         body:
-          $ref: '#/components/schemas/AccountBalances'
-  parameters:
-    pageSize:
-      name: page_size
-      in: query
-      description: Number of records to return per page (default 25, max 100)
-      schema:
-        type: integer
-        default: 25
-        minimum: 1
-        maximum: 100
-    accountId:
-      name: accountId
-      in: path
-      required: true
-      description: Unique identifier of the account arrangement
-      schema:
-        type: string
-    customerIdPath:
-      name: customerId
-      in: path
-      required: true
-      description: Unique identifier of the customer
-      schema:
-        type: string
-    customerId:
-      name: customerId
-      in: query
-      description: Filter by customer identifier
-      schema:
-        type: string
-    pageStart:
-      name: page_start
-      in: query
-      description: Page token or offset for pagination
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-  responses:
-    Forbidden:
-      description: Insufficient permissions to access this resource
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Authentication required or token expired
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Requested resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+          $ref: '#/components/schemas/Account'
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+      - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+          example: example_value
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
+          example: example_value
   securitySchemes:
     bearerAuth:
       type: http

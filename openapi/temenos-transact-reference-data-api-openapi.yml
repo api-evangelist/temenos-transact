@@ -106,6 +106,31 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    Country:
+      type: object
+      description: Country definition with regulatory details
+      properties:
+        countryCode:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+          pattern: ^[A-Z]{2}$
+          example: example_value
+        countryName:
+          type: string
+          description: Full country name
+          example: example_value
+        currencyCode:
+          type: string
+          description: Default currency code
+          example: example_value
+        ibanRequired:
+          type: boolean
+          description: Whether IBAN is required for payments to this country
+          example: true
+        sanctioned:
+          type: boolean
+          description: Whether the country is under sanctions
+          example: true
     ErrorResponse:
       type: object
       description: Standard error response structure
@@ -155,49 +180,6 @@ components:
                     type: string
                     description: Field-level error code
           example: example_value
-    PaginationInfo:
-      type: object
-      description: Pagination metadata for list responses
-      properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
-    IbanValidationResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: object
-          properties:
-            iban:
-              type: string
-              description: The validated IBAN
-            valid:
-              type: boolean
-              description: Whether the IBAN is valid
-            bic:
-              type: string
-              description: Resolved BIC/SWIFT code
-            bankName:
-              type: string
-              description: Name of the bank
-            branchName:
-              type: string
-              description: Name of the branch
-            country:
-              type: string
-              description: Country code
-          example: example_value
     Currency:
       type: object
       description: Currency definition with exchange rate information
@@ -231,6 +213,61 @@ components:
           type: number
           description: Mid-market exchange rate
           example: 42.5
+    IbanValidationResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: object
+          properties:
+            iban:
+              type: string
+              description: The validated IBAN
+            valid:
+              type: boolean
+              description: Whether the IBAN is valid
+            bic:
+              type: string
+              description: Resolved BIC/SWIFT code
+            bankName:
+              type: string
+              description: Name of the bank
+            branchName:
+              type: string
+              description: Name of the branch
+            country:
+              type: string
+              description: Country code
+          example: example_value
+    CountriesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Country'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
     CurrenciesResponse:
       type: object
       properties:
@@ -277,43 +314,6 @@ components:
               type: integer
               description: Time taken to generate the response in milliseconds
           example: example_value
-    Country:
-      type: object
-      description: Country definition with regulatory details
-      properties:
-        countryCode:
-          type: string
-          description: ISO 3166-1 alpha-2 country code
-          pattern: ^[A-Z]{2}$
-          example: example_value
-        countryName:
-          type: string
-          description: Full country name
-          example: example_value
-        currencyCode:
-          type: string
-          description: Default currency code
-          example: example_value
-        ibanRequired:
-          type: boolean
-          description: Whether IBAN is required for payments to this country
-          example: true
-        sanctioned:
-          type: boolean
-          description: Whether the country is under sanctions
-          example: true
-    CountriesResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/Country'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
   parameters:
     pageSize:
       name: page_size
