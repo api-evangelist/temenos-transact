@@ -197,13 +197,101 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    CustomerDetailsResponse:
+    ErrorResponse:
+      type: object
+      description: Standard error response structure
+      required:
+      - header
+      properties:
+        header:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Request identifier
+            status:
+              type: string
+              description: Error status
+              enum:
+              - error
+            transactionStatus:
+              type: string
+              description: Transaction status
+          example: example_value
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Error type classification
+            message:
+              type: string
+              description: Human-readable error message
+            code:
+              type: string
+              description: Machine-readable error code
+            details:
+              type: array
+              description: Detailed error information
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: Field that caused the error
+                  message:
+                    type: string
+                    description: Field-level error message
+                  code:
+                    type: string
+                    description: Field-level error code
+          example: example_value
+    ResponseHeader:
+      type: object
+      description: Standard response header returned by all Transact API operations
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the resource
+          example: abc123
+        status:
+          type: string
+          description: Status of the operation (success, error)
+          enum:
+          - success
+          - error
+          example: success
+        transactionStatus:
+          type: string
+          description: Transaction lifecycle status
+          enum:
+          - Live
+          - Unauth
+          - Hold
+          - Reversed
+          example: Live
+        audit:
+          type: object
+          properties:
+            parseTime:
+              type: integer
+              description: Time taken to parse the request in milliseconds
+            responseParse:
+              type: integer
+              description: Time taken to generate the response in milliseconds
+          example: example_value
+    CustomersResponse:
       type: object
       properties:
         header:
           $ref: '#/components/schemas/ResponseHeader'
         body:
-          $ref: '#/components/schemas/Customer'
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
     CustomerCreateRequest:
       type: object
       required:
@@ -295,44 +383,121 @@ components:
               items:
                 $ref: '#/components/schemas/Address'
           example: example_value
-    Address:
+    AccountsResponse:
       type: object
-      description: Physical or mailing address
       properties:
-        addressType:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+    Account:
+      type: object
+      description: A banking account arrangement in Temenos Transact. Created through the Arrangement Architecture supporting current, savings, corporate, Islamic, non-resident, and minor account types.
+      properties:
+        accountId:
           type: string
-          description: Type of address
+          description: Unique system-generated account identifier
+          examples:
+          - AA2014500001
+        accountName:
+          type: string
+          description: Display name of the account
+          example: example_value
+        customerId:
+          type: string
+          description: Identifier of the owning customer
+          example: '500123'
+        customerName:
+          type: string
+          description: Name of the owning customer
+          example: example_value
+        productId:
+          type: string
+          description: Product identifier from the arrangement architecture
+          example: '500123'
+        productName:
+          type: string
+          description: Human-readable product name
+          example: example_value
+        accountType:
+          type: string
+          description: Type of account
           enum:
-          - RESIDENTIAL
-          - CORRESPONDENCE
-          - BUSINESS
-          - REGISTERED
-          example: RESIDENTIAL
-        addressLine1:
+          - CURRENT
+          - SAVINGS
+          - CORPORATE
+          - ISLAMIC
+          - NON_RESIDENT
+          - MINOR
+          example: CURRENT
+        currency:
           type: string
-          description: First line of address
-          example: example_value
-        addressLine2:
+          description: Account currency in ISO 4217 format
+          pattern: ^[A-Z]{3}$
+          examples:
+          - USD
+          - EUR
+          - GBP
+        status:
           type: string
-          description: Second line of address
-          example: example_value
-        city:
+          description: Current account status
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - CLOSED
+          - PENDING
+          - DORMANT
+          example: ACTIVE
+        openingDate:
           type: string
-          description: City name
-          example: example_value
-        state:
+          format: date
+          description: Date the account was opened
+          example: '2026-01-15'
+        workingBalance:
+          type: number
+          description: Current working balance of the account
+          example: 42.5
+        availableBalance:
+          type: number
+          description: Available balance including overdraft facility
+          example: 42.5
+        accountOfficerId:
+          type: integer
+          description: Identifier of the assigned account officer
+          example: '500123'
+        branchId:
           type: string
-          description: State or province
-          example: example_value
-        postCode:
+          description: Branch where the account is held
+          example: '500123'
+        iban:
           type: string
-          description: Postal or ZIP code
+          description: International Bank Account Number
           example: example_value
-        country:
+        bic:
           type: string
-          description: Country code (ISO 3166)
-          pattern: ^[A-Z]{2}$
+          description: Bank Identifier Code (SWIFT code)
           example: example_value
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
     CustomerUpdateRequest:
       type: object
       properties:
@@ -373,52 +538,44 @@ components:
               items:
                 $ref: '#/components/schemas/Address'
           example: example_value
-    ResponseHeader:
+    Address:
       type: object
-      description: Standard response header returned by all Transact API operations
+      description: Physical or mailing address
       properties:
-        id:
+        addressType:
           type: string
-          description: Unique identifier for the resource
-          example: abc123
-        status:
-          type: string
-          description: Status of the operation (success, error)
+          description: Type of address
           enum:
-          - success
-          - error
-          example: success
-        transactionStatus:
+          - RESIDENTIAL
+          - CORRESPONDENCE
+          - BUSINESS
+          - REGISTERED
+          example: RESIDENTIAL
+        addressLine1:
           type: string
-          description: Transaction lifecycle status
-          enum:
-          - Live
-          - Unauth
-          - Hold
-          - Reversed
-          example: Live
-        audit:
-          type: object
-          properties:
-            parseTime:
-              type: integer
-              description: Time taken to parse the request in milliseconds
-            responseParse:
-              type: integer
-              description: Time taken to generate the response in milliseconds
+          description: First line of address
           example: example_value
-    CustomersResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/Customer'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
+        addressLine2:
+          type: string
+          description: Second line of address
+          example: example_value
+        city:
+          type: string
+          description: City name
+          example: example_value
+        state:
+          type: string
+          description: State or province
+          example: example_value
+        postCode:
+          type: string
+          description: Postal or ZIP code
+          example: example_value
+        country:
+          type: string
+          description: Country code (ISO 3166)
+          pattern: ^[A-Z]{2}$
+          example: example_value
     Customer:
       type: object
       description: A customer record in Temenos Transact representing an individual or corporate entity with a banking relationship.
@@ -565,170 +722,13 @@ components:
           - EXPIRED
           - NOT_CHECKED
           example: VERIFIED
-    AccountsResponse:
+    CustomerDetailsResponse:
       type: object
       properties:
         header:
           $ref: '#/components/schemas/ResponseHeader'
         body:
-          type: array
-          items:
-            $ref: '#/components/schemas/Account'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
-    Account:
-      type: object
-      description: A banking account arrangement in Temenos Transact. Created through the Arrangement Architecture supporting current, savings, corporate, Islamic, non-resident, and minor account types.
-      properties:
-        accountId:
-          type: string
-          description: Unique system-generated account identifier
-          examples:
-          - AA2014500001
-        accountName:
-          type: string
-          description: Display name of the account
-          example: example_value
-        customerId:
-          type: string
-          description: Identifier of the owning customer
-          example: '500123'
-        customerName:
-          type: string
-          description: Name of the owning customer
-          example: example_value
-        productId:
-          type: string
-          description: Product identifier from the arrangement architecture
-          example: '500123'
-        productName:
-          type: string
-          description: Human-readable product name
-          example: example_value
-        accountType:
-          type: string
-          description: Type of account
-          enum:
-          - CURRENT
-          - SAVINGS
-          - CORPORATE
-          - ISLAMIC
-          - NON_RESIDENT
-          - MINOR
-          example: CURRENT
-        currency:
-          type: string
-          description: Account currency in ISO 4217 format
-          pattern: ^[A-Z]{3}$
-          examples:
-          - USD
-          - EUR
-          - GBP
-        status:
-          type: string
-          description: Current account status
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - CLOSED
-          - PENDING
-          - DORMANT
-          example: ACTIVE
-        openingDate:
-          type: string
-          format: date
-          description: Date the account was opened
-          example: '2026-01-15'
-        workingBalance:
-          type: number
-          description: Current working balance of the account
-          example: 42.5
-        availableBalance:
-          type: number
-          description: Available balance including overdraft facility
-          example: 42.5
-        accountOfficerId:
-          type: integer
-          description: Identifier of the assigned account officer
-          example: '500123'
-        branchId:
-          type: string
-          description: Branch where the account is held
-          example: '500123'
-        iban:
-          type: string
-          description: International Bank Account Number
-          example: example_value
-        bic:
-          type: string
-          description: Bank Identifier Code (SWIFT code)
-          example: example_value
-    PaginationInfo:
-      type: object
-      description: Pagination metadata for list responses
-      properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
-    ErrorResponse:
-      type: object
-      description: Standard error response structure
-      required:
-      - header
-      properties:
-        header:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Request identifier
-            status:
-              type: string
-              description: Error status
-              enum:
-              - error
-            transactionStatus:
-              type: string
-              description: Transaction status
-          example: example_value
-        error:
-          type: object
-          properties:
-            type:
-              type: string
-              description: Error type classification
-            message:
-              type: string
-              description: Human-readable error message
-            code:
-              type: string
-              description: Machine-readable error code
-            details:
-              type: array
-              description: Detailed error information
-              items:
-                type: object
-                properties:
-                  field:
-                    type: string
-                    description: Field that caused the error
-                  message:
-                    type: string
-                    description: Field-level error message
-                  code:
-                    type: string
-                    description: Field-level error code
-          example: example_value
+          $ref: '#/components/schemas/Customer'
   parameters:
     pageSize:
       name: page_size
@@ -739,13 +739,6 @@ components:
         default: 25
         minimum: 1
         maximum: 100
-    customerIdPath:
-      name: customerId
-      in: path
-      required: true
-      description: Unique identifier of the customer
-      schema:
-        type: string
     pageStart:
       name: page_start
       in: query
@@ -754,21 +747,16 @@ components:
         type: integer
         default: 0
         minimum: 0
+    customerIdPath:
+      name: customerId
+      in: path
+      required: true
+      description: Unique identifier of the customer
+      schema:
+        type: string
   responses:
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Requested resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
+    Unauthorized:
+      description: Authentication required or token expired
       content:
         application/json:
           schema:
@@ -779,8 +767,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Authentication required or token expired
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
       content:
         application/json:
           schema:

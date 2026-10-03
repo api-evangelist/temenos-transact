@@ -92,6 +92,31 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     customerId:
       name: customerId
@@ -99,6 +124,14 @@ components:
       description: Filter by customer identifier
       schema:
         type: string
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
     pageSize:
       name: page_size
       in: query
@@ -108,96 +141,7 @@ components:
         default: 25
         minimum: 1
         maximum: 100
-    pageStart:
-      name: page_start
-      in: query
-      description: Page token or offset for pagination
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
   schemas:
-    Deposit:
-      type: object
-      description: A deposit arrangement in Temenos Transact
-      properties:
-        depositId:
-          type: string
-          description: Unique deposit identifier
-          example: '500123'
-        customerId:
-          type: string
-          description: Customer identifier
-          example: '500123'
-        productId:
-          type: string
-          description: Deposit product identifier
-          example: '500123'
-        productName:
-          type: string
-          description: Name of the deposit product
-          example: example_value
-        principalAmount:
-          type: number
-          description: Original deposit principal amount
-          example: 42.5
-        currentBalance:
-          type: number
-          description: Current balance including accrued interest
-          example: 42.5
-        currency:
-          type: string
-          description: Deposit currency
-          example: example_value
-        interestRate:
-          type: number
-          description: Applied interest rate percentage
-          example: 42.5
-        accruedInterest:
-          type: number
-          description: Interest accrued but not yet capitalized
-          example: 42.5
-        startDate:
-          type: string
-          format: date
-          description: Deposit start date
-          example: '2026-01-15'
-        maturityDate:
-          type: string
-          format: date
-          description: Deposit maturity date
-          example: '2026-01-15'
-        term:
-          type: string
-          description: Deposit term description
-          examples:
-          - 12M
-          - 6M
-          - 1Y
-        renewalType:
-          type: string
-          description: Automatic renewal behaviour
-          enum:
-          - AUTO_RENEW
-          - NOTIFY
-          - NO_RENEWAL
-          example: AUTO_RENEW
-        status:
-          type: string
-          description: Deposit status
-          enum:
-          - ACTIVE
-          - MATURED
-          - CLOSED
-          - PREMATURE_CLOSURE
-          example: ACTIVE
-    DepositDetailsResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          $ref: '#/components/schemas/Deposit'
     DepositsResponse:
       type: object
       properties:
@@ -210,22 +154,6 @@ components:
           example: []
         page:
           $ref: '#/components/schemas/PaginationInfo'
-    PaginationInfo:
-      type: object
-      description: Pagination metadata for list responses
-      properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
     ErrorResponse:
       type: object
       description: Standard error response structure
@@ -309,31 +237,103 @@ components:
               type: integer
               description: Time taken to generate the response in milliseconds
           example: example_value
-  responses:
-    Unauthorized:
-      description: Authentication required or token expired
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Requested resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    Deposit:
+      type: object
+      description: A deposit arrangement in Temenos Transact
+      properties:
+        depositId:
+          type: string
+          description: Unique deposit identifier
+          example: '500123'
+        customerId:
+          type: string
+          description: Customer identifier
+          example: '500123'
+        productId:
+          type: string
+          description: Deposit product identifier
+          example: '500123'
+        productName:
+          type: string
+          description: Name of the deposit product
+          example: example_value
+        principalAmount:
+          type: number
+          description: Original deposit principal amount
+          example: 42.5
+        currentBalance:
+          type: number
+          description: Current balance including accrued interest
+          example: 42.5
+        currency:
+          type: string
+          description: Deposit currency
+          example: example_value
+        interestRate:
+          type: number
+          description: Applied interest rate percentage
+          example: 42.5
+        accruedInterest:
+          type: number
+          description: Interest accrued but not yet capitalized
+          example: 42.5
+        startDate:
+          type: string
+          format: date
+          description: Deposit start date
+          example: '2026-01-15'
+        maturityDate:
+          type: string
+          format: date
+          description: Deposit maturity date
+          example: '2026-01-15'
+        term:
+          type: string
+          description: Deposit term description
+          examples:
+          - 12M
+          - 6M
+          - 1Y
+        renewalType:
+          type: string
+          description: Automatic renewal behaviour
+          enum:
+          - AUTO_RENEW
+          - NOTIFY
+          - NO_RENEWAL
+          example: AUTO_RENEW
+        status:
+          type: string
+          description: Deposit status
+          enum:
+          - ACTIVE
+          - MATURED
+          - CLOSED
+          - PREMATURE_CLOSURE
+          example: ACTIVE
+    DepositDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Deposit'
   securitySchemes:
     bearerAuth:
       type: http

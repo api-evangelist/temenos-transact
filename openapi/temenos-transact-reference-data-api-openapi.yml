@@ -106,6 +106,57 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    IbanValidationResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: object
+          properties:
+            iban:
+              type: string
+              description: The validated IBAN
+            valid:
+              type: boolean
+              description: Whether the IBAN is valid
+            bic:
+              type: string
+              description: Resolved BIC/SWIFT code
+            bankName:
+              type: string
+              description: Name of the bank
+            branchName:
+              type: string
+              description: Name of the branch
+            country:
+              type: string
+              description: Country code
+          example: example_value
+    CountriesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Country'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
+    CurrenciesResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Currency'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
     Country:
       type: object
       description: Country definition with regulatory details
@@ -180,106 +231,6 @@ components:
                     type: string
                     description: Field-level error code
           example: example_value
-    Currency:
-      type: object
-      description: Currency definition with exchange rate information
-      properties:
-        currencyCode:
-          type: string
-          description: ISO 4217 currency code
-          pattern: ^[A-Z]{3}$
-          example: example_value
-        currencyName:
-          type: string
-          description: Full currency name
-          example: example_value
-        numericCode:
-          type: string
-          description: ISO 4217 numeric code
-          example: example_value
-        decimalPlaces:
-          type: integer
-          description: Number of decimal places
-          example: 10
-        buyRate:
-          type: number
-          description: Current buy exchange rate
-          example: 42.5
-        sellRate:
-          type: number
-          description: Current sell exchange rate
-          example: 42.5
-        midRate:
-          type: number
-          description: Mid-market exchange rate
-          example: 42.5
-    IbanValidationResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: object
-          properties:
-            iban:
-              type: string
-              description: The validated IBAN
-            valid:
-              type: boolean
-              description: Whether the IBAN is valid
-            bic:
-              type: string
-              description: Resolved BIC/SWIFT code
-            bankName:
-              type: string
-              description: Name of the bank
-            branchName:
-              type: string
-              description: Name of the branch
-            country:
-              type: string
-              description: Country code
-          example: example_value
-    CountriesResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/Country'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
-    PaginationInfo:
-      type: object
-      description: Pagination metadata for list responses
-      properties:
-        pageSize:
-          type: integer
-          description: Number of records per page
-          example: 10
-        pageStart:
-          type: integer
-          description: Current page offset
-          example: 10
-        totalRecords:
-          type: integer
-          description: Total number of records available
-          example: 10
-    CurrenciesResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/Currency'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
     ResponseHeader:
       type: object
       description: Standard response header returned by all Transact API operations
@@ -314,7 +265,64 @@ components:
               type: integer
               description: Time taken to generate the response in milliseconds
           example: example_value
+    PaginationInfo:
+      type: object
+      description: Pagination metadata for list responses
+      properties:
+        pageSize:
+          type: integer
+          description: Number of records per page
+          example: 10
+        pageStart:
+          type: integer
+          description: Current page offset
+          example: 10
+        totalRecords:
+          type: integer
+          description: Total number of records available
+          example: 10
+    Currency:
+      type: object
+      description: Currency definition with exchange rate information
+      properties:
+        currencyCode:
+          type: string
+          description: ISO 4217 currency code
+          pattern: ^[A-Z]{3}$
+          example: example_value
+        currencyName:
+          type: string
+          description: Full currency name
+          example: example_value
+        numericCode:
+          type: string
+          description: ISO 4217 numeric code
+          example: example_value
+        decimalPlaces:
+          type: integer
+          description: Number of decimal places
+          example: 10
+        buyRate:
+          type: number
+          description: Current buy exchange rate
+          example: 42.5
+        sellRate:
+          type: number
+          description: Current sell exchange rate
+          example: 42.5
+        midRate:
+          type: number
+          description: Mid-market exchange rate
+          example: 42.5
   parameters:
+    pageStart:
+      name: page_start
+      in: query
+      description: Page token or offset for pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
     pageSize:
       name: page_size
       in: query
@@ -324,23 +332,15 @@ components:
         default: 25
         minimum: 1
         maximum: 100
-    pageStart:
-      name: page_start
-      in: query
-      description: Page token or offset for pagination
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
   responses:
-    Unauthorized:
-      description: Authentication required or token expired
+    InternalServerError:
+      description: Internal server error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
+    Unauthorized:
+      description: Authentication required or token expired
       content:
         application/json:
           schema:
