@@ -78,13 +78,26 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required or token expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
-    customerId:
-      name: customerId
-      in: query
-      description: Filter by customer identifier
-      schema:
-        type: string
     pageStart:
       name: page_start
       in: query
@@ -102,14 +115,25 @@ components:
         default: 25
         minimum: 1
         maximum: 100
+    customerId:
+      name: customerId
+      in: query
+      description: Filter by customer identifier
+      schema:
+        type: string
   schemas:
-    CardDetailsResponse:
+    CardsResponse:
       type: object
       properties:
         header:
           $ref: '#/components/schemas/ResponseHeader'
         body:
-          $ref: '#/components/schemas/Card'
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+          example: []
+        page:
+          $ref: '#/components/schemas/PaginationInfo'
     ErrorResponse:
       type: object
       description: Standard error response structure
@@ -215,6 +239,13 @@ components:
           type: number
           description: Available spending limit
           example: 42.5
+    CardDetailsResponse:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/ResponseHeader'
+        body:
+          $ref: '#/components/schemas/Card'
     ResponseHeader:
       type: object
       description: Standard response header returned by all Transact API operations
@@ -265,37 +296,6 @@ components:
           type: integer
           description: Total number of records available
           example: 10
-    CardsResponse:
-      type: object
-      properties:
-        header:
-          $ref: '#/components/schemas/ResponseHeader'
-        body:
-          type: array
-          items:
-            $ref: '#/components/schemas/Card'
-          example: []
-        page:
-          $ref: '#/components/schemas/PaginationInfo'
-  responses:
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Requested resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Authentication required or token expired
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http
