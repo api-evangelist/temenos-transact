@@ -431,6 +431,8 @@ apis:
   - type: JSONLD
     url: json-ld/temenos-transact-context.jsonld
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/temenos-transact/overview
   - type: Plans
     url: plans/temenos-transact-plans-pricing.yml
   - type: RateLimits
