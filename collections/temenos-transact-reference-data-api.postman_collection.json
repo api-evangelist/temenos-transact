@@ -1,696 +1,714 @@
 {
+  "info": {
+    "_postman_id": "dedf250a-92fb-4472-9afb-92d187ab9955",
+    "name": "Temenos Transact Core Banking Reference Data API",
+    "description": "RESTful APIs for Temenos Transact (formerly T24) core banking operations.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T19:52:42.000Z",
+    "updatedAt": "2026-10-21T19:52:42.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-dedf250a-92fb-4472-9afb-92d187ab9955"
+  },
   "item": [
     {
-      "id": "6f665c6a-4c5b-4dc9-80ff-d0a4a30feffb",
-      "name": "Reference Data",
-      "description": {
-        "content": "Access system-wide lookup and configuration data including currencies, countries, IBAN/BIC validation, interest rate tables, and balance type definitions.",
-        "type": "text/plain"
-      },
+      "name": "reference",
       "item": [
         {
-          "id": "700394f2-510e-4a59-8abc-49c4a39f5dc1",
-          "name": "Temenos Transact List Currencies",
-          "request": {
-            "name": "Temenos Transact List Currencies",
-            "description": {
-              "content": "Retrieve available currencies with their ISO 4217 codes, decimal precision, exchange rates, and market details.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "reference",
-                "currencies"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "25",
-                  "description": "Number of records to return per page (default 25, max 100)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page_start",
-                  "value": "0",
-                  "description": "Page token or offset for pagination"
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "currencies",
+          "item": [
             {
-              "id": "6cb735c3-007b-44d1-a748-16fe45bad4f9",
-              "name": "Successful retrieval of currencies",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "reference",
-                    "currencies"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": []
-                },
+              "name": "Temenos Transact List Currencies",
+              "id": "c974fd2e-ae29-40e7-a330-5f306cefb354",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 8522,\n      \"responseParse\": 1009\n    }\n  },\n  \"page\": {\n    \"pageSize\": 10,\n    \"pageStart\": 10,\n    \"totalRecords\": 10\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "bec061a8-6143-4c1d-b756-35f39ec0c40f",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
                 "url": {
+                  "raw": "{{baseUrl}}/reference/currencies?page_size=25&page_start=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "reference",
                     "currencies"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "Number of records to return per page (default 25, max 100)",
                       "key": "page_size",
                       "value": "25"
                     },
                     {
+                      "description": "Page token or offset for pagination",
                       "key": "page_start",
                       "value": "0"
                     }
-                  ],
-                  "variable": []
+                  ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Retrieve available currencies with their ISO 4217 codes, decimal precision, exchange rates, and market details."
               },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9dbe68ce-40d8-48a9-bed3-a3bea7ca7ed7",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "reference",
-                    "currencies"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "b5207184-4157-4136-8789-0d87907cc77f",
+                  "name": "Successful retrieval of currencies",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reference/currencies?page_size=25&page_start=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reference",
+                        "currencies"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"Reversed\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": [\n    {\n      \"currencyCode\": \"LDY\",\n      \"currencyName\": \"<string>\",\n      \"numericCode\": \"<string>\",\n      \"decimalPlaces\": \"<integer>\",\n      \"buyRate\": \"<number>\",\n      \"sellRate\": \"<number>\",\n      \"midRate\": \"<number>\"\n    },\n    {\n      \"currencyCode\": \"RDT\",\n      \"currencyName\": \"<string>\",\n      \"numericCode\": \"<string>\",\n      \"decimalPlaces\": \"<integer>\",\n      \"buyRate\": \"<number>\",\n      \"sellRate\": \"<number>\",\n      \"midRate\": \"<number>\"\n    }\n  ],\n  \"page\": {\n    \"pageSize\": \"<integer>\",\n    \"pageStart\": \"<integer>\",\n    \"totalRecords\": \"<integer>\"\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:42.000Z",
+                  "updatedAt": "2026-10-21T19:52:42.000Z",
+                  "uid": "35240-b5207184-4157-4136-8789-0d87907cc77f"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "473d2307-3c4f-4dc3-bf1d-f20588aed9f6",
+                  "name": "Authentication required or token expired",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reference/currencies?page_size=25&page_start=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reference",
+                        "currencies"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:42.000Z",
+                  "updatedAt": "2026-10-21T19:52:42.000Z",
+                  "uid": "35240-473d2307-3c4f-4dc3-bf1d-f20588aed9f6"
+                },
+                {
+                  "id": "765f45ed-0bc4-4c98-9656-f73141d9b843",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reference/currencies?page_size=25&page_start=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reference",
+                        "currencies"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:42.000Z",
+                  "updatedAt": "2026-10-21T19:52:42.000Z",
+                  "uid": "35240-765f45ed-0bc4-4c98-9656-f73141d9b843"
                 }
               ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-21T19:52:42.000Z",
+              "updatedAt": "2026-10-21T19:52:42.000Z",
+              "uid": "35240-c974fd2e-ae29-40e7-a330-5f306cefb354"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "d0e81f15-7473-425a-8d76-b9d089d2ade6",
+          "createdAt": "2026-10-21T19:52:42.000Z",
+          "updatedAt": "2026-10-21T19:52:42.000Z",
+          "uid": "35240-d0e81f15-7473-425a-8d76-b9d089d2ade6"
         },
         {
-          "id": "e23e1b7e-8608-4b9b-95ab-905cdbfe8b64",
-          "name": "Temenos Transact List Countries",
-          "request": {
-            "name": "Temenos Transact List Countries",
-            "description": {
-              "content": "Retrieve available countries with their ISO 3166 codes, currency details, and regulatory classification.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "reference",
-                "countries"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "25",
-                  "description": "Number of records to return per page (default 25, max 100)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page_start",
-                  "value": "0",
-                  "description": "Page token or offset for pagination"
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "countries",
+          "item": [
             {
-              "id": "0639bbfe-0a09-4456-9b27-538aaf431a98",
-              "name": "Successful retrieval of countries",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "reference",
-                    "countries"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": []
-                },
+              "name": "Temenos Transact List Countries",
+              "id": "14735289-3106-4e14-8ad9-0b991d6e8da4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 2873,\n      \"responseParse\": 9547\n    }\n  },\n  \"page\": {\n    \"pageSize\": 10,\n    \"pageStart\": 10,\n    \"totalRecords\": 10\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "219cc990-ebb8-43e3-a5c6-d8fac86ceee9",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
                 "url": {
+                  "raw": "{{baseUrl}}/reference/countries?page_size=25&page_start=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "reference",
                     "countries"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "Number of records to return per page (default 25, max 100)",
                       "key": "page_size",
                       "value": "25"
                     },
                     {
+                      "description": "Page token or offset for pagination",
                       "key": "page_start",
                       "value": "0"
                     }
-                  ],
-                  "variable": []
+                  ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Retrieve available countries with their ISO 3166 codes, currency details, and regulatory classification."
               },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e68b12e3-6007-4556-a148-cd9cdf240b71",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "reference",
-                    "countries"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "2794fef0-c220-4285-b435-49e60c66f2fb",
+                  "name": "Successful retrieval of countries",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reference/countries?page_size=25&page_start=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reference",
+                        "countries"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"Reversed\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": [\n    {\n      \"countryCode\": \"DZ\",\n      \"countryName\": \"<string>\",\n      \"currencyCode\": \"<string>\",\n      \"ibanRequired\": \"<boolean>\",\n      \"sanctioned\": \"<boolean>\"\n    },\n    {\n      \"countryCode\": \"UX\",\n      \"countryName\": \"<string>\",\n      \"currencyCode\": \"<string>\",\n      \"ibanRequired\": \"<boolean>\",\n      \"sanctioned\": \"<boolean>\"\n    }\n  ],\n  \"page\": {\n    \"pageSize\": \"<integer>\",\n    \"pageStart\": \"<integer>\",\n    \"totalRecords\": \"<integer>\"\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:42.000Z",
+                  "updatedAt": "2026-10-21T19:52:42.000Z",
+                  "uid": "35240-2794fef0-c220-4285-b435-49e60c66f2fb"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "56ba8770-81dd-4176-9808-f47919ce45df",
+                  "name": "Authentication required or token expired",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reference/countries?page_size=25&page_start=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reference",
+                        "countries"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:42.000Z",
+                  "updatedAt": "2026-10-21T19:52:42.000Z",
+                  "uid": "35240-56ba8770-81dd-4176-9808-f47919ce45df"
+                },
+                {
+                  "id": "ef072e9a-44c2-4314-8527-61ec526871f0",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reference/countries?page_size=25&page_start=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reference",
+                        "countries"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:42.000Z",
+                  "updatedAt": "2026-10-21T19:52:42.000Z",
+                  "uid": "35240-ef072e9a-44c2-4314-8527-61ec526871f0"
                 }
               ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-21T19:52:42.000Z",
+              "updatedAt": "2026-10-21T19:52:42.000Z",
+              "uid": "35240-14735289-3106-4e14-8ad9-0b991d6e8da4"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "3630d8c4-0aaf-4898-9773-374c2386b4cb",
+          "createdAt": "2026-10-21T19:52:42.000Z",
+          "updatedAt": "2026-10-21T19:52:42.000Z",
+          "uid": "35240-3630d8c4-0aaf-4898-9773-374c2386b4cb"
         },
         {
-          "id": "7e634183-8d23-4076-b188-75d268bb6a6f",
-          "name": "Temenos Transact Validate Iban",
-          "request": {
-            "name": "Temenos Transact Validate Iban",
-            "description": {
-              "content": "Validate an International Bank Account Number (IBAN) and return the resolved bank details including BIC, bank name, and branch information.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "reference",
-                "ibanValidation",
-                ":iban"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "iban",
-                  "description": "(Required) The IBAN to validate"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "ibanValidation",
+          "item": [
             {
-              "id": "6e94f485-b3d1-4e19-82c8-f28f6033b77e",
-              "name": "IBAN validation result",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "reference",
-                    "ibanValidation",
-                    ":iban"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "iban",
-                      "description": "(Required) The IBAN to validate"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "{iban}",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "Temenos Transact Validate Iban",
+                  "id": "1a5b4e33-7c64-4cd1-a10f-e26bd1f554d5",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/reference/ibanValidation/:iban",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reference",
+                        "ibanValidation",
+                        ":iban"
+                      ],
+                      "variable": [
+                        {
+                          "id": "bab6776b-4598-4e5a-8b0d-0e154efa91a2",
+                          "key": "iban",
+                          "value": "<string>",
+                          "description": "(Required) The IBAN to validate"
+                        }
+                      ]
+                    },
+                    "description": "Validate an International Bank Account Number (IBAN) and return the resolved bank details including BIC, bank name, and branch information."
+                  },
+                  "response": [
+                    {
+                      "id": "ffc955ae-4e15-411b-afdb-8ce57001e368",
+                      "name": "IBAN validation result",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reference/ibanValidation/:iban",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reference",
+                            "ibanValidation",
+                            ":iban"
+                          ],
+                          "variable": [
+                            {
+                              "key": "iban"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Hold\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": {\n    \"iban\": \"<string>\",\n    \"valid\": \"<boolean>\",\n    \"bic\": \"<string>\",\n    \"bankName\": \"<string>\",\n    \"branchName\": \"<string>\",\n    \"country\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:42.000Z",
+                      "updatedAt": "2026-10-21T19:52:42.000Z",
+                      "uid": "35240-ffc955ae-4e15-411b-afdb-8ce57001e368"
+                    },
+                    {
+                      "id": "91e23a38-60c7-40ad-ba59-b95be7bf2c08",
+                      "name": "Invalid IBAN format",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reference/ibanValidation/:iban",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reference",
+                            "ibanValidation",
+                            ":iban"
+                          ],
+                          "variable": [
+                            {
+                              "key": "iban"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:42.000Z",
+                      "updatedAt": "2026-10-21T19:52:42.000Z",
+                      "uid": "35240-91e23a38-60c7-40ad-ba59-b95be7bf2c08"
+                    },
+                    {
+                      "id": "760b3914-e501-4ebe-9325-07df525e6478",
+                      "name": "Authentication required or token expired",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reference/ibanValidation/:iban",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reference",
+                            "ibanValidation",
+                            ":iban"
+                          ],
+                          "variable": [
+                            {
+                              "key": "iban"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:42.000Z",
+                      "updatedAt": "2026-10-21T19:52:42.000Z",
+                      "uid": "35240-760b3914-e501-4ebe-9325-07df525e6478"
+                    },
+                    {
+                      "id": "39e3fb47-7d79-412a-913b-eba7b8c19bba",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/reference/ibanValidation/:iban",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reference",
+                            "ibanValidation",
+                            ":iban"
+                          ],
+                          "variable": [
+                            {
+                              "key": "iban"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:42.000Z",
+                      "updatedAt": "2026-10-21T19:52:42.000Z",
+                      "uid": "35240-39e3fb47-7d79-412a-913b-eba7b8c19bba"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T19:52:42.000Z",
+                  "updatedAt": "2026-10-21T19:52:42.000Z",
+                  "uid": "35240-1a5b4e33-7c64-4cd1-a10f-e26bd1f554d5"
                 }
               ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 9750,\n      \"responseParse\": 9990\n    }\n  },\n  \"body\": {\n    \"iban\": \"string\",\n    \"valid\": false,\n    \"bic\": \"string\",\n    \"bankName\": \"string\",\n    \"branchName\": \"string\",\n    \"country\": \"string\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "386e8984-efde-4eab-883e-b451e656f3db",
-              "name": "Invalid IBAN format",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "reference",
-                    "ibanValidation",
-                    ":iban"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "iban",
-                      "description": "(Required) The IBAN to validate"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7db467e7-a172-451a-986f-655e8ac0ad16",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "reference",
-                    "ibanValidation",
-                    ":iban"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "iban",
-                      "description": "(Required) The IBAN to validate"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "1001fe48-5116-4026-898e-c912e051f149",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "reference",
-                    "ibanValidation",
-                    ":iban"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "iban",
-                      "description": "(Required) The IBAN to validate"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "ea08befd-c3dc-47e3-8f42-3f8345ec7761",
+              "createdAt": "2026-10-21T19:52:42.000Z",
+              "updatedAt": "2026-10-21T19:52:42.000Z",
+              "uid": "35240-ea08befd-c3dc-47e3-8f42-3f8345ec7761"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "8e7409ed-e49b-4f74-b4e7-e546e6f11970",
+          "createdAt": "2026-10-21T19:52:42.000Z",
+          "updatedAt": "2026-10-21T19:52:42.000Z",
+          "uid": "35240-8e7409ed-e49b-4f74-b4e7-e546e6f11970"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.temenos.com/api/v1.0.0",
-      "key": "baseUrl"
+      "id": "b310886c-64b0-4caa-a46b-683b74a621f7",
+      "createdAt": "2026-10-21T19:52:42.000Z",
+      "updatedAt": "2026-10-21T19:52:42.000Z",
+      "uid": "35240-b310886c-64b0-4caa-a46b-683b74a621f7"
     }
   ],
   "auth": {
@@ -698,17 +716,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "9b4cbe90-3314-4b8f-8c69-25ab747a86f2",
-    "name": "Temenos Transact Core Banking Accounts Reference Data API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.temenos.com/api/v1.0.0"
     }
-  }
+  ]
 }

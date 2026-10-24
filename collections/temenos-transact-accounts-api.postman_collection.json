@@ -1,1748 +1,1788 @@
 {
+  "info": {
+    "_postman_id": "bb3beb34-650a-4cf3-b33a-09ebc340627f",
+    "name": "Temenos Transact Core Banking Accounts API",
+    "description": "RESTful APIs for Temenos Transact (formerly T24) core banking operations.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T19:51:51.000Z",
+    "updatedAt": "2026-10-21T19:51:52.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-bb3beb34-650a-4cf3-b33a-09ebc340627f"
+  },
   "item": [
     {
-      "id": "aa0e33fb-daae-473a-b041-ffc6ea975769",
-      "name": "Accounts",
-      "description": {
-        "content": "Manage customer accounts created using the Arrangement Architecture including current accounts, savings accounts, corporate accounts, Islamic accounts, non-resident and minor accounts.",
-        "type": "text/plain"
-      },
+      "name": "holdings",
       "item": [
         {
-          "id": "a9399810-517d-4bdc-ae31-9bd1a428591b",
-          "name": "Temenos Transact List Accounts",
-          "request": {
-            "name": "Temenos Transact List Accounts",
-            "description": {
-              "content": "Retrieve a list of customer accounts. Supports filtering by customer, account type, status, currency, and other criteria. Returns account arrangements created through the Arrangement Architecture including current, savings, corporate, and Islamic account types.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "holdings",
-                "accounts"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
+          "name": "accounts",
+          "item": [
+            {
+              "name": "{accountId}",
+              "item": [
                 {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "25",
-                  "description": "Number of records to return per page (default 25, max 100)"
+                  "name": "balances",
+                  "item": [
+                    {
+                      "name": "Temenos Transact Get Account Balances",
+                      "id": "7f030bdc-5f60-482e-90f7-b04eb27a08c6",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId/balances",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId",
+                            "balances"
+                          ],
+                          "variable": [
+                            {
+                              "id": "700a574d-9640-4f59-b7b0-1c1f50941ca1",
+                              "key": "accountId",
+                              "value": "<string>",
+                              "description": "(Required) Unique identifier of the account arrangement"
+                            }
+                          ]
+                        },
+                        "description": "Retrieve balance information for a specific account including available balance, working balance, locked amount, cleared balance, and other balance types as configured."
+                      },
+                      "response": [
+                        {
+                          "id": "8d96a928-ae29-48ac-98fd-386599fd0e98",
+                          "name": "Successful retrieval of account balances",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/holdings/accounts/:accountId/balances",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "holdings",
+                                "accounts",
+                                ":accountId",
+                                "balances"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Hold\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": {\n    \"accountId\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"workingBalance\": \"<number>\",\n    \"availableBalance\": \"<number>\",\n    \"clearedBalance\": \"<number>\",\n    \"lockedAmount\": \"<number>\",\n    \"overdraftLimit\": \"<number>\",\n    \"accruedInterest\": \"<number>\",\n    \"pendingDeposits\": \"<number>\",\n    \"asOfDate\": \"<dateTime>\"\n  }\n}",
+                          "createdAt": "2026-10-21T19:51:52.000Z",
+                          "updatedAt": "2026-10-21T19:51:52.000Z",
+                          "uid": "35240-8d96a928-ae29-48ac-98fd-386599fd0e98"
+                        },
+                        {
+                          "id": "86017121-cf5f-4499-964a-c29efbbf6598",
+                          "name": "Authentication required or token expired",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/holdings/accounts/:accountId/balances",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "holdings",
+                                "accounts",
+                                ":accountId",
+                                "balances"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-10-21T19:51:52.000Z",
+                          "updatedAt": "2026-10-21T19:51:52.000Z",
+                          "uid": "35240-86017121-cf5f-4499-964a-c29efbbf6598"
+                        },
+                        {
+                          "id": "9effd09a-2ccd-48e3-ab89-4865be11166a",
+                          "name": "Requested resource not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/holdings/accounts/:accountId/balances",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "holdings",
+                                "accounts",
+                                ":accountId",
+                                "balances"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-10-21T19:51:52.000Z",
+                          "updatedAt": "2026-10-21T19:51:52.000Z",
+                          "uid": "35240-9effd09a-2ccd-48e3-ab89-4865be11166a"
+                        },
+                        {
+                          "id": "0b7ee544-c298-435e-93ec-61039bfc493f",
+                          "name": "Internal server error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/holdings/accounts/:accountId/balances",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "holdings",
+                                "accounts",
+                                ":accountId",
+                                "balances"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-10-21T19:51:52.000Z",
+                          "updatedAt": "2026-10-21T19:51:52.000Z",
+                          "uid": "35240-0b7ee544-c298-435e-93ec-61039bfc493f"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-7f030bdc-5f60-482e-90f7-b04eb27a08c6"
+                    }
+                  ],
+                  "id": "84c37694-9104-4357-b20c-15f44c38b136",
+                  "createdAt": "2026-10-21T19:51:52.000Z",
+                  "updatedAt": "2026-10-21T19:51:52.000Z",
+                  "uid": "35240-84c37694-9104-4357-b20c-15f44c38b136"
                 },
                 {
-                  "disabled": false,
-                  "key": "page_start",
-                  "value": "0",
-                  "description": "Page token or offset for pagination"
+                  "name": "Temenos Transact Get Account Details",
+                  "id": "034411c4-80d9-4d59-b786-f6fd2c9fbcd8",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "accounts",
+                        ":accountId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "4d0ff784-9f84-4d53-a83a-8930103dafce",
+                          "key": "accountId",
+                          "value": "<string>",
+                          "description": "(Required) Unique identifier of the account arrangement"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve detailed information for a specific account arrangement including balances, product details, interest conditions, charges, and account officer assignment."
+                  },
+                  "response": [
+                    {
+                      "id": "9d28f19b-9ccc-49fc-a19b-266a45708be3",
+                      "name": "Successful retrieval of account details",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Reversed\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": {\n    \"accountId\": \"<string>\",\n    \"accountName\": \"<string>\",\n    \"customerId\": \"<string>\",\n    \"customerName\": \"<string>\",\n    \"productId\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"accountType\": \"CURRENT\",\n    \"currency\": \"SME\",\n    \"status\": \"INACTIVE\",\n    \"openingDate\": \"<date>\",\n    \"workingBalance\": \"<number>\",\n    \"availableBalance\": \"<number>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"branchId\": \"<string>\",\n    \"iban\": \"<string>\",\n    \"bic\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-9d28f19b-9ccc-49fc-a19b-266a45708be3"
+                    },
+                    {
+                      "id": "7a1ee38c-48f7-42f9-b589-98dc57b354af",
+                      "name": "Authentication required or token expired",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-7a1ee38c-48f7-42f9-b589-98dc57b354af"
+                    },
+                    {
+                      "id": "8c9eb6f6-64f9-47da-93ee-a7bb4a781a2b",
+                      "name": "Insufficient permissions to access this resource",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-8c9eb6f6-64f9-47da-93ee-a7bb4a781a2b"
+                    },
+                    {
+                      "id": "e058e8e3-42b3-403c-89f6-4ea07ad0761c",
+                      "name": "Requested resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-e058e8e3-42b3-403c-89f6-4ea07ad0761c"
+                    },
+                    {
+                      "id": "6ad589be-9c6a-4938-bc13-674aa1b56899",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-6ad589be-9c6a-4938-bc13-674aa1b56899"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T19:51:52.000Z",
+                  "updatedAt": "2026-10-21T19:51:52.000Z",
+                  "uid": "35240-034411c4-80d9-4d59-b786-f6fd2c9fbcd8"
                 },
                 {
-                  "disabled": false,
-                  "key": "customerId",
-                  "value": "<string>",
-                  "description": "Filter by customer identifier"
-                },
-                {
-                  "disabled": false,
-                  "key": "accountType",
-                  "value": "<string>",
-                  "description": "Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)"
-                },
-                {
-                  "disabled": false,
-                  "key": "currency",
-                  "value": "<string>",
-                  "description": "Filter by account currency (ISO 4217 code)"
-                },
-                {
-                  "disabled": false,
-                  "key": "status",
-                  "value": "<string>",
-                  "description": "Filter by account status"
+                  "name": "Temenos Transact Update Account",
+                  "id": "52d5f520-06cd-43fc-b263-ee376a76615e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "accounts",
+                        ":accountId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "10c712e1-3ec8-400e-962a-32e45c003c6c",
+                          "key": "accountId",
+                          "value": "<string>",
+                          "description": "(Required) Unique identifier of the account arrangement"
+                        }
+                      ]
+                    },
+                    "description": "Update an existing account arrangement. Supports modifying account attributes such as posting restrictions, overdraft limits, account officer, and product conditions."
+                  },
+                  "response": [
+                    {
+                      "id": "54cdd477-fec9-40a9-8cb7-803f7ed8401a",
+                      "name": "Account updated successfully",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Reversed\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": {\n    \"accountId\": \"<string>\",\n    \"accountName\": \"<string>\",\n    \"customerId\": \"<string>\",\n    \"customerName\": \"<string>\",\n    \"productId\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"accountType\": \"CURRENT\",\n    \"currency\": \"SME\",\n    \"status\": \"INACTIVE\",\n    \"openingDate\": \"<date>\",\n    \"workingBalance\": \"<number>\",\n    \"availableBalance\": \"<number>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"branchId\": \"<string>\",\n    \"iban\": \"<string>\",\n    \"bic\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-54cdd477-fec9-40a9-8cb7-803f7ed8401a"
+                    },
+                    {
+                      "id": "801f6018-d2aa-41c8-9621-d312788c48e6",
+                      "name": "Bad request - invalid parameters or malformed request",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-801f6018-d2aa-41c8-9621-d312788c48e6"
+                    },
+                    {
+                      "id": "1d7dae72-ce1c-44fe-ab0e-2e3f980b9fa8",
+                      "name": "Authentication required or token expired",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-1d7dae72-ce1c-44fe-ab0e-2e3f980b9fa8"
+                    },
+                    {
+                      "id": "afc9d984-411c-474b-9abf-0a74c902e792",
+                      "name": "Insufficient permissions to access this resource",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-afc9d984-411c-474b-9abf-0a74c902e792"
+                    },
+                    {
+                      "id": "24f3fbce-cb1e-4564-8b64-b383ef1d9003",
+                      "name": "Requested resource not found",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-24f3fbce-cb1e-4564-8b64-b383ef1d9003"
+                    },
+                    {
+                      "id": "5121b8bb-692e-4423-bec0-6b3c1ca6f5f7",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-5121b8bb-692e-4423-bec0-6b3c1ca6f5f7"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T19:51:52.000Z",
+                  "updatedAt": "2026-10-21T19:51:52.000Z",
+                  "uid": "35240-52d5f520-06cd-43fc-b263-ee376a76615e"
                 }
               ],
-              "variable": []
+              "id": "0d86d26f-0b74-4946-85e6-247a50f615a4",
+              "createdAt": "2026-10-21T19:51:52.000Z",
+              "updatedAt": "2026-10-21T19:51:52.000Z",
+              "uid": "35240-0d86d26f-0b74-4946-85e6-247a50f615a4"
             },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
             {
-              "id": "09d069af-510c-4d49-9909-65bd00460999",
-              "name": "Successful retrieval of accounts list",
-              "originalRequest": {
+              "name": "Temenos Transact List Accounts",
+              "id": "f904d6d4-2f41-457a-8224-160684d85436",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
                 "url": {
+                  "raw": "{{baseUrl}}/holdings/accounts?page_size=25&page_start=0&customerId=<string>&accountType=<string>&currency=<string>&status=CLOSED",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "holdings",
                     "accounts"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "Number of records to return per page (default 25, max 100)",
                       "key": "page_size",
                       "value": "25"
                     },
                     {
+                      "description": "Page token or offset for pagination",
                       "key": "page_start",
                       "value": "0"
                     },
                     {
+                      "description": "Filter by customer identifier",
                       "key": "customerId",
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)",
                       "key": "accountType",
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter by account currency (ISO 4217 code)",
                       "key": "currency",
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter by account status",
                       "key": "status",
-                      "value": "<string>"
+                      "value": "CLOSED"
+                    }
+                  ]
+                },
+                "description": "Retrieve a list of customer accounts. Supports filtering by customer, account type, status, currency, and other criteria. Returns account arrangements created through the Arrangement Architecture including current, savings, corporate, and Islamic account types."
+              },
+              "response": [
+                {
+                  "id": "9b18168b-c053-4985-b236-33fa34013cd0",
+                  "name": "Successful retrieval of accounts list",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/accounts?page_size=25&page_start=0&customerId=<string>&accountType=<string>&currency=<string>&status=CLOSED",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "accounts"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)",
+                          "key": "accountType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account currency (ISO 4217 code)",
+                          "key": "currency",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account status",
+                          "key": "status",
+                          "value": "CLOSED"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Unauth\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": [\n    {\n      \"accountId\": \"<string>\",\n      \"accountName\": \"<string>\",\n      \"customerId\": \"<string>\",\n      \"customerName\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"productName\": \"<string>\",\n      \"accountType\": \"SAVINGS\",\n      \"currency\": \"YMN\",\n      \"status\": \"DORMANT\",\n      \"openingDate\": \"<date>\",\n      \"workingBalance\": \"<number>\",\n      \"availableBalance\": \"<number>\",\n      \"accountOfficerId\": \"<integer>\",\n      \"branchId\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\"\n    },\n    {\n      \"accountId\": \"<string>\",\n      \"accountName\": \"<string>\",\n      \"customerId\": \"<string>\",\n      \"customerName\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"productName\": \"<string>\",\n      \"accountType\": \"NON_RESIDENT\",\n      \"currency\": \"DGU\",\n      \"status\": \"INACTIVE\",\n      \"openingDate\": \"<date>\",\n      \"workingBalance\": \"<number>\",\n      \"availableBalance\": \"<number>\",\n      \"accountOfficerId\": \"<integer>\",\n      \"branchId\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\"\n    }\n  ],\n  \"page\": {\n    \"pageSize\": \"<integer>\",\n    \"pageStart\": \"<integer>\",\n    \"totalRecords\": \"<integer>\"\n  }\n}",
+                  "createdAt": "2026-10-21T19:51:52.000Z",
+                  "updatedAt": "2026-10-21T19:51:52.000Z",
+                  "uid": "35240-9b18168b-c053-4985-b236-33fa34013cd0"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 1171,\n      \"responseParse\": 5035\n    }\n  },\n  \"page\": {\n    \"pageSize\": 10,\n    \"pageStart\": 10,\n    \"totalRecords\": 10\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "cc425c83-2407-40b0-a2c7-0f03ecfce39e",
-              "name": "Bad request - invalid parameters or malformed request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "57896a23-7b88-428c-abf4-f04a4eac9c5d",
+                  "name": "Bad request - invalid parameters or malformed request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/accounts?page_size=25&page_start=0&customerId=<string>&accountType=<string>&currency=<string>&status=CLOSED",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "accounts"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)",
+                          "key": "accountType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account currency (ISO 4217 code)",
+                          "key": "currency",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account status",
+                          "key": "status",
+                          "value": "CLOSED"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "customerId",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "accountType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "currency",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "status",
-                      "value": "<string>"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:51:52.000Z",
+                  "updatedAt": "2026-10-21T19:51:52.000Z",
+                  "uid": "35240-57896a23-7b88-428c-abf4-f04a4eac9c5d"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "4961a416-0a45-49d1-97e0-564d806cb228",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "2bbfb331-1052-434f-b3ed-4a5ee052436a",
+                  "name": "Authentication required or token expired",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/accounts?page_size=25&page_start=0&customerId=<string>&accountType=<string>&currency=<string>&status=CLOSED",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "accounts"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)",
+                          "key": "accountType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account currency (ISO 4217 code)",
+                          "key": "currency",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account status",
+                          "key": "status",
+                          "value": "CLOSED"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "customerId",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "accountType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "currency",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "status",
-                      "value": "<string>"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:51:52.000Z",
+                  "updatedAt": "2026-10-21T19:51:52.000Z",
+                  "uid": "35240-2bbfb331-1052-434f-b3ed-4a5ee052436a"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9c918af7-78dc-476e-a592-381084c60ad7",
-              "name": "Insufficient permissions to access this resource",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "0e690491-175a-47fb-a115-acf5fa56d737",
+                  "name": "Insufficient permissions to access this resource",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/accounts?page_size=25&page_start=0&customerId=<string>&accountType=<string>&currency=<string>&status=CLOSED",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "accounts"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)",
+                          "key": "accountType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account currency (ISO 4217 code)",
+                          "key": "currency",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account status",
+                          "key": "status",
+                          "value": "CLOSED"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "customerId",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "accountType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "currency",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "status",
-                      "value": "<string>"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:51:52.000Z",
+                  "updatedAt": "2026-10-21T19:51:52.000Z",
+                  "uid": "35240-0e690491-175a-47fb-a115-acf5fa56d737"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "21f4b4fc-7e18-42cc-b4e9-6b9c083f3046",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "bdffe8db-82b9-4f26-a4ef-1d8a12ac7b5b",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/accounts?page_size=25&page_start=0&customerId=<string>&accountType=<string>&currency=<string>&status=CLOSED",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "accounts"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account type (e.g., CURRENT, SAVINGS, CORPORATE)",
+                          "key": "accountType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account currency (ISO 4217 code)",
+                          "key": "currency",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by account status",
+                          "key": "status",
+                          "value": "CLOSED"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "customerId",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "accountType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "currency",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "status",
-                      "value": "<string>"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:51:52.000Z",
+                  "updatedAt": "2026-10-21T19:51:52.000Z",
+                  "uid": "35240-bdffe8db-82b9-4f26-a4ef-1d8a12ac7b5b"
                 }
               ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-21T19:51:52.000Z",
+              "updatedAt": "2026-10-21T19:51:52.000Z",
+              "uid": "35240-f904d6d4-2f41-457a-8224-160684d85436"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "c50eb4d7-a9ec-4074-80d2-c78c8220bd28",
-          "name": "Temenos Transact Get Account Details",
-          "request": {
-            "name": "Temenos Transact Get Account Details",
-            "description": {
-              "content": "Retrieve detailed information for a specific account arrangement including balances, product details, interest conditions, charges, and account officer assignment.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "holdings",
-                "accounts",
-                ":accountId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "accountId",
-                  "description": "(Required) Unique identifier of the account arrangement"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "37369298-8f48-43f5-910e-a28d3f8dfe51",
-              "name": "Successful retrieval of account details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 4413,\n      \"responseParse\": 420\n    }\n  },\n  \"body\": {\n    \"accountId\": \"AA2014500001\",\n    \"accountName\": \"example_value\",\n    \"customerId\": \"500123\",\n    \"customerName\": \"example_value\",\n    \"productId\": \"500123\",\n    \"productName\": \"example_value\",\n    \"accountType\": \"CURRENT\",\n    \"currency\": \"USD\",\n    \"status\": \"ACTIVE\",\n    \"openingDate\": \"2026-01-15\",\n    \"workingBalance\": 42.5,\n    \"availableBalance\": 42.5,\n    \"accountOfficerId\": 9657,\n    \"branchId\": \"500123\",\n    \"iban\": \"example_value\",\n    \"bic\": \"example_value\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8cb3974d-ed85-42fb-af52-06ca50b837aa",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e867e1a4-e1b8-47b2-9962-83dd8a725d97",
-              "name": "Insufficient permissions to access this resource",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "798a4fdc-750f-48b0-ba4c-20162debe5b8",
-              "name": "Requested resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "db2dd8c5-15e1-4214-adf7-fcbc940d7f16",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "3f0974e0-d48b-4fe8-bf88-5af55d410c91",
-          "name": "Temenos Transact Update Account",
-          "request": {
-            "name": "Temenos Transact Update Account",
-            "description": {
-              "content": "Update an existing account arrangement. Supports modifying account attributes such as posting restrictions, overdraft limits, account officer, and product conditions.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "holdings",
-                "accounts",
-                ":accountId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "accountId",
-                  "description": "(Required) Unique identifier of the account arrangement"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PUT",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "0bacf7b1-7786-46a0-9ad3-41b8a3dad5c0",
-              "name": "Account updated successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 4413,\n      \"responseParse\": 420\n    }\n  },\n  \"body\": {\n    \"accountId\": \"AA2014500001\",\n    \"accountName\": \"example_value\",\n    \"customerId\": \"500123\",\n    \"customerName\": \"example_value\",\n    \"productId\": \"500123\",\n    \"productName\": \"example_value\",\n    \"accountType\": \"CURRENT\",\n    \"currency\": \"USD\",\n    \"status\": \"ACTIVE\",\n    \"openingDate\": \"2026-01-15\",\n    \"workingBalance\": 42.5,\n    \"availableBalance\": 42.5,\n    \"accountOfficerId\": 9657,\n    \"branchId\": \"500123\",\n    \"iban\": \"example_value\",\n    \"bic\": \"example_value\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "390084e0-1a60-4879-bc7f-6b896ec35437",
-              "name": "Bad request - invalid parameters or malformed request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "1c5ad479-826f-4361-9983-0e9ec02d033d",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "4fb25e17-3d55-49e1-bf3a-55937644caea",
-              "name": "Insufficient permissions to access this resource",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d7828048-8fe4-4325-8250-a5ca9f1aecd7",
-              "name": "Requested resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7a63046e-598e-46db-9240-df3fc0a53d6e",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"header\": {\n    \"override\": \"<boolean>\"\n  },\n  \"body\": {\n    \"accountName\": \"<string>\",\n    \"accountOfficerId\": \"<integer>\",\n    \"overdraftLimit\": \"<number>\",\n    \"postingRestriction\": \"<string>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "0889ee61-82ed-4028-b761-3fee68fb5562",
-          "name": "Temenos Transact Get Account Balances",
-          "request": {
-            "name": "Temenos Transact Get Account Balances",
-            "description": {
-              "content": "Retrieve balance information for a specific account including available balance, working balance, locked amount, cleared balance, and other balance types as configured.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "holdings",
-                "accounts",
-                ":accountId",
-                "balances"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "accountId",
-                  "description": "(Required) Unique identifier of the account arrangement"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "d75fa8e9-c4d5-49c3-bbbf-336ab8c3e51d",
-              "name": "Successful retrieval of account balances",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId",
-                    "balances"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 1655,\n      \"responseParse\": 3583\n    }\n  },\n  \"body\": {\n    \"accountId\": \"500123\",\n    \"currency\": \"example_value\",\n    \"workingBalance\": 42.5,\n    \"availableBalance\": 42.5,\n    \"clearedBalance\": 42.5,\n    \"lockedAmount\": 42.5,\n    \"overdraftLimit\": 42.5,\n    \"accruedInterest\": 42.5,\n    \"pendingDeposits\": 42.5,\n    \"asOfDate\": \"2026-01-15T10:30:00Z\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "590e00ad-8218-40cb-b86f-bbb90f0e5f71",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId",
-                    "balances"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "4a88a738-b454-4525-a9c9-a1857e798ae3",
-              "name": "Requested resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId",
-                    "balances"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3ebe6df2-3f34-44e9-b532-f09c5cb5a13d",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId",
-                    "balances"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "a43c4d49-2442-44e3-93ae-2819d03e03c5",
-          "name": "Temenos Transact List Customer Accounts",
-          "request": {
-            "name": "Temenos Transact List Customer Accounts",
-            "description": {
-              "content": "Retrieve all accounts associated with a specific customer, including account type, status, currency, and balance summary.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "party",
-                "customers",
-                ":customerId",
-                "accounts"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "25",
-                  "description": "Number of records to return per page (default 25, max 100)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page_start",
-                  "value": "0",
-                  "description": "Page token or offset for pagination"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "customerId",
-                  "description": "(Required) Unique identifier of the customer"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "7f1a1be3-20cf-4bcb-bde5-f500df7c1423",
-              "name": "Successful retrieval of customer accounts",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "party",
-                    "customers",
-                    ":customerId",
-                    "accounts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "customerId",
-                      "description": "(Required) Unique identifier of the customer"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 1171,\n      \"responseParse\": 5035\n    }\n  },\n  \"page\": {\n    \"pageSize\": 10,\n    \"pageStart\": 10,\n    \"totalRecords\": 10\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a5bb2e47-c457-4e29-9dff-2a08b1ec79f7",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "party",
-                    "customers",
-                    ":customerId",
-                    "accounts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "customerId",
-                      "description": "(Required) Unique identifier of the customer"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7f5037f6-74ee-41dd-8251-39156d0a4fa2",
-              "name": "Requested resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "party",
-                    "customers",
-                    ":customerId",
-                    "accounts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "customerId",
-                      "description": "(Required) Unique identifier of the customer"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "da33fe65-0cbf-4dcb-a3e5-db035a4c41c6",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "party",
-                    "customers",
-                    ":customerId",
-                    "accounts"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "customerId",
-                      "description": "(Required) Unique identifier of the customer"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "2df933b0-615c-49f5-9014-44d7c467aca2",
+          "createdAt": "2026-10-21T19:51:52.000Z",
+          "updatedAt": "2026-10-21T19:51:52.000Z",
+          "uid": "35240-2df933b0-615c-49f5-9014-44d7c467aca2"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
+      "id": "ad84ab06-f5dc-448f-b372-0dc4d8db32b6",
+      "createdAt": "2026-10-21T19:51:52.000Z",
+      "updatedAt": "2026-10-21T19:51:52.000Z",
+      "uid": "35240-ad84ab06-f5dc-448f-b372-0dc4d8db32b6"
+    },
     {
-      "type": "string",
-      "value": "https://api.temenos.com/api/v1.0.0",
-      "key": "baseUrl"
+      "name": "party",
+      "item": [
+        {
+          "name": "customers",
+          "item": [
+            {
+              "name": "{customerId}",
+              "item": [
+                {
+                  "name": "accounts",
+                  "item": [
+                    {
+                      "name": "Temenos Transact List Customer Accounts",
+                      "id": "09a354f6-251f-45b4-8522-f183d63198d0",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/party/customers/:customerId/accounts?page_size=25&page_start=0",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "party",
+                            "customers",
+                            ":customerId",
+                            "accounts"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of records to return per page (default 25, max 100)",
+                              "key": "page_size",
+                              "value": "25"
+                            },
+                            {
+                              "description": "Page token or offset for pagination",
+                              "key": "page_start",
+                              "value": "0"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "b5117903-c5e8-44dd-9fb0-8a0fd4c8b8d2",
+                              "key": "customerId",
+                              "value": "<string>",
+                              "description": "(Required) Unique identifier of the customer"
+                            }
+                          ]
+                        },
+                        "description": "Retrieve all accounts associated with a specific customer, including account type, status, currency, and balance summary."
+                      },
+                      "response": [
+                        {
+                          "id": "9e5874b8-ad69-4c4b-bb05-f150212d12ba",
+                          "name": "Successful retrieval of customer accounts",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/party/customers/:customerId/accounts?page_size=25&page_start=0",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "party",
+                                "customers",
+                                ":customerId",
+                                "accounts"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Number of records to return per page (default 25, max 100)",
+                                  "key": "page_size",
+                                  "value": "25"
+                                },
+                                {
+                                  "description": "Page token or offset for pagination",
+                                  "key": "page_start",
+                                  "value": "0"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "customerId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Unauth\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": [\n    {\n      \"accountId\": \"<string>\",\n      \"accountName\": \"<string>\",\n      \"customerId\": \"<string>\",\n      \"customerName\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"productName\": \"<string>\",\n      \"accountType\": \"SAVINGS\",\n      \"currency\": \"YMN\",\n      \"status\": \"DORMANT\",\n      \"openingDate\": \"<date>\",\n      \"workingBalance\": \"<number>\",\n      \"availableBalance\": \"<number>\",\n      \"accountOfficerId\": \"<integer>\",\n      \"branchId\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\"\n    },\n    {\n      \"accountId\": \"<string>\",\n      \"accountName\": \"<string>\",\n      \"customerId\": \"<string>\",\n      \"customerName\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"productName\": \"<string>\",\n      \"accountType\": \"NON_RESIDENT\",\n      \"currency\": \"DGU\",\n      \"status\": \"INACTIVE\",\n      \"openingDate\": \"<date>\",\n      \"workingBalance\": \"<number>\",\n      \"availableBalance\": \"<number>\",\n      \"accountOfficerId\": \"<integer>\",\n      \"branchId\": \"<string>\",\n      \"iban\": \"<string>\",\n      \"bic\": \"<string>\"\n    }\n  ],\n  \"page\": {\n    \"pageSize\": \"<integer>\",\n    \"pageStart\": \"<integer>\",\n    \"totalRecords\": \"<integer>\"\n  }\n}",
+                          "createdAt": "2026-10-21T19:51:52.000Z",
+                          "updatedAt": "2026-10-21T19:51:52.000Z",
+                          "uid": "35240-9e5874b8-ad69-4c4b-bb05-f150212d12ba"
+                        },
+                        {
+                          "id": "8c8a57c6-5ca8-4b32-a261-f383ef378f57",
+                          "name": "Authentication required or token expired",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/party/customers/:customerId/accounts?page_size=25&page_start=0",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "party",
+                                "customers",
+                                ":customerId",
+                                "accounts"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Number of records to return per page (default 25, max 100)",
+                                  "key": "page_size",
+                                  "value": "25"
+                                },
+                                {
+                                  "description": "Page token or offset for pagination",
+                                  "key": "page_start",
+                                  "value": "0"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "customerId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-10-21T19:51:52.000Z",
+                          "updatedAt": "2026-10-21T19:51:52.000Z",
+                          "uid": "35240-8c8a57c6-5ca8-4b32-a261-f383ef378f57"
+                        },
+                        {
+                          "id": "44ba6180-5663-4469-b9c2-dca0aaef0e2a",
+                          "name": "Requested resource not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/party/customers/:customerId/accounts?page_size=25&page_start=0",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "party",
+                                "customers",
+                                ":customerId",
+                                "accounts"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Number of records to return per page (default 25, max 100)",
+                                  "key": "page_size",
+                                  "value": "25"
+                                },
+                                {
+                                  "description": "Page token or offset for pagination",
+                                  "key": "page_start",
+                                  "value": "0"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "customerId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-10-21T19:51:52.000Z",
+                          "updatedAt": "2026-10-21T19:51:52.000Z",
+                          "uid": "35240-44ba6180-5663-4469-b9c2-dca0aaef0e2a"
+                        },
+                        {
+                          "id": "2f4d5998-c8d5-4293-95c4-75b256144685",
+                          "name": "Internal server error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/party/customers/:customerId/accounts?page_size=25&page_start=0",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "party",
+                                "customers",
+                                ":customerId",
+                                "accounts"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Number of records to return per page (default 25, max 100)",
+                                  "key": "page_size",
+                                  "value": "25"
+                                },
+                                {
+                                  "description": "Page token or offset for pagination",
+                                  "key": "page_start",
+                                  "value": "0"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "customerId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-10-21T19:51:52.000Z",
+                          "updatedAt": "2026-10-21T19:51:52.000Z",
+                          "uid": "35240-2f4d5998-c8d5-4293-95c4-75b256144685"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T19:51:52.000Z",
+                      "updatedAt": "2026-10-21T19:51:52.000Z",
+                      "uid": "35240-09a354f6-251f-45b4-8522-f183d63198d0"
+                    }
+                  ],
+                  "id": "5fd24b08-c885-4cb0-ac3b-67cd905aba82",
+                  "createdAt": "2026-10-21T19:51:52.000Z",
+                  "updatedAt": "2026-10-21T19:51:52.000Z",
+                  "uid": "35240-5fd24b08-c885-4cb0-ac3b-67cd905aba82"
+                }
+              ],
+              "id": "870b886f-c024-4154-be2b-ad378e46551d",
+              "createdAt": "2026-10-21T19:51:52.000Z",
+              "updatedAt": "2026-10-21T19:51:52.000Z",
+              "uid": "35240-870b886f-c024-4154-be2b-ad378e46551d"
+            }
+          ],
+          "id": "dc35c171-62ea-460a-8977-e5489b081700",
+          "createdAt": "2026-10-21T19:51:52.000Z",
+          "updatedAt": "2026-10-21T19:51:52.000Z",
+          "uid": "35240-dc35c171-62ea-460a-8977-e5489b081700"
+        }
+      ],
+      "id": "daf4fae3-378a-4d2d-bfc6-c1fbd546133b",
+      "createdAt": "2026-10-21T19:51:52.000Z",
+      "updatedAt": "2026-10-21T19:51:52.000Z",
+      "uid": "35240-daf4fae3-378a-4d2d-bfc6-c1fbd546133b"
     }
   ],
   "auth": {
@@ -1750,17 +1790,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "a54f63a7-7fd2-41c4-af97-a050b57f698a",
-    "name": "Temenos Transact Core Banking Accounts API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.temenos.com/api/v1.0.0"
     }
-  }
+  ]
 }

@@ -1,607 +1,617 @@
 {
+  "info": {
+    "_postman_id": "47aceea7-325d-4b97-9000-c823c92c24ef",
+    "name": "Temenos Transact Core Banking Loans API",
+    "description": "RESTful APIs for Temenos Transact (formerly T24) core banking operations.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T19:52:23.000Z",
+    "updatedAt": "2026-10-21T19:52:23.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-47aceea7-325d-4b97-9000-c823c92c24ef"
+  },
   "item": [
     {
-      "id": "69628148-2f2c-4489-bb9d-20765cfd7309",
-      "name": "Loans",
-      "description": {
-        "content": "Create and manage loan arrangements, credit facilities, repayment schedules, drawdowns, and loan lifecycle operations.",
-        "type": "text/plain"
-      },
+      "name": "holdings",
       "item": [
         {
-          "id": "682e2c02-5428-4147-9d92-6cb30b89962a",
-          "name": "Temenos Transact List Loans",
-          "request": {
-            "name": "Temenos Transact List Loans",
-            "description": {
-              "content": "Retrieve loan arrangements including personal loans, mortgages, credit facilities, and overdraft agreements. Supports filtering by customer, product type, status, and currency.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "holdings",
-                "loans"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "25",
-                  "description": "Number of records to return per page (default 25, max 100)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page_start",
-                  "value": "0",
-                  "description": "Page token or offset for pagination"
-                },
-                {
-                  "disabled": false,
-                  "key": "customerId",
-                  "value": "<string>",
-                  "description": "Filter by customer identifier"
-                },
-                {
-                  "disabled": false,
-                  "key": "productType",
-                  "value": "<string>",
-                  "description": "Filter by loan product type"
-                },
-                {
-                  "disabled": false,
-                  "key": "status",
-                  "value": "<string>",
-                  "description": "Filter by loan status"
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "loans",
+          "item": [
             {
-              "id": "d76b4bda-3459-43e8-baf6-4ffb3e5e4cfc",
-              "name": "Successful retrieval of loans",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "loans"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+              "name": "{loanId}",
+              "item": [
+                {
+                  "name": "Temenos Transact Get Loan Details",
+                  "id": "08bad742-4910-4026-b7c8-6b7c760bac07",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/loans/:loanId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "loans",
+                        ":loanId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "9dc4e9a4-151a-4432-8b9f-ecf6a2ad26b5",
+                          "key": "loanId",
+                          "value": "<string>",
+                          "description": "(Required) Unique identifier of the loan arrangement"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve detailed information for a specific loan arrangement including principal, outstanding balance, interest rate, repayment schedule, next payment date, and facility details."
+                  },
+                  "response": [
                     {
-                      "key": "page_size",
-                      "value": "25"
+                      "id": "fcad4a34-70f6-4868-81d9-390e8e2be352",
+                      "name": "Successful retrieval of loan details",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/loans/:loanId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "loans",
+                            ":loanId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "loanId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"Hold\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": {\n    \"loanId\": \"<string>\",\n    \"customerId\": \"<string>\",\n    \"productId\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"principalAmount\": \"<number>\",\n    \"outstandingBalance\": \"<number>\",\n    \"currency\": \"<string>\",\n    \"interestRate\": \"<number>\",\n    \"effectiveRate\": \"<number>\",\n    \"disbursementDate\": \"<date>\",\n    \"maturityDate\": \"<date>\",\n    \"nextPaymentDate\": \"<date>\",\n    \"nextPaymentAmount\": \"<number>\",\n    \"repaymentFrequency\": \"QUARTERLY\",\n    \"status\": \"CLOSED\",\n    \"overdueAmount\": \"<number>\",\n    \"daysPastDue\": \"<integer>\"\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:23.000Z",
+                      "updatedAt": "2026-10-21T19:52:23.000Z",
+                      "uid": "35240-fcad4a34-70f6-4868-81d9-390e8e2be352"
                     },
                     {
-                      "key": "page_start",
-                      "value": "0"
+                      "id": "069ceb22-2fb5-4b2a-8d9b-1e674ec958a0",
+                      "name": "Authentication required or token expired",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/loans/:loanId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "loans",
+                            ":loanId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "loanId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:23.000Z",
+                      "updatedAt": "2026-10-21T19:52:23.000Z",
+                      "uid": "35240-069ceb22-2fb5-4b2a-8d9b-1e674ec958a0"
                     },
                     {
-                      "key": "customerId",
-                      "value": "<string>"
+                      "id": "a1e2a4f2-6d3d-497b-9863-3869137bc5bf",
+                      "name": "Requested resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/loans/:loanId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "loans",
+                            ":loanId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "loanId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:23.000Z",
+                      "updatedAt": "2026-10-21T19:52:23.000Z",
+                      "uid": "35240-a1e2a4f2-6d3d-497b-9863-3869137bc5bf"
                     },
                     {
-                      "key": "productType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "status",
-                      "value": "<string>"
+                      "id": "51cee0af-2d6a-48ee-b86d-e49a05778911",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/loans/:loanId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "loans",
+                            ":loanId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "loanId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:23.000Z",
+                      "updatedAt": "2026-10-21T19:52:23.000Z",
+                      "uid": "35240-51cee0af-2d6a-48ee-b86d-e49a05778911"
                     }
                   ],
-                  "variable": []
-                },
+                  "createdAt": "2026-10-21T19:52:23.000Z",
+                  "updatedAt": "2026-10-21T19:52:23.000Z",
+                  "uid": "35240-08bad742-4910-4026-b7c8-6b7c760bac07"
+                }
+              ],
+              "id": "5c6a0bfc-09f3-41a0-b8a5-f21f7f4da626",
+              "createdAt": "2026-10-21T19:52:23.000Z",
+              "updatedAt": "2026-10-21T19:52:23.000Z",
+              "uid": "35240-5c6a0bfc-09f3-41a0-b8a5-f21f7f4da626"
+            },
+            {
+              "name": "Temenos Transact List Loans",
+              "id": "bded95bc-1e5f-4f4e-95e0-6c2b7e2376a6",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 1704,\n      \"responseParse\": 9118\n    }\n  },\n  \"page\": {\n    \"pageSize\": 10,\n    \"pageStart\": 10,\n    \"totalRecords\": 10\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a471daed-5178-4ffa-847d-14d64231471f",
-              "name": "Bad request - invalid parameters or malformed request",
-              "originalRequest": {
                 "url": {
+                  "raw": "{{baseUrl}}/holdings/loans?page_size=25&page_start=0&customerId=<string>&productType=<string>&status=CLOSED",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "holdings",
                     "loans"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "Number of records to return per page (default 25, max 100)",
                       "key": "page_size",
                       "value": "25"
                     },
                     {
+                      "description": "Page token or offset for pagination",
                       "key": "page_start",
                       "value": "0"
                     },
                     {
+                      "description": "Filter by customer identifier",
                       "key": "customerId",
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter by loan product type",
                       "key": "productType",
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter by loan status",
                       "key": "status",
-                      "value": "<string>"
+                      "value": "CLOSED"
+                    }
+                  ]
+                },
+                "description": "Retrieve loan arrangements including personal loans, mortgages, credit facilities, and overdraft agreements. Supports filtering by customer, product type, status, and currency."
+              },
+              "response": [
+                {
+                  "id": "e241108f-4d8a-4c97-bf24-af25ea743d28",
+                  "name": "Successful retrieval of loans",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/loans?page_size=25&page_start=0&customerId=<string>&productType=<string>&status=CLOSED",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "loans"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by loan product type",
+                          "key": "productType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by loan status",
+                          "key": "status",
+                          "value": "CLOSED"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": [\n    {\n      \"loanId\": \"<string>\",\n      \"customerId\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"productName\": \"<string>\",\n      \"principalAmount\": \"<number>\",\n      \"outstandingBalance\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"interestRate\": \"<number>\",\n      \"effectiveRate\": \"<number>\",\n      \"disbursementDate\": \"<date>\",\n      \"maturityDate\": \"<date>\",\n      \"nextPaymentDate\": \"<date>\",\n      \"nextPaymentAmount\": \"<number>\",\n      \"repaymentFrequency\": \"ANNUALLY\",\n      \"status\": \"MATURED\",\n      \"overdueAmount\": \"<number>\",\n      \"daysPastDue\": \"<integer>\"\n    },\n    {\n      \"loanId\": \"<string>\",\n      \"customerId\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"productName\": \"<string>\",\n      \"principalAmount\": \"<number>\",\n      \"outstandingBalance\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"interestRate\": \"<number>\",\n      \"effectiveRate\": \"<number>\",\n      \"disbursementDate\": \"<date>\",\n      \"maturityDate\": \"<date>\",\n      \"nextPaymentDate\": \"<date>\",\n      \"nextPaymentAmount\": \"<number>\",\n      \"repaymentFrequency\": \"ANNUALLY\",\n      \"status\": \"MATURED\",\n      \"overdueAmount\": \"<number>\",\n      \"daysPastDue\": \"<integer>\"\n    }\n  ],\n  \"page\": {\n    \"pageSize\": \"<integer>\",\n    \"pageStart\": \"<integer>\",\n    \"totalRecords\": \"<integer>\"\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:23.000Z",
+                  "updatedAt": "2026-10-21T19:52:23.000Z",
+                  "uid": "35240-e241108f-4d8a-4c97-bf24-af25ea743d28"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "fd5e9136-30b8-4d2c-a33f-147d136e2d32",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "loans"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "5f62aa9e-bfbf-42f1-874f-1a608c8abc98",
+                  "name": "Bad request - invalid parameters or malformed request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/loans?page_size=25&page_start=0&customerId=<string>&productType=<string>&status=CLOSED",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "loans"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by loan product type",
+                          "key": "productType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by loan status",
+                          "key": "status",
+                          "value": "CLOSED"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "customerId",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "productType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "status",
-                      "value": "<string>"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:23.000Z",
+                  "updatedAt": "2026-10-21T19:52:23.000Z",
+                  "uid": "35240-5f62aa9e-bfbf-42f1-874f-1a608c8abc98"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3090184b-4cfb-4cf7-9088-6e263d2cb7f3",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "loans"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "04be4c1c-e96c-45f4-a686-8ff72514bd28",
+                  "name": "Authentication required or token expired",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/loans?page_size=25&page_start=0&customerId=<string>&productType=<string>&status=CLOSED",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "loans"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by loan product type",
+                          "key": "productType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by loan status",
+                          "key": "status",
+                          "value": "CLOSED"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "customerId",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "productType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "status",
-                      "value": "<string>"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:23.000Z",
+                  "updatedAt": "2026-10-21T19:52:23.000Z",
+                  "uid": "35240-04be4c1c-e96c-45f4-a686-8ff72514bd28"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "380df50f-cbfa-45d2-b190-b71cfa7f41f5",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/loans?page_size=25&page_start=0&customerId=<string>&productType=<string>&status=CLOSED",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "loans"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by loan product type",
+                          "key": "productType",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by loan status",
+                          "key": "status",
+                          "value": "CLOSED"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:23.000Z",
+                  "updatedAt": "2026-10-21T19:52:23.000Z",
+                  "uid": "35240-380df50f-cbfa-45d2-b190-b71cfa7f41f5"
                 }
               ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-21T19:52:23.000Z",
+              "updatedAt": "2026-10-21T19:52:23.000Z",
+              "uid": "35240-bded95bc-1e5f-4f4e-95e0-6c2b7e2376a6"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "4d9ad376-ade5-4811-96c7-4e7f4ecdca37",
-          "name": "Temenos Transact Get Loan Details",
-          "request": {
-            "name": "Temenos Transact Get Loan Details",
-            "description": {
-              "content": "Retrieve detailed information for a specific loan arrangement including principal, outstanding balance, interest rate, repayment schedule, next payment date, and facility details.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "holdings",
-                "loans",
-                ":loanId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "loanId",
-                  "description": "(Required) Unique identifier of the loan arrangement"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "fc4ac8a5-3bb4-45de-9376-af2c8066ac99",
-              "name": "Successful retrieval of loan details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "loans",
-                    ":loanId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "loanId",
-                      "description": "(Required) Unique identifier of the loan arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 153,\n      \"responseParse\": 2289\n    }\n  },\n  \"body\": {\n    \"loanId\": \"500123\",\n    \"customerId\": \"500123\",\n    \"productId\": \"500123\",\n    \"productName\": \"example_value\",\n    \"principalAmount\": 42.5,\n    \"outstandingBalance\": 42.5,\n    \"currency\": \"example_value\",\n    \"interestRate\": 42.5,\n    \"effectiveRate\": 42.5,\n    \"disbursementDate\": \"2026-01-15\",\n    \"maturityDate\": \"2026-01-15\",\n    \"nextPaymentDate\": \"2026-01-15\",\n    \"nextPaymentAmount\": 42.5,\n    \"repaymentFrequency\": \"MONTHLY\",\n    \"status\": \"ACTIVE\",\n    \"overdueAmount\": 42.5,\n    \"daysPastDue\": 10\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ed38663f-e613-4656-a8f2-286784694827",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "loans",
-                    ":loanId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "loanId",
-                      "description": "(Required) Unique identifier of the loan arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "fd375dc0-6a87-4133-982a-698e99506416",
-              "name": "Requested resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "loans",
-                    ":loanId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "loanId",
-                      "description": "(Required) Unique identifier of the loan arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "fa1cd27b-b95a-45dc-9af4-70c8fa7ea891",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "loans",
-                    ":loanId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "loanId",
-                      "description": "(Required) Unique identifier of the loan arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "a5ad8732-1ab2-43a3-935b-7e17818e3764",
+          "createdAt": "2026-10-21T19:52:23.000Z",
+          "updatedAt": "2026-10-21T19:52:23.000Z",
+          "uid": "35240-a5ad8732-1ab2-43a3-935b-7e17818e3764"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.temenos.com/api/v1.0.0",
-      "key": "baseUrl"
+      "id": "e5f6b3fe-8609-4fe3-ab4b-72422a4a3e30",
+      "createdAt": "2026-10-21T19:52:23.000Z",
+      "updatedAt": "2026-10-21T19:52:23.000Z",
+      "uid": "35240-e5f6b3fe-8609-4fe3-ab4b-72422a4a3e30"
     }
   ],
   "auth": {
@@ -609,17 +619,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "8b4299a1-cdb0-442c-8837-2f08dfbc3c88",
-    "name": "Temenos Transact Core Banking Accounts Loans API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.temenos.com/api/v1.0.0"
     }
-  }
+  ]
 }

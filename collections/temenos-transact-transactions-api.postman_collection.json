@@ -1,527 +1,564 @@
 {
+  "info": {
+    "_postman_id": "89d7746c-ef80-416d-8388-320af66cb7e2",
+    "name": "Temenos Transact Core Banking Transactions API",
+    "description": "RESTful APIs for Temenos Transact (formerly T24) core banking operations.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T19:52:48.000Z",
+    "updatedAt": "2026-10-21T19:52:48.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-89d7746c-ef80-416d-8388-320af66cb7e2"
+  },
   "item": [
     {
-      "id": "6d6d258d-60c1-44da-8291-8e7c1dc900ba",
-      "name": "Transactions",
-      "description": {
-        "content": "Retrieve transaction history, statement details, and account activity records for all account types and arrangements.",
-        "type": "text/plain"
-      },
+      "name": "holdings",
       "item": [
         {
-          "id": "24ecc929-4993-42b7-ba92-78cd5b871785",
-          "name": "Temenos Transact List Account Transactions",
-          "request": {
-            "name": "Temenos Transact List Account Transactions",
-            "description": {
-              "content": "Retrieve transaction history for a specific account. Supports filtering by date range, transaction type, amount range, and booking date. Returns debit and credit entries with narrative, value date, and reference details.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "holdings",
-                "accounts",
-                ":accountId",
-                "transactions"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "25",
-                  "description": "Number of records to return per page (default 25, max 100)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page_start",
-                  "value": "0",
-                  "description": "Page token or offset for pagination"
-                },
-                {
-                  "disabled": false,
-                  "key": "fromDate",
-                  "value": "<date>",
-                  "description": "Start date for transaction history (YYYY-MM-DD)"
-                },
-                {
-                  "disabled": false,
-                  "key": "toDate",
-                  "value": "<date>",
-                  "description": "End date for transaction history (YYYY-MM-DD)"
-                },
-                {
-                  "disabled": false,
-                  "key": "transactionType",
-                  "value": "<string>",
-                  "description": "Filter by transaction type"
-                },
-                {
-                  "disabled": false,
-                  "key": "minAmount",
-                  "value": "<number>",
-                  "description": "Minimum transaction amount filter"
-                },
-                {
-                  "disabled": false,
-                  "key": "maxAmount",
-                  "value": "<number>",
-                  "description": "Maximum transaction amount filter"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "accountId",
-                  "description": "(Required) Unique identifier of the account arrangement"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "accounts",
+          "item": [
             {
-              "id": "f47125d3-d5df-4660-8930-a549a89c007a",
-              "name": "Successful retrieval of transaction history",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId",
-                    "transactions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "fromDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "toDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "transactionType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "minAmount",
-                      "value": "<number>"
-                    },
-                    {
-                      "key": "maxAmount",
-                      "value": "<number>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "{accountId}",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "transactions",
+                  "item": [
+                    {
+                      "name": "Temenos Transact List Account Transactions",
+                      "id": "262b71d3-9919-4538-9995-48338dcc41e0",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/accounts/:accountId/transactions?page_size=25&page_start=0&fromDate=<date>&toDate=<date>&transactionType=<string>&minAmount=<number>&maxAmount=<number>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "accounts",
+                            ":accountId",
+                            "transactions"
+                          ],
+                          "query": [
+                            {
+                              "description": "Number of records to return per page (default 25, max 100)",
+                              "key": "page_size",
+                              "value": "25"
+                            },
+                            {
+                              "description": "Page token or offset for pagination",
+                              "key": "page_start",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Start date for transaction history (YYYY-MM-DD)",
+                              "key": "fromDate",
+                              "value": "<date>"
+                            },
+                            {
+                              "description": "End date for transaction history (YYYY-MM-DD)",
+                              "key": "toDate",
+                              "value": "<date>"
+                            },
+                            {
+                              "description": "Filter by transaction type",
+                              "key": "transactionType",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Minimum transaction amount filter",
+                              "key": "minAmount",
+                              "value": "<number>"
+                            },
+                            {
+                              "description": "Maximum transaction amount filter",
+                              "key": "maxAmount",
+                              "value": "<number>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "3f780bbe-f3d2-4251-bfe4-1c39ff935448",
+                              "key": "accountId",
+                              "value": "<string>",
+                              "description": "(Required) Unique identifier of the account arrangement"
+                            }
+                          ]
+                        },
+                        "description": "Retrieve transaction history for a specific account. Supports filtering by date range, transaction type, amount range, and booking date. Returns debit and credit entries with narrative, value date, and reference details."
+                      },
+                      "response": [
+                        {
+                          "id": "af47dcec-c23d-4368-9af1-e6a803bf034f",
+                          "name": "Successful retrieval of transaction history",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/holdings/accounts/:accountId/transactions?page_size=25&page_start=0&fromDate=<date>&toDate=<date>&transactionType=<string>&minAmount=<number>&maxAmount=<number>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "holdings",
+                                "accounts",
+                                ":accountId",
+                                "transactions"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Number of records to return per page (default 25, max 100)",
+                                  "key": "page_size",
+                                  "value": "25"
+                                },
+                                {
+                                  "description": "Page token or offset for pagination",
+                                  "key": "page_start",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Start date for transaction history (YYYY-MM-DD)",
+                                  "key": "fromDate",
+                                  "value": "<date>"
+                                },
+                                {
+                                  "description": "End date for transaction history (YYYY-MM-DD)",
+                                  "key": "toDate",
+                                  "value": "<date>"
+                                },
+                                {
+                                  "description": "Filter by transaction type",
+                                  "key": "transactionType",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Minimum transaction amount filter",
+                                  "key": "minAmount",
+                                  "value": "<number>"
+                                },
+                                {
+                                  "description": "Maximum transaction amount filter",
+                                  "key": "maxAmount",
+                                  "value": "<number>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Unauth\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": [\n    {\n      \"transactionId\": \"<string>\",\n      \"accountId\": \"<string>\",\n      \"transactionType\": \"<string>\",\n      \"debitOrCredit\": \"DEBIT\",\n      \"amount\": \"<number>\",\n      \"currency\": \"RHJ\",\n      \"bookingDate\": \"<date>\",\n      \"valueDate\": \"<date>\",\n      \"processingDate\": \"<date>\",\n      \"reference\": \"<string>\",\n      \"narrative\": \"<string>\",\n      \"counterpartyAccountId\": \"<string>\",\n      \"counterpartyName\": \"<string>\",\n      \"balance\": \"<number>\",\n      \"exchangeRate\": \"<number>\",\n      \"chargesAmount\": \"<number>\",\n      \"reversalIndicator\": \"<boolean>\",\n      \"statementNumber\": \"<string>\"\n    },\n    {\n      \"transactionId\": \"<string>\",\n      \"accountId\": \"<string>\",\n      \"transactionType\": \"<string>\",\n      \"debitOrCredit\": \"DEBIT\",\n      \"amount\": \"<number>\",\n      \"currency\": \"XIC\",\n      \"bookingDate\": \"<date>\",\n      \"valueDate\": \"<date>\",\n      \"processingDate\": \"<date>\",\n      \"reference\": \"<string>\",\n      \"narrative\": \"<string>\",\n      \"counterpartyAccountId\": \"<string>\",\n      \"counterpartyName\": \"<string>\",\n      \"balance\": \"<number>\",\n      \"exchangeRate\": \"<number>\",\n      \"chargesAmount\": \"<number>\",\n      \"reversalIndicator\": \"<boolean>\",\n      \"statementNumber\": \"<string>\"\n    }\n  ],\n  \"page\": {\n    \"pageSize\": \"<integer>\",\n    \"pageStart\": \"<integer>\",\n    \"totalRecords\": \"<integer>\"\n  }\n}",
+                          "createdAt": "2026-10-21T19:52:48.000Z",
+                          "updatedAt": "2026-10-21T19:52:48.000Z",
+                          "uid": "35240-af47dcec-c23d-4368-9af1-e6a803bf034f"
+                        },
+                        {
+                          "id": "fd0f5384-2997-45be-9c3b-0d602d52b656",
+                          "name": "Bad request - invalid parameters or malformed request",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/holdings/accounts/:accountId/transactions?page_size=25&page_start=0&fromDate=<date>&toDate=<date>&transactionType=<string>&minAmount=<number>&maxAmount=<number>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "holdings",
+                                "accounts",
+                                ":accountId",
+                                "transactions"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Number of records to return per page (default 25, max 100)",
+                                  "key": "page_size",
+                                  "value": "25"
+                                },
+                                {
+                                  "description": "Page token or offset for pagination",
+                                  "key": "page_start",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Start date for transaction history (YYYY-MM-DD)",
+                                  "key": "fromDate",
+                                  "value": "<date>"
+                                },
+                                {
+                                  "description": "End date for transaction history (YYYY-MM-DD)",
+                                  "key": "toDate",
+                                  "value": "<date>"
+                                },
+                                {
+                                  "description": "Filter by transaction type",
+                                  "key": "transactionType",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Minimum transaction amount filter",
+                                  "key": "minAmount",
+                                  "value": "<number>"
+                                },
+                                {
+                                  "description": "Maximum transaction amount filter",
+                                  "key": "maxAmount",
+                                  "value": "<number>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-10-21T19:52:48.000Z",
+                          "updatedAt": "2026-10-21T19:52:48.000Z",
+                          "uid": "35240-fd0f5384-2997-45be-9c3b-0d602d52b656"
+                        },
+                        {
+                          "id": "f1ff6e30-67d6-4764-9efd-a72b16d6a2a8",
+                          "name": "Authentication required or token expired",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/holdings/accounts/:accountId/transactions?page_size=25&page_start=0&fromDate=<date>&toDate=<date>&transactionType=<string>&minAmount=<number>&maxAmount=<number>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "holdings",
+                                "accounts",
+                                ":accountId",
+                                "transactions"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Number of records to return per page (default 25, max 100)",
+                                  "key": "page_size",
+                                  "value": "25"
+                                },
+                                {
+                                  "description": "Page token or offset for pagination",
+                                  "key": "page_start",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Start date for transaction history (YYYY-MM-DD)",
+                                  "key": "fromDate",
+                                  "value": "<date>"
+                                },
+                                {
+                                  "description": "End date for transaction history (YYYY-MM-DD)",
+                                  "key": "toDate",
+                                  "value": "<date>"
+                                },
+                                {
+                                  "description": "Filter by transaction type",
+                                  "key": "transactionType",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Minimum transaction amount filter",
+                                  "key": "minAmount",
+                                  "value": "<number>"
+                                },
+                                {
+                                  "description": "Maximum transaction amount filter",
+                                  "key": "maxAmount",
+                                  "value": "<number>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-10-21T19:52:48.000Z",
+                          "updatedAt": "2026-10-21T19:52:48.000Z",
+                          "uid": "35240-f1ff6e30-67d6-4764-9efd-a72b16d6a2a8"
+                        },
+                        {
+                          "id": "b40aaaad-38cb-42af-b185-26876ee818bf",
+                          "name": "Requested resource not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/holdings/accounts/:accountId/transactions?page_size=25&page_start=0&fromDate=<date>&toDate=<date>&transactionType=<string>&minAmount=<number>&maxAmount=<number>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "holdings",
+                                "accounts",
+                                ":accountId",
+                                "transactions"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Number of records to return per page (default 25, max 100)",
+                                  "key": "page_size",
+                                  "value": "25"
+                                },
+                                {
+                                  "description": "Page token or offset for pagination",
+                                  "key": "page_start",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Start date for transaction history (YYYY-MM-DD)",
+                                  "key": "fromDate",
+                                  "value": "<date>"
+                                },
+                                {
+                                  "description": "End date for transaction history (YYYY-MM-DD)",
+                                  "key": "toDate",
+                                  "value": "<date>"
+                                },
+                                {
+                                  "description": "Filter by transaction type",
+                                  "key": "transactionType",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Minimum transaction amount filter",
+                                  "key": "minAmount",
+                                  "value": "<number>"
+                                },
+                                {
+                                  "description": "Maximum transaction amount filter",
+                                  "key": "maxAmount",
+                                  "value": "<number>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-10-21T19:52:48.000Z",
+                          "updatedAt": "2026-10-21T19:52:48.000Z",
+                          "uid": "35240-b40aaaad-38cb-42af-b185-26876ee818bf"
+                        },
+                        {
+                          "id": "3091412b-1d56-48bf-85d9-0f8aa50364b5",
+                          "name": "Internal server error",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/holdings/accounts/:accountId/transactions?page_size=25&page_start=0&fromDate=<date>&toDate=<date>&transactionType=<string>&minAmount=<number>&maxAmount=<number>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "holdings",
+                                "accounts",
+                                ":accountId",
+                                "transactions"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Number of records to return per page (default 25, max 100)",
+                                  "key": "page_size",
+                                  "value": "25"
+                                },
+                                {
+                                  "description": "Page token or offset for pagination",
+                                  "key": "page_start",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Start date for transaction history (YYYY-MM-DD)",
+                                  "key": "fromDate",
+                                  "value": "<date>"
+                                },
+                                {
+                                  "description": "End date for transaction history (YYYY-MM-DD)",
+                                  "key": "toDate",
+                                  "value": "<date>"
+                                },
+                                {
+                                  "description": "Filter by transaction type",
+                                  "key": "transactionType",
+                                  "value": "<string>"
+                                },
+                                {
+                                  "description": "Minimum transaction amount filter",
+                                  "key": "minAmount",
+                                  "value": "<number>"
+                                },
+                                {
+                                  "description": "Maximum transaction amount filter",
+                                  "key": "maxAmount",
+                                  "value": "<number>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                          "createdAt": "2026-10-21T19:52:48.000Z",
+                          "updatedAt": "2026-10-21T19:52:48.000Z",
+                          "uid": "35240-3091412b-1d56-48bf-85d9-0f8aa50364b5"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T19:52:48.000Z",
+                      "updatedAt": "2026-10-21T19:52:48.000Z",
+                      "uid": "35240-262b71d3-9919-4538-9995-48338dcc41e0"
+                    }
+                  ],
+                  "id": "83b6efcf-d827-41cb-8919-e1f738819b91",
+                  "createdAt": "2026-10-21T19:52:48.000Z",
+                  "updatedAt": "2026-10-21T19:52:48.000Z",
+                  "uid": "35240-83b6efcf-d827-41cb-8919-e1f738819b91"
                 }
               ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 4976,\n      \"responseParse\": 6883\n    }\n  },\n  \"page\": {\n    \"pageSize\": 10,\n    \"pageStart\": 10,\n    \"totalRecords\": 10\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "e234e1e5-d6c7-4d42-8b23-9d9c058927f6",
-              "name": "Bad request - invalid parameters or malformed request",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId",
-                    "transactions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "fromDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "toDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "transactionType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "minAmount",
-                      "value": "<number>"
-                    },
-                    {
-                      "key": "maxAmount",
-                      "value": "<number>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "373cebf1-a669-4f51-9b61-0f2e4eb684fa",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId",
-                    "transactions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "fromDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "toDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "transactionType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "minAmount",
-                      "value": "<number>"
-                    },
-                    {
-                      "key": "maxAmount",
-                      "value": "<number>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "ec1536e3-6642-41aa-8ebb-2eb382928998",
-              "name": "Requested resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId",
-                    "transactions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "fromDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "toDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "transactionType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "minAmount",
-                      "value": "<number>"
-                    },
-                    {
-                      "key": "maxAmount",
-                      "value": "<number>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8782aaa7-6328-461c-8dd3-e6d2f79889da",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "accounts",
-                    ":accountId",
-                    "transactions"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "fromDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "toDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "transactionType",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "minAmount",
-                      "value": "<number>"
-                    },
-                    {
-                      "key": "maxAmount",
-                      "value": "<number>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Unique identifier of the account arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "7b494b16-a108-4efa-8411-a7fd0badd008",
+              "createdAt": "2026-10-21T19:52:48.000Z",
+              "updatedAt": "2026-10-21T19:52:48.000Z",
+              "uid": "35240-7b494b16-a108-4efa-8411-a7fd0badd008"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "c004b8ed-80df-49f9-bdcd-77baf77d57da",
+          "createdAt": "2026-10-21T19:52:48.000Z",
+          "updatedAt": "2026-10-21T19:52:48.000Z",
+          "uid": "35240-c004b8ed-80df-49f9-bdcd-77baf77d57da"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.temenos.com/api/v1.0.0",
-      "key": "baseUrl"
+      "id": "c24ef59c-a180-41bd-8a10-a24e85e03f37",
+      "createdAt": "2026-10-21T19:52:48.000Z",
+      "updatedAt": "2026-10-21T19:52:48.000Z",
+      "uid": "35240-c24ef59c-a180-41bd-8a10-a24e85e03f37"
     }
   ],
   "auth": {
@@ -529,17 +566,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "f94c79a4-5542-46f9-8f03-0ff0e5596546",
-    "name": "Temenos Transact Core Banking Accounts Transactions API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.temenos.com/api/v1.0.0"
     }
-  }
+  ]
 }

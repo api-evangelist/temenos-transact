@@ -1,607 +1,617 @@
 {
+  "info": {
+    "_postman_id": "99b30d5e-fee2-43b1-97b5-20559e7042e5",
+    "name": "Temenos Transact Core Banking Deposits API",
+    "description": "RESTful APIs for Temenos Transact (formerly T24) core banking operations.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T19:52:17.000Z",
+    "updatedAt": "2026-10-21T19:52:17.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-99b30d5e-fee2-43b1-97b5-20559e7042e5"
+  },
   "item": [
     {
-      "id": "0fd62682-dea9-478b-9caf-b609587c462f",
-      "name": "Deposits",
-      "description": {
-        "content": "Manage deposit arrangements including term deposits, savings deposits, and fixed deposit products with maturity tracking and renewal capabilities.",
-        "type": "text/plain"
-      },
+      "name": "holdings",
       "item": [
         {
-          "id": "3dc7157f-25e4-49ed-85ab-708245b42007",
-          "name": "Temenos Transact List Deposits",
-          "request": {
-            "name": "Temenos Transact List Deposits",
-            "description": {
-              "content": "Retrieve deposit arrangements including term deposits, savings deposits, and fixed deposits. Supports filtering by customer, maturity date range, status, and currency.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "holdings",
-                "deposits"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "page_size",
-                  "value": "25",
-                  "description": "Number of records to return per page (default 25, max 100)"
-                },
-                {
-                  "disabled": false,
-                  "key": "page_start",
-                  "value": "0",
-                  "description": "Page token or offset for pagination"
-                },
-                {
-                  "disabled": false,
-                  "key": "customerId",
-                  "value": "<string>",
-                  "description": "Filter by customer identifier"
-                },
-                {
-                  "disabled": false,
-                  "key": "maturityDateFrom",
-                  "value": "<date>",
-                  "description": "Filter deposits maturing from this date (YYYY-MM-DD)"
-                },
-                {
-                  "disabled": false,
-                  "key": "maturityDateTo",
-                  "value": "<date>",
-                  "description": "Filter deposits maturing up to this date (YYYY-MM-DD)"
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "deposits",
+          "item": [
             {
-              "id": "cdec670d-5649-41ac-9f79-f523db0a13e8",
-              "name": "Successful retrieval of deposits",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "deposits"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+              "name": "{depositId}",
+              "item": [
+                {
+                  "name": "Temenos Transact Get Deposit Details",
+                  "id": "4b0d3067-876f-4c7a-83cb-370de0c10f8a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/deposits/:depositId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "deposits",
+                        ":depositId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "5f55ec2c-b739-4ae7-8834-69462af8e72b",
+                          "key": "depositId",
+                          "value": "<string>",
+                          "description": "(Required) Unique identifier of the deposit arrangement"
+                        }
+                      ]
+                    },
+                    "description": "Retrieve detailed information for a specific deposit arrangement including principal amount, interest rate, maturity date, accrued interest, and renewal options."
+                  },
+                  "response": [
                     {
-                      "key": "page_size",
-                      "value": "25"
+                      "id": "c581ac74-747b-47c2-ad06-a6a8bca1742b",
+                      "name": "Successful retrieval of deposit details",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/deposits/:depositId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "deposits",
+                            ":depositId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "depositId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"Hold\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": {\n    \"depositId\": \"<string>\",\n    \"customerId\": \"<string>\",\n    \"productId\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"principalAmount\": \"<number>\",\n    \"currentBalance\": \"<number>\",\n    \"currency\": \"<string>\",\n    \"interestRate\": \"<number>\",\n    \"accruedInterest\": \"<number>\",\n    \"startDate\": \"<date>\",\n    \"maturityDate\": \"<date>\",\n    \"term\": \"<string>\",\n    \"renewalType\": \"NOTIFY\",\n    \"status\": \"MATURED\"\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:17.000Z",
+                      "updatedAt": "2026-10-21T19:52:17.000Z",
+                      "uid": "35240-c581ac74-747b-47c2-ad06-a6a8bca1742b"
                     },
                     {
-                      "key": "page_start",
-                      "value": "0"
+                      "id": "691a9fa9-9e9e-4b3e-9e0c-c2c480392f8a",
+                      "name": "Authentication required or token expired",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/deposits/:depositId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "deposits",
+                            ":depositId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "depositId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:17.000Z",
+                      "updatedAt": "2026-10-21T19:52:17.000Z",
+                      "uid": "35240-691a9fa9-9e9e-4b3e-9e0c-c2c480392f8a"
                     },
                     {
-                      "key": "customerId",
-                      "value": "<string>"
+                      "id": "b3c70c76-3caf-44e6-92d0-f1da0b980584",
+                      "name": "Requested resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/deposits/:depositId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "deposits",
+                            ":depositId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "depositId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:17.000Z",
+                      "updatedAt": "2026-10-21T19:52:17.000Z",
+                      "uid": "35240-b3c70c76-3caf-44e6-92d0-f1da0b980584"
                     },
                     {
-                      "key": "maturityDateFrom",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "maturityDateTo",
-                      "value": "<date>"
+                      "id": "2d0584dd-ec0a-43b8-b2a9-4f9fba6eda0e",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/holdings/deposits/:depositId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "holdings",
+                            "deposits",
+                            ":depositId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "depositId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-10-21T19:52:17.000Z",
+                      "updatedAt": "2026-10-21T19:52:17.000Z",
+                      "uid": "35240-2d0584dd-ec0a-43b8-b2a9-4f9fba6eda0e"
                     }
                   ],
-                  "variable": []
-                },
+                  "createdAt": "2026-10-21T19:52:17.000Z",
+                  "updatedAt": "2026-10-21T19:52:17.000Z",
+                  "uid": "35240-4b0d3067-876f-4c7a-83cb-370de0c10f8a"
+                }
+              ],
+              "id": "15e262b0-e7ab-4478-b78a-af05945d2122",
+              "createdAt": "2026-10-21T19:52:17.000Z",
+              "updatedAt": "2026-10-21T19:52:17.000Z",
+              "uid": "35240-15e262b0-e7ab-4478-b78a-af05945d2122"
+            },
+            {
+              "name": "Temenos Transact List Deposits",
+              "id": "f5f37a11-874c-48ad-a35a-64954e90eabf",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 8438,\n      \"responseParse\": 229\n    }\n  },\n  \"page\": {\n    \"pageSize\": 10,\n    \"pageStart\": 10,\n    \"totalRecords\": 10\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "363b907f-f2a5-4f0b-80d2-7148ea1b08ce",
-              "name": "Bad request - invalid parameters or malformed request",
-              "originalRequest": {
                 "url": {
+                  "raw": "{{baseUrl}}/holdings/deposits?page_size=25&page_start=0&customerId=<string>&maturityDateFrom=<date>&maturityDateTo=<date>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
                   "path": [
                     "holdings",
                     "deposits"
                   ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
                   "query": [
                     {
+                      "description": "Number of records to return per page (default 25, max 100)",
                       "key": "page_size",
                       "value": "25"
                     },
                     {
+                      "description": "Page token or offset for pagination",
                       "key": "page_start",
                       "value": "0"
                     },
                     {
+                      "description": "Filter by customer identifier",
                       "key": "customerId",
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter deposits maturing from this date (YYYY-MM-DD)",
                       "key": "maturityDateFrom",
                       "value": "<date>"
                     },
                     {
+                      "description": "Filter deposits maturing up to this date (YYYY-MM-DD)",
                       "key": "maturityDateTo",
                       "value": "<date>"
                     }
-                  ],
-                  "variable": []
+                  ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Retrieve deposit arrangements including term deposits, savings deposits, and fixed deposits. Supports filtering by customer, maturity date range, status, and currency."
               },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "48661606-a3a0-4162-aefa-19d9e14e67e0",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "deposits"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "e01b8887-5198-44c9-8050-b86e37dad273",
+                  "name": "Successful retrieval of deposits",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/deposits?page_size=25&page_start=0&customerId=<string>&maturityDateFrom=<date>&maturityDateTo=<date>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "deposits"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter deposits maturing from this date (YYYY-MM-DD)",
+                          "key": "maturityDateFrom",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter deposits maturing up to this date (YYYY-MM-DD)",
+                          "key": "maturityDateTo",
+                          "value": "<date>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "customerId",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "maturityDateFrom",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "maturityDateTo",
-                      "value": "<date>"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": \"<integer>\",\n      \"responseParse\": \"<integer>\"\n    }\n  },\n  \"body\": [\n    {\n      \"depositId\": \"<string>\",\n      \"customerId\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"productName\": \"<string>\",\n      \"principalAmount\": \"<number>\",\n      \"currentBalance\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"interestRate\": \"<number>\",\n      \"accruedInterest\": \"<number>\",\n      \"startDate\": \"<date>\",\n      \"maturityDate\": \"<date>\",\n      \"term\": \"<string>\",\n      \"renewalType\": \"NO_RENEWAL\",\n      \"status\": \"MATURED\"\n    },\n    {\n      \"depositId\": \"<string>\",\n      \"customerId\": \"<string>\",\n      \"productId\": \"<string>\",\n      \"productName\": \"<string>\",\n      \"principalAmount\": \"<number>\",\n      \"currentBalance\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"interestRate\": \"<number>\",\n      \"accruedInterest\": \"<number>\",\n      \"startDate\": \"<date>\",\n      \"maturityDate\": \"<date>\",\n      \"term\": \"<string>\",\n      \"renewalType\": \"NOTIFY\",\n      \"status\": \"PREMATURE_CLOSURE\"\n    }\n  ],\n  \"page\": {\n    \"pageSize\": \"<integer>\",\n    \"pageStart\": \"<integer>\",\n    \"totalRecords\": \"<integer>\"\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:17.000Z",
+                  "updatedAt": "2026-10-21T19:52:17.000Z",
+                  "uid": "35240-e01b8887-5198-44c9-8050-b86e37dad273"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "948d4d52-7228-49b4-a6c2-5ec1ab2acac0",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "deposits"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
+                  "id": "7f6b1d0e-2022-4609-a2ed-950b368fc99a",
+                  "name": "Bad request - invalid parameters or malformed request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/deposits?page_size=25&page_start=0&customerId=<string>&maturityDateFrom=<date>&maturityDateTo=<date>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "deposits"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter deposits maturing from this date (YYYY-MM-DD)",
+                          "key": "maturityDateFrom",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter deposits maturing up to this date (YYYY-MM-DD)",
+                          "key": "maturityDateTo",
+                          "value": "<date>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
                     {
-                      "key": "page_size",
-                      "value": "25"
-                    },
-                    {
-                      "key": "page_start",
-                      "value": "0"
-                    },
-                    {
-                      "key": "customerId",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "maturityDateFrom",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "maturityDateTo",
-                      "value": "<date>"
+                      "key": "Content-Type",
+                      "value": "application/json"
                     }
                   ],
-                  "variable": []
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:17.000Z",
+                  "updatedAt": "2026-10-21T19:52:17.000Z",
+                  "uid": "35240-7f6b1d0e-2022-4609-a2ed-950b368fc99a"
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "8ff2c424-45c9-494e-bba1-a1016ad235b6",
+                  "name": "Authentication required or token expired",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/deposits?page_size=25&page_start=0&customerId=<string>&maturityDateFrom=<date>&maturityDateTo=<date>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "deposits"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter deposits maturing from this date (YYYY-MM-DD)",
+                          "key": "maturityDateFrom",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter deposits maturing up to this date (YYYY-MM-DD)",
+                          "key": "maturityDateTo",
+                          "value": "<date>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:17.000Z",
+                  "updatedAt": "2026-10-21T19:52:17.000Z",
+                  "uid": "35240-8ff2c424-45c9-494e-bba1-a1016ad235b6"
+                },
+                {
+                  "id": "a5b6d435-d812-4888-b9f3-3f81d1a9c770",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/holdings/deposits?page_size=25&page_start=0&customerId=<string>&maturityDateFrom=<date>&maturityDateTo=<date>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "holdings",
+                        "deposits"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of records to return per page (default 25, max 100)",
+                          "key": "page_size",
+                          "value": "25"
+                        },
+                        {
+                          "description": "Page token or offset for pagination",
+                          "key": "page_start",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Filter by customer identifier",
+                          "key": "customerId",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter deposits maturing from this date (YYYY-MM-DD)",
+                          "key": "maturityDateFrom",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "Filter deposits maturing up to this date (YYYY-MM-DD)",
+                          "key": "maturityDateTo",
+                          "value": "<date>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"header\": {\n    \"id\": \"<string>\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"<string>\"\n  },\n  \"error\": {\n    \"type\": \"<string>\",\n    \"message\": \"<string>\",\n    \"code\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\",\n        \"code\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-10-21T19:52:17.000Z",
+                  "updatedAt": "2026-10-21T19:52:17.000Z",
+                  "uid": "35240-a5b6d435-d812-4888-b9f3-3f81d1a9c770"
                 }
               ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-21T19:52:17.000Z",
+              "updatedAt": "2026-10-21T19:52:17.000Z",
+              "uid": "35240-f5f37a11-874c-48ad-a35a-64954e90eabf"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "109a376a-26dc-4af0-88ce-379461ac99c1",
-          "name": "Temenos Transact Get Deposit Details",
-          "request": {
-            "name": "Temenos Transact Get Deposit Details",
-            "description": {
-              "content": "Retrieve detailed information for a specific deposit arrangement including principal amount, interest rate, maturity date, accrued interest, and renewal options.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "holdings",
-                "deposits",
-                ":depositId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "depositId",
-                  "description": "(Required) Unique identifier of the deposit arrangement"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "54aae99b-2755-4ecc-ba64-5a91d48d2029",
-              "name": "Successful retrieval of deposit details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "deposits",
-                    ":depositId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "depositId",
-                      "description": "(Required) Unique identifier of the deposit arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"abc123\",\n    \"status\": \"success\",\n    \"transactionStatus\": \"Live\",\n    \"audit\": {\n      \"parseTime\": 9330,\n      \"responseParse\": 8898\n    }\n  },\n  \"body\": {\n    \"depositId\": \"500123\",\n    \"customerId\": \"500123\",\n    \"productId\": \"500123\",\n    \"productName\": \"example_value\",\n    \"principalAmount\": 42.5,\n    \"currentBalance\": 42.5,\n    \"currency\": \"example_value\",\n    \"interestRate\": 42.5,\n    \"accruedInterest\": 42.5,\n    \"startDate\": \"2026-01-15\",\n    \"maturityDate\": \"2026-01-15\",\n    \"term\": \"12M\",\n    \"renewalType\": \"AUTO_RENEW\",\n    \"status\": \"ACTIVE\"\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "f5ae0fbb-83bf-45f9-87b8-95ad5d2255f6",
-              "name": "Authentication required or token expired",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "deposits",
-                    ":depositId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "depositId",
-                      "description": "(Required) Unique identifier of the deposit arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "d52418a1-ea0e-4e4a-9011-2bca0760e120",
-              "name": "Requested resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "deposits",
-                    ":depositId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "depositId",
-                      "description": "(Required) Unique identifier of the deposit arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "a97e494a-818e-4db1-a1dc-3219cd66e69c",
-              "name": "Internal server error",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "holdings",
-                    "deposits",
-                    ":depositId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "depositId",
-                      "description": "(Required) Unique identifier of the deposit arrangement"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Internal Server Error",
-              "code": 500,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"header\": {\n    \"id\": \"string\",\n    \"status\": \"error\",\n    \"transactionStatus\": \"string\"\n  },\n  \"error\": {\n    \"type\": \"string\",\n    \"message\": \"string\",\n    \"code\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"message\": \"string\",\n        \"code\": \"string\"\n      }\n    ]\n  }\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "163fb5b0-e07b-40b6-99f9-2ea47ffab3fe",
+          "createdAt": "2026-10-21T19:52:17.000Z",
+          "updatedAt": "2026-10-21T19:52:17.000Z",
+          "uid": "35240-163fb5b0-e07b-40b6-99f9-2ea47ffab3fe"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.temenos.com/api/v1.0.0",
-      "key": "baseUrl"
+      "id": "08719c5a-20bd-4540-a91f-ff4080350e16",
+      "createdAt": "2026-10-21T19:52:17.000Z",
+      "updatedAt": "2026-10-21T19:52:17.000Z",
+      "uid": "35240-08719c5a-20bd-4540-a91f-ff4080350e16"
     }
   ],
   "auth": {
@@ -609,17 +619,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "e57ea333-00ba-4737-a11a-1a5f52c3e41d",
-    "name": "Temenos Transact Core Banking Accounts Deposits API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "RESTful APIs for Temenos Transact (formerly T24) core banking operations. Provides comprehensive banking functionality organized into domain-driven API categories including Holdings (accounts, deposits, loans, cards), Order (payments, transfers, standing orders), Party (customers, beneficiaries, KYC), Reference (currencies, countries, rates), Product (catalog, conditions), and Enterprise (pricing, bundles). Built on the Arrangement Architecture, a modular business component-based framework enabling reusable product components across retail, corporate, treasury, wealth, and Islamic banking domains. APIs exchange data over HTTP using JSON format with a versioned URL structure following the pattern api/v1.0.0/{domain}/{resource}.\n\nContact Support:\n Name: Temenos Developer Support\n Email: api.support@temenos.com",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.temenos.com/api/v1.0.0"
     }
-  }
+  ]
 }
